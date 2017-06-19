@@ -8,7 +8,7 @@ maplib = {}
 
 --create tiles
 mapheight = 48
-mapwidth  = 50
+mapwidth  = 30
 tiles = {}
 function maplib.createmap()
 	for x = 1,mapwidth do
@@ -28,6 +28,7 @@ end
 
 --executed in love.draw to draw map
 function maplib.draw()
+	love.graphics.setFont(font)
 	love.graphics.setColor(255,255,255,255)
 	for x = 1,mapwidth do
 		for y = 1,mapheight do

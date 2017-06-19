@@ -20,6 +20,7 @@ function player.test()
 end
 
 function player.draw()
+	love.graphics.setFont(font)
 	love.graphics.setColor(255,0,0,255)
     love.graphics.print("8", player.playerx, player.playery)
 end
