@@ -53,10 +53,10 @@ function menu.draw()
 
 	love.graphics.setFont(fontbig)
 	love.graphics.setColor(255,0,0,255)
-    love.graphics.print("G", 400, menutitle.g)
-    love.graphics.print("A", 440, menutitle.a)
-    love.graphics.print("M", 480, menutitle.m)
-    love.graphics.print("E", 520, menutitle.e)
+    love.graphics.print("D", 400, menutitle.g)
+    love.graphics.print("I", 440, menutitle.a)
+    love.graphics.print("G", 480, menutitle.m)
+    love.graphics.print("!", 520, menutitle.e)
 
 	--score debug
 	love.graphics.setFont(fontmed)
