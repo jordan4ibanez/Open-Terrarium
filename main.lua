@@ -19,10 +19,14 @@ end
 
 function love.load()
 	maplib.createmap()
+	
 	font = love.graphics.newFont("font.ttf", 12)
 	fontmed = love.graphics.newFont("font.ttf", 22)
 	fontbig = love.graphics.newFont("font.ttf", 35)
+	
 	love.graphics.setFont(font)
+	
+	minesound = love.audio.newSource("mine.ogg", "static")
 end
 
 
