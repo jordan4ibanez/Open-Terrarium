@@ -23,21 +23,20 @@ function love.keypressed( key, scancode, isrepeat )
 	end
 	
 	if key == "w" then
-      player.playery = player.playery - 1
+		jump()
 	end
-	if key == "s" then
-      player.playery = player.playery + 1
-	end
+	
 	collision(oldposx,oldposy)
-	
-	if key == "space" then
-		player.mining = not player.mining
-	end
-	
-	
-	
+		
 end
 
+--try to jump
+function jump()
+	if player.playery < mapheight and tiles[player.playerx][player.playery+1]["block"] ~= 0 then
+		player.playery = player.playery - 1
+	end
+
+end
 
 --mining
 function mine(key)

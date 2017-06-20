@@ -7,3 +7,24 @@ function collision(oldposx,oldposy)
 	end
 	
 end
+
+--make the player fall when in air
+gravtimer = 0
+
+function gravity(dt)
+	if player.playery < mapheight and tiles[player.playerx][player.playery+1]["block"] == 0 then
+		gravtimer = gravtimer + dt
+		if gravtimer >= 0.35 then
+			local oldposx,oldposy = player.playerx,player.playery
+			
+			player.playery = player.playery + 1
+			
+			collision(oldposx,oldposy)
+			
+			gravtimer = 0
+		end
+	else
+		gravtimer = 0
+	end
+
+end
