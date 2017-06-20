@@ -63,33 +63,6 @@ function mine(key)
 			end
 		end
 	end
-
-    --[[
-	local x,y = 0,0
-	if key == "a" then
-		if player.playerx > 1 then
-			x = -1
-		end
-	elseif key == "d" then
-		if player.playerx < mapwidth then
-			x = 1
-		end
-	elseif key == "w" then
-		if player.playery > 1 then
-			y = -1
-		end
-	elseif key == "s" then
-		if player.playery < mapheight then
-			y = 1
-		end
-	end
-	--cancel if nothing
-	if x == 0 and y == 0 then
-		return
-	end
-	
-
-	]]--
 end
 
 function player.draw()
