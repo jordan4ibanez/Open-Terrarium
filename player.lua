@@ -21,8 +21,33 @@ function love.keypressed( key, scancode, isrepeat )
       player.playery = player.playery + 1
 	end
 	collision(oldposx,oldposy)
+	
+	mine(key)
+	
 end
 
+
+--mining
+function mine(key)
+	if key == "a" then
+		if player.playerx > 1 then
+			tiles[player.playerx-1][player.playery]["block"] = 0
+		end
+	elseif key == "d" then
+		if player.playerx < mapwidth then
+			tiles[player.playerx+1][player.playery]["block"] = 0
+		end
+	elseif key == "w" then
+		if player.playery > 1 then
+			tiles[player.playerx][player.playery-1]["block"] = 0
+		end
+	elseif key == "s" then
+		if player.playery < mapheight then
+			tiles[player.playerx][player.playery+1]["block"] = 0
+		end
+	end
+
+end
 
 function player.draw()
 	love.graphics.setFont(font)
