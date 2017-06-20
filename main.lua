@@ -1,6 +1,15 @@
+--use love math.random
+
+
+
+
 dofile("player.lua")
 dofile("map.lua")
 dofile("menu.lua")
+dofile("collision.lua")
+
+--the scale of the map
+scale = 12
 
 function love.draw()
 	maplib.draw()
@@ -18,6 +27,5 @@ end
 
 
 function love.update(dt)
-	player.test()
 	menu.animate()
 end

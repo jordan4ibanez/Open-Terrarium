@@ -62,4 +62,7 @@ function menu.draw()
 	love.graphics.setFont(fontmed)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("Score:"..tostring(math.random(0,20000000)), 400,110)
+	
+	--debug player's pos
+	love.graphics.print("PosX:"..player.playerx.." PosY:"..player.playery, 400,150)
 end

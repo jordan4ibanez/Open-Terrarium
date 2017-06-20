@@ -19,8 +19,10 @@ function maplib.createmap()
 			local randomtile = math.random(0,1)
 			if randomtile == 0 then
 				tiles[x][y]["tile"] = ""
+				tiles[x][y]["block"] = 0
 			elseif randomtile == 1 then
 				tiles[x][y]["tile"] = "*"
+				tiles[x][y]["block"] = 1
 			end
 		end
 	end
@@ -32,7 +34,7 @@ function maplib.draw()
 	love.graphics.setColor(255,255,255,255)
 	for x = 1,mapwidth do
 		for y = 1,mapheight do
-			love.graphics.print(tiles[x][y]["tile"], x*12, y*12)
+			love.graphics.print(tiles[x][y]["tile"], x*scale, y*scale)
 		end
 	end
 end
