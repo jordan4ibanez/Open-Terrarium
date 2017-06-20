@@ -28,6 +28,7 @@ function love.load()
 	minesound = love.audio.newSource("mine.ogg", "static")
 	placesound = love.audio.newSource("place.ogg", "static")
 	stepsound = love.audio.newSource("step.ogg", "static")
+	oof = love.audio.newSource("oof.ogg", "static")
 end
 
 function love.quit( )

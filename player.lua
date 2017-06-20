@@ -26,6 +26,7 @@ function love.keypressed( key, scancode, isrepeat )
 		jump()
 	end
 	
+	--footsteps
 	if collision(oldposx,oldposy) ~= true and (player.playery < mapheight and tiles[oldposx][oldposy+1]["block"] ~= 0) then
 		stepsound:setPitch(love.math.random(50,100)/100)
 		stepsound:stop()
