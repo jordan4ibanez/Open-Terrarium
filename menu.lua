@@ -92,7 +92,7 @@ function menu.cursor()
 	local x, y = love.mouse.getPosition( )
 	local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
 	--only change if in boundaries
-	if ((xx >= 1 and xx <= mapwidth) and (yy >= 1 and yy <= mapheight)) and (math.abs(xx-player.playerx) <=3 and math.abs(yy-player.playery)) then
+	if ((xx >= 1 and xx <= mapwidth) and (yy >= 1 and yy <= mapheight)) and (math.abs(xx-player.playerx) <=5 and math.abs(yy-player.playery) <=5) then
 		mx,my = xx,yy
 	else
 		mx,my = -1,-1
