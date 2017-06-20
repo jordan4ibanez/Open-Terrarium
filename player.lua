@@ -53,6 +53,7 @@ function mine(key)
 				minesound:stop()
 				minesound:play()
 				tiles[mx][my]["block"] = 0
+				player.mining = true
 			end
 		elseif right then
 			if tiles[mx][my]["block"] == 0 and (mx ~= player.playerx or my ~= player.playery) then
@@ -60,6 +61,7 @@ function mine(key)
 				placesound:stop()
 				placesound:play()
 				tiles[mx][my]["block"] = 1
+				player.mining = false
 			end
 		end
 	end
