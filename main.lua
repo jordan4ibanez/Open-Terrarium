@@ -26,7 +26,9 @@ function love.load()
 	
 	love.graphics.setFont(font)
 	
+	
 	minesound = love.audio.newSource("mine.ogg", "static")
+	placesound = love.audio.newSource("place.ogg", "static")
 end
 
 

@@ -2,6 +2,8 @@
 player = {}
 player.playerx,player.playery = 1,1
 
+player.mining = true
+
 --controls
 
 function love.keypressed( key, scancode, isrepeat )
@@ -21,6 +23,10 @@ function love.keypressed( key, scancode, isrepeat )
       player.playery = player.playery + 1
 	end
 	collision(oldposx,oldposy)
+	
+	if key == "space" then
+		player.mining = not player.mining
+	end
 	
 	mine(key)
 	
@@ -47,13 +53,26 @@ function mine(key)
 			y = 1
 		end
 	end
+	--cancel if nothing
+	if x == 0 and y == 0 then
+		return
+	end
 	
 	--play sound and remove tile
-	if tiles[player.playerx+x][player.playery+y]["block"] ~= 0 then
-		minesound:setPitch(love.math.random(50,100)/100)
-		minesound:stop()
-		minesound:play()
-		tiles[player.playerx+x][player.playery+y]["block"] = 0
+	if player.mining == true then
+		if tiles[player.playerx+x][player.playery+y]["block"] ~= 0 then
+			minesound:setPitch(love.math.random(50,100)/100)
+			minesound:stop()
+			minesound:play()
+			tiles[player.playerx+x][player.playery+y]["block"] = 0
+		end
+	elseif player.mining == false then
+		if tiles[player.playerx+x][player.playery+y]["block"] == 0 then
+			placesound:setPitch(love.math.random(50,100)/100)
+			placesound:stop()
+			placesound:play()
+			tiles[player.playerx+x][player.playery+y]["block"] = 1
+		end
 	end
 
 end

@@ -62,7 +62,22 @@ function menu.draw()
 	love.graphics.setFont(fontmed)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("Score:"..tostring(math.random(0,20000000)), 400,110)
+
 	
+	--debug mining
+	if player.mining == true then
+		love.graphics.setColor(255,0,0,255)
+		love.graphics.print("Mining", 400,180)
+		love.graphics.setColor(128,128,128,255)
+		love.graphics.print("Placing", 560,180)
+		
+	elseif player.mining == false then		
+		love.graphics.setColor(128,128,128,255)
+		love.graphics.print("Mining", 400,180)
+		love.graphics.setColor(255,0,0,255)
+		love.graphics.print("Placing", 560,180)love.graphics.print("PosX:"..player.playerx.." PosY:"..player.playery, 400,150)
+	end
 	--debug player's pos
+	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("PosX:"..player.playerx.." PosY:"..player.playery, 400,150)
 end
