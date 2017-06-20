@@ -86,6 +86,13 @@ function menu.draw()
 	--debug mouse's pos
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("MX:"..mx.." MY:"..my, 400,220)
+	--debug selected item
+	love.graphics.setColor(255,255,255,255)
+	if player.selected == 1 then
+		love.graphics.print("ITEM: #", 400,250)
+	elseif player.selected == 2 then
+		love.graphics.print("ITEM: /", 400,250)
+	end
 end
 
 function menu.cursor()

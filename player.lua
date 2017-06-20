@@ -1,9 +1,10 @@
 --the player library
 player = {}
-player.playerx,player.playery = 1,1
+player.playerx,player.playery = 1,38
 
 player.mining = true
 
+player.selected = 1
 --controls
 
 function love.keypressed( key, scancode, isrepeat )
@@ -27,17 +28,24 @@ function love.keypressed( key, scancode, isrepeat )
 	end
 	
 	--footsteps
-	if collision(oldposx,oldposy) ~= true and (player.playery < mapheight and tiles[oldposx][oldposy+1]["block"] ~= 0) then
+	if collision(oldposx,oldposy) ~= true and oldposy < mapheight and tiles[oldposx][oldposy+1]["block"] ~= 0 then
 		stepsound:setPitch(love.math.random(50,100)/100)
 		stepsound:stop()
 		stepsound:play()
 	end
+	
+	if key == "1" then
+		player.selected = 1
+	elseif key == "2" then
+		player.selected = 2
+	end
 		
+
 end
 
 --try to jump
 function jump()
-	if player.playery < mapheight and tiles[player.playerx][player.playery+1]["block"] ~= 0 then
+	if (player.playery < mapheight and tiles[player.playerx][player.playery+1]["block"] ~= 0) or player.playery == mapheight then
 		player.playery = player.playery - 1
 	end
 
@@ -64,7 +72,7 @@ function mine(key)
 				placesound:setPitch(love.math.random(50,100)/100)
 				placesound:stop()
 				placesound:play()
-				tiles[mx][my]["block"] = 1
+				tiles[mx][my]["block"] = player.selected
 				player.mining = false
 			end
 		end

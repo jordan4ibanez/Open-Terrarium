@@ -13,12 +13,7 @@ function maplib.createmap()
 		for y = 1,mapheight do
 			tiles[x][y] =  {}
 			
-			local randomtile = love.math.random(0,1)
-			if randomtile == 0 then
-				tiles[x][y]["block"] = 0
-			elseif randomtile == 1 then
-				tiles[x][y]["block"] = 1
-			end
+			tiles[x][y]["block"] = love.math.random(0,1)
 		end
 	end
 end
@@ -31,9 +26,11 @@ function maplib.draw()
 		for y = 1,mapheight do
 			local graphic
 			if tiles[x][y]["block"] == 0 then
-				graphic = ""
+				graphic = "" --air
 			elseif tiles[x][y]["block"] == 1 then
-				graphic = "#"
+				graphic = "#" --stone
+			elseif tiles[x][y]["block"] == 2 then
+				graphic = "/" --stairs
 			end
 			love.graphics.print(graphic, x*scale, y*scale)
 		end
