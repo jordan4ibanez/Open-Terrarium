@@ -1,6 +1,3 @@
-
-math.randomseed( os.time() )
-
 --the map library
 maplib = {}
 
@@ -16,7 +13,7 @@ function maplib.createmap()
 		for y = 1,mapheight do
 			tiles[x][y] =  {}
 			
-			local randomtile = math.random(0,1)
+			local randomtile = love.math.random(0,1)
 			if randomtile == 0 then
 				tiles[x][y]["block"] = 0
 			elseif randomtile == 1 then

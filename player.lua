@@ -7,6 +7,12 @@ player.mining = true
 --controls
 
 function love.keypressed( key, scancode, isrepeat )
+
+	--quit
+	if key == "escape" then
+		love.event.push('quit')
+	end
+
 	local oldposx,oldposy = player.playerx,player.playery
 	
 	if key == "left" then

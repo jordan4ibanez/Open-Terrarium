@@ -1,5 +1,3 @@
---use love math.random
-
 
 
 
@@ -31,6 +29,9 @@ function love.load()
 	placesound = love.audio.newSource("place.ogg", "static")
 end
 
+function love.quit()
+	return true
+end
 
 function love.update(dt)
 	menu.animate()

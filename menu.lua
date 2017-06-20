@@ -1,6 +1,7 @@
 --menu animation and info
 menu = {}
 
+mx,my = 1,1
 
 menutitle = {}
 menutitle.g = 50
@@ -50,7 +51,9 @@ function menu.animate()
 end
 
 function menu.draw()
-
+	
+	menu.cursor()
+	
 	love.graphics.setFont(fontbig)
 	love.graphics.setColor(255,0,0,255)
     love.graphics.print("D", 400, menutitle.g)
@@ -61,7 +64,7 @@ function menu.draw()
 	--score debug
 	love.graphics.setFont(fontmed)
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("Score:"..tostring(math.random(0,20000000)), 400,110)
+	love.graphics.print("Score:"..tostring(love.math.random(0,20000000)), 400,110)
 
 	
 	--debug mining
@@ -80,4 +83,21 @@ function menu.draw()
 	--debug player's pos
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("PosX:"..player.playerx.." PosY:"..player.playery, 400,150)
+	--debug mouse's pos
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.print("MX:"..mx.." MY:"..my, 400,220)
+end
+
+function menu.cursor()
+	local x, y = love.mouse.getPosition( )
+	local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
+	--only change if in boundaries
+	if (xx >= 1 and xx <= mapwidth) and (yy >= 1 and yy <= mapheight) then
+		mx = xx
+		my = yy
+	else
+		mx,my = 1,1
+	end
+	love.graphics.rectangle("line", (mx* scale), (my*scale)-3, scale, scale )
+
 end
