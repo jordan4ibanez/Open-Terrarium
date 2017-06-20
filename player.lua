@@ -21,7 +21,6 @@ function love.keypressed( key, scancode, isrepeat )
       player.playery = player.playery + 1
 	end
 	collision(oldposx,oldposy)
-	--player.playerx,player.playery = oldposx,oldposy
 end
 
 
