@@ -36,4 +36,5 @@ end
 
 function love.update(dt)
 	menu.animate()
+	mine(key)
 end

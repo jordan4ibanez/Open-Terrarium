@@ -15,17 +15,17 @@ function love.keypressed( key, scancode, isrepeat )
 
 	local oldposx,oldposy = player.playerx,player.playery
 	
-	if key == "left" then
+	if key == "a" then
       player.playerx = player.playerx - 1
 	end
-	if key == "right" then
+	if key == "d" then
       player.playerx = player.playerx + 1
 	end
 	
-	if key == "up" then
+	if key == "w" then
       player.playery = player.playery - 1
 	end
-	if key == "down" then
+	if key == "s" then
       player.playery = player.playery + 1
 	end
 	collision(oldposx,oldposy)
@@ -34,13 +34,37 @@ function love.keypressed( key, scancode, isrepeat )
 		player.mining = not player.mining
 	end
 	
-	mine(key)
+	
 	
 end
 
 
 --mining
 function mine(key)
+	--left mouse button (mine)
+	local left = love.mouse.isDown(1)
+	local right = love.mouse.isDown(2)
+
+	if mx ~= -1 and my ~= -1 then
+		--play sound and remove tile
+		if left then
+			if tiles[mx][my]["block"] ~= 0 then
+				minesound:setPitch(love.math.random(50,100)/100)
+				minesound:stop()
+				minesound:play()
+				tiles[mx][my]["block"] = 0
+			end
+		elseif right then
+			if tiles[mx][my]["block"] == 0 and (mx ~= player.playerx or my ~= player.playery) then
+				placesound:setPitch(love.math.random(50,100)/100)
+				placesound:stop()
+				placesound:play()
+				tiles[mx][my]["block"] = 1
+			end
+		end
+	end
+
+    --[[
 	local x,y = 0,0
 	if key == "a" then
 		if player.playerx > 1 then
@@ -64,23 +88,8 @@ function mine(key)
 		return
 	end
 	
-	--play sound and remove tile
-	if player.mining == true then
-		if tiles[player.playerx+x][player.playery+y]["block"] ~= 0 then
-			minesound:setPitch(love.math.random(50,100)/100)
-			minesound:stop()
-			minesound:play()
-			tiles[player.playerx+x][player.playery+y]["block"] = 0
-		end
-	elseif player.mining == false then
-		if tiles[player.playerx+x][player.playery+y]["block"] == 0 then
-			placesound:setPitch(love.math.random(50,100)/100)
-			placesound:stop()
-			placesound:play()
-			tiles[player.playerx+x][player.playery+y]["block"] = 1
-		end
-	end
 
+	]]--
 end
 
 function player.draw()

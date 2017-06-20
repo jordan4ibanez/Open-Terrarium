@@ -92,11 +92,10 @@ function menu.cursor()
 	local x, y = love.mouse.getPosition( )
 	local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
 	--only change if in boundaries
-	if (xx >= 1 and xx <= mapwidth) and (yy >= 1 and yy <= mapheight) then
-		mx = xx
-		my = yy
+	if ((xx >= 1 and xx <= mapwidth) and (yy >= 1 and yy <= mapheight)) and (math.abs(xx-player.playerx) <=3 and math.abs(yy-player.playery)) then
+		mx,my = xx,yy
 	else
-		mx,my = 1,1
+		mx,my = -1,-1
 	end
 	love.graphics.rectangle("line", (mx* scale), (my*scale)-3, scale, scale )
 
