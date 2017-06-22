@@ -93,6 +93,7 @@ function menu.draw()
 	elseif player.selected == 2 then
 		love.graphics.print("ITEM: /", 400,250)
 	end
+	love.graphics.print("Chunkx:"..chunkx.." Chunky:"..chunky, 400,280)
 end
 
 function menu.cursor()

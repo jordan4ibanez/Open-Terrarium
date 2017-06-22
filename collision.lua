@@ -21,7 +21,14 @@ end
 gravtimer = 0
 
 function gravity(dt)
-	if player.playery < mapheight and tiles[player.playerx][player.playery+1]["block"] == 0 then
+	--don't apply gravity if at bottom
+	if player.playery == mapheight then
+		player.playery = player.playery + 1
+		maplib.new_block()
+		return
+	end
+	
+	if tiles[player.playerx][player.playery+1]["block"] == 0 then
 		gravtimer = gravtimer + dt
 		if gravtimer >= 0.2 then
 			local oldposx,oldposy = player.playerx,player.playery

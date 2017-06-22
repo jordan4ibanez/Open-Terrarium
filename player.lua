@@ -1,6 +1,6 @@
 --the player library
 player = {}
-player.playerx,player.playery = 1,38
+player.playerx,player.playery = math.random(1,mapwidth),math.random(1,mapheight)
 
 player.mining = true
 
@@ -27,8 +27,10 @@ function love.keypressed( key, scancode, isrepeat )
 		jump()
 	end
 	
+	local collide = maplib.new_block()
+	
 	--footsteps
-	if collision(oldposx,oldposy) ~= true and oldposy < mapheight and tiles[oldposx][oldposy+1]["block"] ~= 0 then
+	if collide == true and collision(oldposx,oldposy) ~= true and oldposy < mapheight and tiles[oldposx][oldposy+1]["block"] ~= 0 then
 		stepsound:setPitch(love.math.random(50,100)/100)
 		stepsound:stop()
 		stepsound:play()

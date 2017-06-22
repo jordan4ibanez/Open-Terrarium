@@ -1,11 +1,13 @@
 --the directory
 dir = love.filesystem.getAppdataDirectory( )
 
-dofile("player.lua")
+math.randomseed(os.time())
+
 dofile("tserial.lua")
 dofile("map.lua")
 dofile("menu.lua")
 dofile("collision.lua")
+dofile("player.lua")
 
 --the scale of the map
 scale = 12
