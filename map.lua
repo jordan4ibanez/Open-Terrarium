@@ -2,18 +2,38 @@
 maplib = {}
 
 
-
 --create tiles
 mapheight = 48
 mapwidth  = 30
 tiles = {}
+
+--generates tile blocks
 function maplib.createmap()
+	
+	local dir = love.filesystem.getAppdataDirectory()
+	
+	love.filesystem.createDirectory(dir.."map")
+	
+	files = love.filesystem.getDirectoryItems( love.filesystem.getAppdataDirectory() )
+	
+	file = love.filesystem.newFile( "map.txt" )
+	
+	
+	
+	print(files["map"])
+	
+	
 	for x = 1,mapwidth do
 		tiles[x] = {}
 		for y = 1,mapheight do
+			local value = love.math.noise( x/mapwidth, y/mapheight )
 			tiles[x][y] =  {}
-			
-			tiles[x][y]["block"] = love.math.random(0,1)
+			if value > 0.5 then
+				tiles[x][y]["block"] = 1--love.math.random(0,1)
+			else
+				tiles[x][y]["block"] = 0
+			end
+				
 		end
 	end
 end
