@@ -9,33 +9,39 @@ tiles = {}
 
 --generates tile blocks
 function maplib.createmap()
-	
-	local dir = love.filesystem.getAppdataDirectory()
-	
-	love.filesystem.createDirectory(dir.."map")
-	
-	files = love.filesystem.getDirectoryItems( love.filesystem.getAppdataDirectory() )
-	
-	file = love.filesystem.newFile( "map.txt" )
-	
-	
-	
-	print(files["map"])
-	
-	
-	for x = 1,mapwidth do
-		tiles[x] = {}
-		for y = 1,mapheight do
-			local value = love.math.noise( x/mapwidth, y/mapheight )
-			tiles[x][y] =  {}
-			if value > 0.5 then
-				tiles[x][y]["block"] = 1--love.math.random(0,1)
-			else
-				tiles[x][y]["block"] = 0
+	local map_exists = love.filesystem.exists("map")
+
+	if not map_exists then
+		for x = 1,mapwidth do
+			tiles[x] = {}
+			for y = 1,mapheight do
+				local value = love.math.noise( x/mapwidth, y/mapheight )
+				tiles[x][y] =  {}
+				if value > 0.5 then
+					tiles[x][y]["block"] = 1--love.math.random(0,1)
+				else
+					tiles[x][y]["block"] = 0
+				end
+					
 			end
-				
 		end
+		
+		
+		
+		love.filesystem.createDirectory( "map" )
+	
+		love.filesystem.write( "/map/testmap.txt", TSerial.pack(tiles))
+	else
+		
+		tiles = TSerial.unpack(love.filesystem.read("/map/testmap.txt"))
 	end
+	
+	
+
+	
+	
+
+
 end
 
 --executed in love.draw to draw map

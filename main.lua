@@ -1,7 +1,8 @@
-
-
+--the directory
+dir = love.filesystem.getAppdataDirectory( )
 
 dofile("player.lua")
+dofile("tserial.lua")
 dofile("map.lua")
 dofile("menu.lua")
 dofile("collision.lua")
