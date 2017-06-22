@@ -7,7 +7,7 @@ chunkx,chunky = 0,0
 --create tiles
 mapheight = 48
 mapwidth  = 30
-tiles = {}
+
 
 --makes player move to next map section
 function maplib.new_block()
@@ -51,25 +51,27 @@ function maplib.createmap()
 	end
 	
 	local block_exists = love.filesystem.exists("/map/"..chunkx.."_"..chunky..".txt")
-
+	
+	
+	tiles = {}
 	if not block_exists then
 		for x = 1,mapwidth do
 			tiles[x] = {}
 			for y = 1,mapheight do
-				local value = love.math.noise( x/mapwidth, y/mapheight )
+				local value =  love.math.noise( chunkx*x*5, chunky*y*5 )
+				print(value)
 				tiles[x][y] =  {}
-				if value > 0.5 then
+				if value > 0.5  and value < 0.6 then
 					tiles[x][y]["block"] = 1--love.math.random(0,1)
+				elseif value >= 0.6 and value <= 0.8 then
+					tiles[x][y]["block"] = 2
+				
 				else
 					tiles[x][y]["block"] = 0
 				end
 					
 			end
 		end
-		
-		
-		
-		
 	
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 	else
