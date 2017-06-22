@@ -68,6 +68,7 @@ function mine(key)
 				minesound:play()
 				tiles[mx][my]["block"] = 0
 				player.mining = true
+				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 			end
 		elseif right then
 			if tiles[mx][my]["block"] == 0 and (mx ~= player.playerx or my ~= player.playery) then
@@ -76,6 +77,7 @@ function mine(key)
 				placesound:play()
 				tiles[mx][my]["block"] = player.selected
 				player.mining = false
+				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 			end
 		end
 	end

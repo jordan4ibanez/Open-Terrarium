@@ -58,13 +58,13 @@ function maplib.createmap()
 		for x = 1,mapwidth do
 			tiles[x] = {}
 			for y = 1,mapheight do
-				local value =  love.math.noise( chunkx*x*5, chunky*y*5 )
+				local value =  love.math.noise( chunkx*y*5, chunky*x*5 )
 				print(value)
 				tiles[x][y] =  {}
-				if value > 0.5  and value < 0.6 then
-					tiles[x][y]["block"] = 1--love.math.random(0,1)
-				elseif value >= 0.6 and value <= 0.8 then
-					tiles[x][y]["block"] = 2
+				if value > 0.45  and value < 0.6 then
+					tiles[x][y]["block"] = 2--love.math.random(0,1)
+				elseif value >= 0.1 and value <= 0.4 then
+					tiles[x][y]["block"] = 1
 				
 				else
 					tiles[x][y]["block"] = 0
@@ -73,6 +73,7 @@ function maplib.createmap()
 			end
 		end
 	
+		--save
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 	else
 		
