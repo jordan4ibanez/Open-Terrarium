@@ -33,7 +33,7 @@ function love.keypressed( key, scancode, isrepeat )
 	if key == "f5" then
 		chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
 		maplib.createmap()
-		print("generate random block")
+		--print("generate random block")
 	end
 	
 	--footsteps
@@ -75,7 +75,7 @@ function mine(key)
 	if mx ~= -1 and my ~= -1 then
 		--play sound and remove tile
 		if left then
-			if tiles[mx][my]["block"] ~= 0 then
+			if tiles[mx][my]["block"] ~= 1 then
 				minesound:setPitch(love.math.random(50,100)/100)
 				minesound:stop()
 				minesound:play()
@@ -84,7 +84,7 @@ function mine(key)
 				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 			end
 		elseif right then
-			if tiles[mx][my]["block"] == 0 and (mx ~= player.playerx or my ~= player.playery) then
+			if tiles[mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
 				placesound:setPitch(love.math.random(50,100)/100)
 				placesound:stop()
 				placesound:play()

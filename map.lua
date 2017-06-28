@@ -57,7 +57,6 @@ function maplib.generate_ore(tiles)
 			for w = -3,-1 do
 				for z = 1,3 do
 					--stay within map boundaries
-					print(w+x,y+z)
 					if x + w >= 1 and y + z <= mapheight then
 						tiles[x+w][y+z]["block"] = 3
 					end
@@ -68,6 +67,14 @@ function maplib.generate_ore(tiles)
 		
 		end
 	end
+
+end
+
+--generate air caves
+
+function maplib.generate_cave(tiles)
+
+	print("generate a cave (not yet coded)")
 
 end
 
@@ -97,6 +104,8 @@ function maplib.createmap()
 		end
 		
 		maplib.generate_ore(tiles)
+		
+		maplib.generate_cave(tiles)
 		
 		--save
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
