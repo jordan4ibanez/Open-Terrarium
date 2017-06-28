@@ -28,7 +28,7 @@ function gravity(dt)
 		return
 	end
 	
-	if tiles[player.playerx][player.playery+1]["block"] == 0 then
+	if tiles[player.playerx][player.playery+1]["block"] == 1 then
 		gravtimer = gravtimer + dt
 		if gravtimer >= 0.2 then
 			local oldposx,oldposy = player.playerx,player.playery
