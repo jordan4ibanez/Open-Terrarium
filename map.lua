@@ -9,7 +9,7 @@ mapheight = 48
 mapwidth  = 30
 
 ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
-ore_max = 3 -- the max
+ore_max = 5 -- the max
 
 --makes player move to next map section
 function maplib.new_block()
@@ -48,12 +48,22 @@ function maplib.generate_ore(tiles)
 
 	local limit = math.random(ore_min, ore_max)
 	
-	print(limit)
 	
 	if limit ~= 0 then
 		for limit = 1,limit do
 			local x,y = math.random(1,mapwidth),math.random(1,mapheight)
-			tiles[x][y]["block"] = 2
+			
+			--add this to the x,y
+			for w = -3,-1 do
+				for z = 1,3 do
+					--stay within map boundaries
+					print(w+x,y+z)
+					if x + w >= 1 and y + z <= mapheight then
+						tiles[x+w][y+z]["block"] = 1
+					end
+					
+				end
+			end
 		
 		
 		end
@@ -86,7 +96,7 @@ function maplib.createmap()
 			end
 		end
 		
-		--maplib.generate_ore(tiles)
+		maplib.generate_ore(tiles)
 		
 		--save
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
