@@ -2,12 +2,14 @@
 maplib = {}
 
 
-chunkx,chunky = 0,0
+chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
 
 --create tiles
 mapheight = 48
 mapwidth  = 30
 
+ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
+ore_max = 3 -- the max
 
 --makes player move to next map section
 function maplib.new_block()
@@ -41,6 +43,23 @@ function maplib.new_block()
 	return true
 end
 
+--generates ore
+function maplib.generate_ore(tiles)
+
+	local limit = math.random(ore_min, ore_max)
+	
+	print(limit)
+	
+	if limit ~= 0 then
+		for limit = 1,limit do
+			local x,y = math.random(1,mapwidth),math.random(1,mapheight)
+			tiles[x][y]["block"] = 2
+		
+		
+		end
+	end
+
+end
 
 
 --generates tile blocks
@@ -53,26 +72,22 @@ function maplib.createmap()
 	local block_exists = love.filesystem.exists("/map/"..chunkx.."_"..chunky..".txt")
 	
 	
+	local number = 0
+	local val = 0
 	tiles = {}
+	--generate map block
 	if not block_exists then
 		for x = 1,mapwidth do
 			tiles[x] = {}
 			for y = 1,mapheight do
-				local value =  love.math.noise( chunkx*y*5, chunky*x*5 )
-				print(value)
 				tiles[x][y] =  {}
-				if value > 0.45  and value < 0.6 then
-					tiles[x][y]["block"] = 2--love.math.random(0,1)
-				elseif value >= 0.1 and value <= 0.4 then
-					tiles[x][y]["block"] = 1
-				
-				else
-					tiles[x][y]["block"] = 0
-				end
-					
+				tiles[x][y]["block"] = 1
+							
 			end
 		end
-	
+		
+		maplib.generate_ore(tiles)
+		
 		--save
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 	else
@@ -98,6 +113,7 @@ function maplib.draw()
 			love.graphics.print(graphic, x*scale, y*scale)
 		end
 	end
+	
 end
 
 --[[ a test

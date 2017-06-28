@@ -29,11 +29,24 @@ function love.keypressed( key, scancode, isrepeat )
 	
 	local collide = maplib.new_block()
 	
+	--debug
+	if key == "f5" then
+		chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
+		maplib.createmap()
+		print("generate random block")
+	end
+	
 	--footsteps
+	
+	--fix every button causing sound
+	--fix every button causing sound
+	
+	if oldposx ~= player.playerx or oldposy ~= player.playery then
 	if collide == true and collision(oldposx,oldposy) ~= true and oldposy < mapheight and tiles[oldposx][oldposy+1]["block"] ~= 0 then
 		stepsound:setPitch(love.math.random(50,100)/100)
 		stepsound:stop()
 		stepsound:play()
+	end
 	end
 	
 	if key == "1" then
