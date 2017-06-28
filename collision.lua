@@ -4,9 +4,9 @@ function collision(oldposx,oldposy)
 	--stairs
 	if (player.playerx <= mapwidth and player.playerx > 1) and 
 		(player.playery < mapheight and player.playery > 1) and 
-		tiles[player.playerx][player.playery]["block"] == 2 then
+		tiles[player.playerx][player.playery]["block"] == 3 then
 		player.playery = player.playery - 1
-	elseif (player.playerx > mapwidth or player.playerx <= 0) or (player.playery > mapheight or player.playery <= 0) or tiles[player.playerx][player.playery]["block"] ~= 0 then
+	elseif (player.playerx > mapwidth or player.playerx <= 0) or (player.playery > mapheight or player.playery <= 0) or tiles[player.playerx][player.playery]["block"] ~= 1 then
 		player.playerx,player.playery = oldposx,oldposy
 		--can't move
 		oof:setPitch(love.math.random(65,100)/100)

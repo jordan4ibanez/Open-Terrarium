@@ -81,12 +81,12 @@ function maplib.createmap()
 			tiles[x] = {}
 			for y = 1,mapheight do
 				tiles[x][y] =  {}
-				tiles[x][y]["block"] = 1
+				tiles[x][y]["block"] = 2
 							
 			end
 		end
 		
-		maplib.generate_ore(tiles)
+		--maplib.generate_ore(tiles)
 		
 		--save
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
@@ -102,15 +102,7 @@ function maplib.draw()
 	love.graphics.setColor(255,255,255,255)
 	for x = 1,mapwidth do
 		for y = 1,mapheight do
-			local graphic
-			if tiles[x][y]["block"] == 0 then
-				graphic = "" --air
-			elseif tiles[x][y]["block"] == 1 then
-				graphic = "#" --stone
-			elseif tiles[x][y]["block"] == 2 then
-				graphic = "/" --stairs
-			end
-			love.graphics.print(graphic, x*scale, y*scale)
+			love.graphics.print(ore[tiles[x][y]["block"]]["image"], x*scale, y*scale)
 		end
 	end
 	

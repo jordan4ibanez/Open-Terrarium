@@ -79,7 +79,7 @@ function mine(key)
 				minesound:setPitch(love.math.random(50,100)/100)
 				minesound:stop()
 				minesound:play()
-				tiles[mx][my]["block"] = 0
+				tiles[mx][my]["block"] = 1
 				player.mining = true
 				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
 			end

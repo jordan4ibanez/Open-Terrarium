@@ -4,6 +4,7 @@ dir = love.filesystem.getAppdataDirectory( )
 math.randomseed(os.time())
 
 dofile("tserial.lua")
+dofile("ore.lua")
 dofile("map.lua")
 dofile("menu.lua")
 dofile("collision.lua")
