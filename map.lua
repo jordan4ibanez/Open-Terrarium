@@ -59,7 +59,7 @@ function maplib.generate_ore(tiles)
 					--stay within map boundaries
 					print(w+x,y+z)
 					if x + w >= 1 and y + z <= mapheight then
-						tiles[x+w][y+z]["block"] = 1
+						tiles[x+w][y+z]["block"] = 3
 					end
 					
 				end
@@ -109,9 +109,10 @@ end
 --executed in love.draw to draw map
 function maplib.draw()
 	love.graphics.setFont(font)
-	love.graphics.setColor(255,255,255,255)
+	
 	for x = 1,mapwidth do
 		for y = 1,mapheight do
+			love.graphics.setColor(ore[tiles[x][y]["block"]]["rgb"][1],ore[tiles[x][y]["block"]]["rgb"][2],ore[tiles[x][y]["block"]]["rgb"][3],255)
 			love.graphics.print(ore[tiles[x][y]["block"]]["image"], x*scale, y*scale)
 		end
 	end
