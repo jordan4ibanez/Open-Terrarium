@@ -8,8 +8,13 @@ chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
 mapheight = 48
 mapwidth  = 30
 
+--ore generation
 ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
 ore_max = 5 -- the max
+
+--cave generation
+cave_min = 3
+cave_max = 200
 
 --makes player move to next map section
 function maplib.new_block()
@@ -70,11 +75,30 @@ function maplib.generate_ore(tiles)
 
 end
 
---generate air caves
-
+--generates caves
 function maplib.generate_cave(tiles)
 
-	print("generate a cave (not yet coded)")
+	local limit = math.random(cave_min, cave_max)
+	
+	
+	if limit ~= 0 then
+		for limit = 1,limit do
+			local x,y = math.random(1,mapwidth),math.random(1,mapheight)
+			
+			--add this to the x,y
+			for w = -3,-1 do
+				for z = 1,3 do
+					--stay within map boundaries
+					if x + w >= 1 and y + z <= mapheight then
+						tiles[x+w][y+z]["block"] = 1
+					end
+					
+				end
+			end
+		
+		
+		end
+	end
 
 end
 
