@@ -13,8 +13,14 @@ ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
 ore_max = 5 -- the max
 
 --cave generation
-cave_min = 3
+cave_min = 150
 cave_max = 200
+
+--the chunk y which the rock starts
+underground = 0
+
+--the top of the dirt layer
+earth_max = 2
 
 --makes player move to next map section
 function maplib.new_block()
@@ -32,13 +38,13 @@ function maplib.new_block()
 		return false
 	
 	elseif player.playery < 1 then
-		chunky = chunky - 1
+		chunky = chunky + 1
 		maplib.createmap() -- create a new block
 		player.playery = mapheight -- put player on other side of screen
 		print(" block y -1")
 		return false
 	elseif player.playery > mapheight then
-		chunky = chunky + 1
+		chunky = chunky - 1
 		maplib.createmap() -- create a new block
 		player.playery = 1 -- put player on other side of screen
 		print("block y +1")
@@ -118,18 +124,60 @@ function maplib.createmap()
 	tiles = {}
 	--generate map block
 	if not block_exists then
-		for x = 1,mapwidth do
-			tiles[x] = {}
-			for y = 1,mapheight do
-				tiles[x][y] =  {}
-				tiles[x][y]["block"] = 2
-							
+		print(chunky)
+		--generate underground
+		if chunky <= underground then
+			for x = 1,mapwidth do
+				tiles[x] = {}
+				for y = 1,mapheight do
+					tiles[x][y] =  {}
+					tiles[x][y]["block"] = 2
+								
+				end
+			end
+			maplib.generate_ore(tiles)
+			
+			maplib.generate_cave(tiles)
+		--generate the grass top
+		elseif chunky == earth_max then
+			local yy = math.random(1,mapheight)
+			for x = 1,mapwidth do
+				tiles[x] = {}
+				yy =  yy + math.random(-1,1)
+				for y = 1,mapheight do
+					tiles[x][y] =  {}
+					--generate dirt as debug
+					if y == yy then
+						tiles[x][y]["block"] = 4
+					elseif y < yy then
+						tiles[x][y]["block"] = 1
+					else
+						tiles[x][y]["block"] = 3
+					end								
+				end
+			end
+		--generate dirt under grass
+		elseif chunky < earth_max and chunky > underground then
+			print("test")
+			for x = 1,mapwidth do
+				tiles[x] = {}
+				for y = 1,mapheight do
+					tiles[x][y] =  {}
+					tiles[x][y]["block"] = 3
+								
+				end
+			end
+		else
+			print("generate air")
+			for x = 1,mapwidth do
+				tiles[x] = {}
+				for y = 1,mapheight do
+					tiles[x][y] =  {}
+					tiles[x][y]["block"] = 1
+								
+				end
 			end
 		end
-		
-		maplib.generate_ore(tiles)
-		
-		maplib.generate_cave(tiles)
 		
 		--save
 		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
