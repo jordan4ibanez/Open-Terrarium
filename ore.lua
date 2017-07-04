@@ -9,4 +9,13 @@ ore = {
 		
 }
 
+--create water
+
+--lighting
+
+--fix collision
+
+--fix consistent maps
+
+
 --print(ore[1]["name"])

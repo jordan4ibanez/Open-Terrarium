@@ -5,8 +5,7 @@ maplib = {}
 chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
 
 --create tiles
-mapheight = 48
-mapwidth  = 30
+map_max = 25
 
 --ore generation
 ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
@@ -22,15 +21,18 @@ underground = 0
 --the top of the dirt layer
 earth_max = 2
 
+--max chunks loaded ( chunk x chunk )
+max_chunks = 3
+
 --makes player move to next map section
 function maplib.new_block()
 	if player.playerx < 1 then
 		chunkx = chunkx - 1
 		maplib.createmap() -- create a new block
-		player.playerx = mapwidth -- put player on other side of screen
+		player.playerx = map_max -- put player on other side of screen
 		print(" block x -1")
 		return false
-	elseif player.playerx > mapwidth then
+	elseif player.playerx > map_max then
 		chunkx = chunkx + 1
 		maplib.createmap() -- create a new block
 		player.playerx = 1 -- put player on other side of screen
@@ -40,10 +42,10 @@ function maplib.new_block()
 	elseif player.playery < 1 then
 		chunky = chunky + 1
 		maplib.createmap() -- create a new block
-		player.playery = mapheight -- put player on other side of screen
+		player.playery = map_max -- put player on other side of screen
 		print(" block y -1")
 		return false
-	elseif player.playery > mapheight then
+	elseif player.playery > map_max then
 		chunky = chunky - 1
 		maplib.createmap() -- create a new block
 		player.playery = 1 -- put player on other side of screen
@@ -62,13 +64,13 @@ function maplib.generate_ore(tiles)
 	
 	if limit ~= 0 then
 		for limit = 1,limit do
-			local x,y = math.random(1,mapwidth),math.random(1,mapheight)
+			local x,y = math.random(1,map_max),math.random(1,map_max)
 			
 			--add this to the x,y
 			for w = -3,-1 do
 				for z = 1,3 do
 					--stay within map boundaries
-					if x + w >= 1 and y + z <= mapheight then
+					if x + w >= 1 and y + z <= map_max then
 						tiles[x+w][y+z]["block"] = 3
 					end
 					
@@ -89,13 +91,13 @@ function maplib.generate_cave(tiles)
 	
 	if limit ~= 0 then
 		for limit = 1,limit do
-			local x,y = math.random(1,mapwidth),math.random(1,mapheight)
+			local x,y = math.random(1,map_max),math.random(1,map_max)
 			
 			--add this to the x,y
 			for w = -3,-1 do
 				for z = 1,3 do
 					--stay within map boundaries
-					if x + w >= 1 and y + z <= mapheight then
+					if x + w >= 1 and y + z <= map_max then
 						tiles[x+w][y+z]["block"] = 1
 					end
 					
@@ -127,9 +129,9 @@ function maplib.createmap()
 		print(chunky)
 		--generate underground
 		if chunky <= underground then
-			for x = 1,mapwidth do
+			for x = 1,map_max do
 				tiles[x] = {}
-				for y = 1,mapheight do
+				for y = 1,map_max do
 					tiles[x][y] =  {}
 					tiles[x][y]["block"] = 2
 								
@@ -140,11 +142,11 @@ function maplib.createmap()
 			maplib.generate_cave(tiles)
 		--generate the grass top
 		elseif chunky == earth_max then
-			local yy = math.random(1,mapheight)
-			for x = 1,mapwidth do
+			local yy = math.random(1,map_max)
+			for x = 1,map_max do
 				tiles[x] = {}
 				yy =  yy + math.random(-1,1)
-				for y = 1,mapheight do
+				for y = 1,map_max do
 					tiles[x][y] =  {}
 					--generate dirt as debug
 					if y == yy then
@@ -159,9 +161,9 @@ function maplib.createmap()
 		--generate dirt under grass
 		elseif chunky < earth_max and chunky > underground then
 			print("test")
-			for x = 1,mapwidth do
+			for x = 1, map_max do
 				tiles[x] = {}
-				for y = 1,mapheight do
+				for y = 1,map_max do
 					tiles[x][y] =  {}
 					tiles[x][y]["block"] = 3
 								
@@ -169,9 +171,9 @@ function maplib.createmap()
 			end
 		else
 			print("generate air")
-			for x = 1,mapwidth do
+			for x = 1,map_max do
 				tiles[x] = {}
-				for y = 1,mapheight do
+				for y = 1,map_max do
 					tiles[x][y] =  {}
 					tiles[x][y]["block"] = 1
 								
@@ -191,10 +193,13 @@ end
 function maplib.draw()
 	love.graphics.setFont(font)
 	
-	for x = 1,mapwidth do
-		for y = 1,mapheight do
+	for x = 1,map_max do
+		for y = 1,map_max do
 			love.graphics.setColor(ore[tiles[x][y]["block"]]["rgb"][1],ore[tiles[x][y]["block"]]["rgb"][2],ore[tiles[x][y]["block"]]["rgb"][3],255)
 			love.graphics.print(ore[tiles[x][y]["block"]]["image"], x*scale, y*scale)
+			if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
+				love.graphics.print("X", x*scale, y*scale)
+			end
 		end
 	end
 	
