@@ -99,13 +99,24 @@ end
 
 function menu.cursor()
 	local x, y = love.mouse.getPosition( )
-	local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
-	--only change if in boundaries
-	if ((xx >= 1 and xx <= map_max) and (yy >= 1 and yy <= map_max)) and (math.abs(xx-player.playerx) <=5 and math.abs(yy-player.playery) <=5) then
-		mx,my = xx,yy
+	
+	
+	love.graphics.circle( "fill", player_drawnx, player_drawny, 4 )
+	
+	--local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
+	local xx,yy = math.floor((x-player_drawnx)/scale)*scale,math.floor((y-player_drawny)/scale)*scale
+
+
+	mx,my = player.playerx + (xx/scale),player.playery + (yy/scale)
+	
+	
+	--only change and draw if in boundaries
+	if ((mx >= 1 and mx <= map_max) and (my >= 1 and my <= map_max)) and (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
+		love.graphics.rectangle("line", player_drawnx+xx, player_drawny+yy-3, scale, scale )
 	else
 		mx,my = -1,-1
 	end
-	love.graphics.rectangle("line", (mx* scale), (my*scale)-3, scale, scale )
+	
+	
 
 end

@@ -117,9 +117,11 @@ function mine(key)
 	end
 end
 
+player_drawnx,player_drawny = 0,0
+
 function player.draw()
 	love.graphics.setFont(font)
 	love.graphics.setColor(255,0,0,255)
-    love.graphics.print("8", ((player.playerx*scale)-(player.playerx*scale))+((scale*map_max)/2), ((player.playery*scale)-(player.playery*scale))+((scale*map_max)/2))
-    print( (map_max/2)*scale, (map_max/2)*scale)
+	player_drawnx,player_drawny = ((scale*map_max)/2),((scale*map_max)/2)
+    love.graphics.print("8", player_drawnx,player_drawny  )
 end
