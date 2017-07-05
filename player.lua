@@ -78,7 +78,7 @@ end
 
 --try to jump
 function jump()
-	if (player.playery < map_max and tiles[player.playerx][player.playery+1]["block"] ~= 0) or player.playery == mapheight then
+	if (player.playery < map_max and loaded_chunks[0][0][player.playerx][player.playery+1]["block"] ~= 1) or player.playery == mapheight then
 		player.playery = player.playery - 1
 	end
 

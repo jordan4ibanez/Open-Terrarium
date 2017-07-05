@@ -2,11 +2,11 @@
 
 function collision(oldposx,oldposy)
 	--stairs
-	if (player.playerx <= map_max and player.playerx > 1) and 
-		(player.playery < map_max and player.playery > 1) and 
-		loaded_chunks[0][0][player.playerx][player.playery]["block"] == 3 then
-		player.playery = player.playery - 1
-	elseif (player.playerx > map_max or player.playerx <= 0) or (player.playery > map_max or player.playery <= 0) or loaded_chunks[0][0][player.playerx][player.playery]["block"] ~= 1 then
+	--if (player.playerx <= map_max and player.playerx > 1) and 
+	--	(player.playery < map_max and player.playery > 1) and 
+	--	loaded_chunks[0][0][player.playerx][player.playery]["block"] == 3 then
+	--	player.playery = player.playery - 1
+	if (player.playerx > map_max or player.playerx <= 0) or (player.playery > map_max or player.playery <= 0) or loaded_chunks[0][0][player.playerx][player.playery]["block"] ~= 1 then
 		player.playerx,player.playery = oldposx,oldposy
 		--can't move
 		oof:setPitch(love.math.random(65,100)/100)
