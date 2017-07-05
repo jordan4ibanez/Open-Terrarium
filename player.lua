@@ -120,6 +120,6 @@ end
 function player.draw()
 	love.graphics.setFont(font)
 	love.graphics.setColor(255,0,0,255)
-    love.graphics.print("8", math.floor((map_max/2)*scale), math.floor((map_max/2)*scale))
+    love.graphics.print("8", ((player.playerx*scale)-(player.playerx*scale))+((scale*map_max)/2), ((player.playery*scale)-(player.playery*scale))+((scale*map_max)/2))
     print( (map_max/2)*scale, (map_max/2)*scale)
 end

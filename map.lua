@@ -190,13 +190,28 @@ function maplib.createmap()
 end
 
 --executed in love.draw to draw map
+
+--function maplib.draw()
+--	love.graphics.setFont(font)
+--	
+--	for x = 1,map_max do
+--		for y = 1,map_max do
+--			love.graphics.setColor(ore[tiles[x][y]["block"]]["rgb"][1],ore[tiles[x][y]["block"]]["rgb"][2],ore[tiles[x][y]["block"]]["rgb"][3],255)
+--			love.graphics.print(ore[tiles[x][y]["block"]]["image"], x*scale, y*scale)
+--			if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
+--				love.graphics.print("X", x*scale, y*scale)
+--			end
+--		end
+--	end
+--	
+--end
 function maplib.draw()
 	love.graphics.setFont(font)
 	
 	for x = 1,map_max do
 		for y = 1,map_max do
 			love.graphics.setColor(ore[tiles[x][y]["block"]]["rgb"][1],ore[tiles[x][y]["block"]]["rgb"][2],ore[tiles[x][y]["block"]]["rgb"][3],255)
-			love.graphics.print(ore[tiles[x][y]["block"]]["image"], x*scale, y*scale)
+			love.graphics.print(ore[tiles[x][y]["block"]]["image"], ((x*scale)-(player.playerx*scale))+((scale*map_max)/2), ((y*scale)-(player.playery*scale))+((scale*map_max)/2))
 			if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
 				love.graphics.print("X", x*scale, y*scale)
 			end
