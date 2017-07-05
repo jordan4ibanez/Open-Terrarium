@@ -33,7 +33,7 @@ function love.keypressed( key, scancode, isrepeat )
 	
 	--debug
 	if key == "f5" then
-		chunkx,chunky = math.random(-1000,1000),math.random(-1,2)
+		chunkx,chunky = math.random(-1000,1000),math.random(0,3)
 		maplib.createmap()
 		--print("generate random block")
 		
@@ -49,7 +49,7 @@ function love.keypressed( key, scancode, isrepeat )
         end
         
 		print("generating new map")
-		chunkx,chunky = math.random(-1000,1000),math.random(-1,2)
+		chunkx,chunky = math.random(-1000,1000),math.random(0,3)
 		maplib.createmap()
 	end
 	
@@ -68,9 +68,9 @@ function love.keypressed( key, scancode, isrepeat )
 	end
 	
 	if key == "1" then
-		player.selected = 1
-	elseif key == "2" then
 		player.selected = 2
+	elseif key == "2" then
+		player.selected = 3
 	end
 		
 
@@ -93,24 +93,24 @@ function mine(key)
 	if mx ~= -1 and my ~= -1 then
 		--play sound and remove tile
 		if left then
-			if tiles[mx][my]["block"] ~= 1 then
+			if loaded_chunks[0][0][mx][my]["block"] ~= 1 then
 				minesound:setPitch(love.math.random(50,100)/100)
 				minesound:stop()
 				minesound:play()
-				tiles[mx][my]["block"] = 1
+				loaded_chunks[0][0][mx][my]["block"] = 1
 				player.mining = true
-				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
+				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(loaded_chunks[0][0]))
 				
 				score = score + 1
 			end
 		elseif right then
-			if tiles[mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
+			if loaded_chunks[0][0][mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
 				placesound:setPitch(love.math.random(50,100)/100)
 				placesound:stop()
 				placesound:play()
-				tiles[mx][my]["block"] = player.selected
+				loaded_chunks[0][0][mx][my]["block"] = player.selected
 				player.mining = false
-				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
+				love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(loaded_chunks[0][0]))
 					score = score + 1
 			end
 		end

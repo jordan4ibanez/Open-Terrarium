@@ -4,8 +4,8 @@ maplib = {}
 
 chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
 
---create tiles
-map_max = 25
+--tile size
+map_max = 35
 
 --ore generation
 ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
@@ -103,90 +103,121 @@ function maplib.generate_cave(tiles)
 					
 				end
 			end
-		
-		
 		end
 	end
 
 end
 
 
+--[[
+when walking around seemlessly generate chunks
+
+unload chunks that are not visible <-
+or
+keep all chunks loaded, just do not render them off screen
+
+create a x * x table, set max loaded chunks (x)
+
+render, and modify everything to work correctly with all loaded chunks
+
+]]--
+
+max_chunks = 1 --x * x chunks loaded --does -1 - 1 (-x to x) -- (x * 2) + 1 to get max chunks in memory
+
+
+
 --generates tile blocks
 function maplib.createmap()
+
+	loaded_chunks = {} --chunks in mememory
 	
-	if not love.filesystem.exists("map") then
-		love.filesystem.createDirectory( "map" )
-	end
-	
-	local block_exists = love.filesystem.exists("/map/"..chunkx.."_"..chunky..".txt")
-	
-	
-	local number = 0
-	local val = 0
-	tiles = {}
-	--generate map block
-	if not block_exists then
-		print(chunky)
-		--generate underground
-		if chunky <= underground then
-			for x = 1,map_max do
-				tiles[x] = {}
-				for y = 1,map_max do
-					tiles[x][y] =  {}
-					tiles[x][y]["block"] = 2
-								
-				end
-			end
-			maplib.generate_ore(tiles)
+	for xx  = -max_chunks,max_chunks do
+		loaded_chunks[xx] = {}
+		for yy  = -max_chunks,max_chunks do 
+		
 			
-			maplib.generate_cave(tiles)
-		--generate the grass top
-		elseif chunky == earth_max then
-			local yy = math.random(1,map_max)
-			for x = 1,map_max do
-				tiles[x] = {}
-				yy =  yy + math.random(-1,1)
-				for y = 1,map_max do
-					tiles[x][y] =  {}
-					--generate dirt as debug
-					if y == yy then
-						tiles[x][y]["block"] = 4
-					elseif y < yy then
-						tiles[x][y]["block"] = 1
-					else
-						tiles[x][y]["block"] = 3
-					end								
-				end
+			if not love.filesystem.exists("map") then
+				love.filesystem.createDirectory( "map" )
 			end
-		--generate dirt under grass
-		elseif chunky < earth_max and chunky > underground then
-			print("test")
-			for x = 1, map_max do
-				tiles[x] = {}
-				for y = 1,map_max do
-					tiles[x][y] =  {}
-					tiles[x][y]["block"] = 3
-								
+			
+			local block_exists = love.filesystem.exists("/map/"..chunkx+xx.."_"..chunky+yy..".txt")
+			
+			
+			local number = 0
+			local val = 0
+			tiles = {}
+			--generate map block
+			if not block_exists then
+				--print(chunky)
+				--generate underground
+				if chunky+yy <= underground then
+					for x = 1,map_max do
+						tiles[x] = {}
+						for y = 1,map_max do
+							tiles[x][y] =  {}
+							tiles[x][y]["block"] = 2
+										
+						end
+					end
+					maplib.generate_ore(tiles)
+					
+					maplib.generate_cave(tiles)
+				--generate the grass top
+				elseif chunky+yy == earth_max then
+					local yer = math.random(1,map_max)
+					for x = 1,map_max do
+						tiles[x] = {}
+						yer =  yer + math.random(-1,1)
+						for y = 1,map_max do
+							tiles[x][y] =  {}
+							--generate dirt as debug
+							if y == yer then
+								tiles[x][y]["block"] = 4
+							elseif y < yer then
+								tiles[x][y]["block"] = 1
+							else
+								tiles[x][y]["block"] = 3
+							end								
+						end
+					end
+				--generate dirt under grass
+				elseif chunky+yy < earth_max and chunky+yy > underground then
+					--print("test")
+					for x = 1, map_max do
+						tiles[x] = {}
+						for y = 1,map_max do
+							tiles[x][y] =  {}
+							tiles[x][y]["block"] = 3
+										
+						end
+					end
+				else
+					--print("generate air")
+					for x = 1,map_max do
+						tiles[x] = {}
+						for y = 1,map_max do
+							tiles[x][y] =  {}
+							tiles[x][y]["block"] = 1
+										
+						end
+					end
 				end
-			end
-		else
-			print("generate air")
-			for x = 1,map_max do
-				tiles[x] = {}
-				for y = 1,map_max do
-					tiles[x][y] =  {}
-					tiles[x][y]["block"] = 1
-								
-				end
+				
+				--save
+				love.filesystem.write( "/map/"..chunkx+xx.."_"..chunky+yy..".txt", TSerial.pack(tiles))
+				loaded_chunks[xx][yy] = tiles
+			else
+				
+				tiles = TSerial.unpack(love.filesystem.read("/map/"..chunkx+xx.."_"..chunky+yy..".txt"))
+				loaded_chunks[xx][yy] = tiles
 			end
 		end
-		
-		--save
-		love.filesystem.write( "/map/"..chunkx.."_"..chunky..".txt", TSerial.pack(tiles))
-	else
-		
-		tiles = TSerial.unpack(love.filesystem.read("/map/"..chunkx.."_"..chunky..".txt"))
 	end
+	--for xx  = -max_chunks,max_chunks do
+	--	for yy  = -max_chunks,max_chunks do 
+	--		print(loaded_chunks[xx][yy])
+	--	end
+	--end
 end
 
 --executed in love.draw to draw map
@@ -207,17 +238,21 @@ end
 --end
 function maplib.draw()
 	love.graphics.setFont(font)
-	
-	for x = 1,map_max do
-		for y = 1,map_max do
-			love.graphics.setColor(ore[tiles[x][y]["block"]]["rgb"][1],ore[tiles[x][y]["block"]]["rgb"][2],ore[tiles[x][y]["block"]]["rgb"][3],255)
-			love.graphics.print(ore[tiles[x][y]["block"]]["image"], ((x*scale)-(player.playerx*scale))+((scale*map_max)/2), ((y*scale)-(player.playery*scale))+((scale*map_max)/2))
-			if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
-				love.graphics.print("X", x*scale, y*scale)
+	for xx  = -max_chunks,max_chunks do
+		for yy  = -max_chunks,max_chunks do
+			for x = 1,map_max do
+				for y = 1,map_max do
+					love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
+					
+					
+					love.graphics.print(ore[loaded_chunks[xx][-yy][x][y]["block"]]["image"], (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx), (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy))
+					--if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
+					--	love.graphics.print("X", x*scale, y*scale)
+					--end
+				end
 			end
 		end
 	end
-	
 end
 
 --[[ a test

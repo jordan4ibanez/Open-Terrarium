@@ -101,7 +101,7 @@ function menu.cursor()
 	local x, y = love.mouse.getPosition( )
 	
 	
-	love.graphics.circle( "fill", player_drawnx, player_drawny, 4 )
+	--love.graphics.circle( "fill", player_drawnx, player_drawny, 4 )
 	
 	--local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
 	local xx,yy = math.floor((x-player_drawnx)/scale)*scale,math.floor((y-player_drawny)/scale)*scale
