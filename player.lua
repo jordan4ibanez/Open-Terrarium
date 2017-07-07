@@ -31,7 +31,7 @@ function love.keypressed( key, scancode, isrepeat )
 		jump()
 	end
 	
-	local collide = maplib.new_block()
+	local collide = maplib.new_block(oldposx,oldposy)
 	
 	--debug
 	if key == "f5" then

@@ -11,7 +11,7 @@ dofile("collision.lua")
 dofile("player.lua")
 
 --the scale of the map
-scale = 12
+scale = 16
 
 function love.draw()
 	maplib.draw()
@@ -33,6 +33,14 @@ function love.load()
 	placesound = love.audio.newSource("place.ogg", "static")
 	stepsound = love.audio.newSource("step.ogg", "static")
 	oof = love.audio.newSource("oof.ogg", "static")
+	
+	texture_table = {}
+	local i = 1
+	for key,value in pairs(ore) do
+		texture_table[i] = love.graphics.newImage("textures/"..value.image)
+		i = i + 1
+	end
+	
 end
 
 function love.quit( )

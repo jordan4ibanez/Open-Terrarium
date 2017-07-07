@@ -25,32 +25,48 @@ earth_max = 2
 max_chunks = 3
 
 --makes player move to next map section
-function maplib.new_block()
+function maplib.new_block(oldposx,oldposy)
 	if player.playerx < 1 then
-		chunkx = chunkx - 1
-		maplib.createmap() -- create a new block
-		player.playerx = map_max -- put player on other side of screen
-		print(" block x -1")
-		return false
+		if loaded_chunks[-1][0][map_max][player.playery]["block"] == 1 then
+			chunkx = chunkx - 1
+			maplib.createmap() -- create a new block
+			player.playerx = map_max -- put player on other side of screen		
+			print(" block x -1")
+			return false
+		else
+			print("something blocking -1 x")
+		end
 	elseif player.playerx > map_max then
-		chunkx = chunkx + 1
-		maplib.createmap() -- create a new block
-		player.playerx = 1 -- put player on other side of screen
-		print("block x +1")
-		return false
+		if loaded_chunks[1][0][1][player.playery]["block"] == 1 then
+			chunkx = chunkx + 1
+			maplib.createmap() -- create a new block
+			player.playerx = 1 -- put player on other side of screen
+			print("block x +1")
+			return false
+		else
+			print("something blocking 1 x")
+		end
 	
 	elseif player.playery < 1 then
-		chunky = chunky + 1
-		maplib.createmap() -- create a new block
-		player.playery = map_max -- put player on other side of screen
-		print(" block y -1")
-		return false
+		if loaded_chunks[0][1][player.playerx][map_max]["block"] == 1 then
+			chunky = chunky + 1
+			maplib.createmap() -- create a new block
+			player.playery = map_max -- put player on other side of screen
+			print(" block y -1")
+			return false
+		else
+			print("something blocking 1 y")
+		end
 	elseif player.playery > map_max then
-		chunky = chunky - 1
-		maplib.createmap() -- create a new block
-		player.playery = 1 -- put player on other side of screen
-		print("block y +1")
-		return false
+		if loaded_chunks[0][-1][player.playerx][1]["block"] == 1 then
+			chunky = chunky - 1
+			maplib.createmap() -- create a new block
+			player.playery = 1 -- put player on other side of screen
+			print("block y +1")
+			return false
+		else
+			print("something blocking -1 y")
+		end
 	end
 	
 	return true
@@ -242,10 +258,10 @@ function maplib.draw()
 		for yy  = -max_chunks,max_chunks do
 			for x = 1,map_max do
 				for y = 1,map_max do
-					love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
-					
-					
-					love.graphics.print(ore[loaded_chunks[xx][-yy][x][y]["block"]]["image"], (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety)
+					--love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
+					--print(loaded_chunks[xx][-yy][x][y]["block"])
+					love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4)
+					--love.graphics.print(,, )
 					--if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
 					--	love.graphics.print("X", x*scale, y*scale)
 					--end

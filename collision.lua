@@ -12,7 +12,7 @@ function collision(oldposx,oldposy)
 		oof:setPitch(love.math.random(65,100)/100)
 		oof:stop()
 		oof:play()
-		print("return true")
+		--print("return true")
 		return(true)
 	end
 	
@@ -41,9 +41,8 @@ function gravity(dt)
 			gravtimer = 0
 		end
 	elseif player.playery == map_max and loaded_chunks[0][-1][player.playerx][1]["block"] == 1 then
-		print("applying new chunk gravity")
+		--print("applying new chunk gravity")
 		if gravtimer >= 0.2 then
-			print("moo")
 			player.playery = player.playery + 1
 			maplib.new_block()
 		end
