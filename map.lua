@@ -271,6 +271,67 @@ function maplib.draw()
 	end
 end
 
+flowtimer = 0
+
+--make liquids flow
+function maplib.liquid_flow(dt)
+	flowtimer = flowtimer + dt
+	
+	local after_table = {}
+	if flowtimer > 1 then
+		flowtimer = 0
+		for xx  = -max_chunks,max_chunks do
+			after_table[xx] = {}
+			for yy  = -max_chunks,max_chunks do
+				after_table[xx][yy] = {}
+				for x = 1,map_max do
+					after_table[xx][yy][x] = {}
+					for y = 1,map_max do
+						after_table[xx][yy][x][y] = {}
+						local block = loaded_chunks[xx][-yy][x][y]["block"]
+						--downward flow
+						if ore[block]["prop"] == "liquid"  and y + 1 <= map_max and loaded_chunks[xx][-yy][x][y+1]["block"] == 1  then
+							after_table[xx][yy][x][y]["block"] = block
+							after_table[xx][yy][x][y]["down"] = "down"
+						end
+						--rightward flow
+						if ore[block]["prop"] == "liquid"  and x + 1 <= map_max and loaded_chunks[xx][-yy][x+1][y]["block"] == 1  then
+							after_table[xx][yy][x][y]["block"] = block
+							after_table[xx][yy][x][y]["right"] = "right"
+						end
+						--leftward flow
+						if ore[block]["prop"] == "liquid"  and x - 1 >= 1 and loaded_chunks[xx][-yy][x-1][y]["block"] == 1  then
+							after_table[xx][yy][x][y]["block"] = block
+							after_table[xx][yy][x][y]["left"] = "left"
+						end
+						--love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4,0, scale/16, scale/16)
+					end
+				end
+			end
+		end
+	end
+	--a hack to delay water flow
+	for keyxx,valuexx in pairs(after_table) do
+		for keyyy,valueyy in pairs(valuexx) do
+			for keyx, valuex in pairs(valueyy) do
+				for keyy,valuey in pairs(valuex) do
+					if valuey["block"] ~= nil then
+						--don't elseif, or will bug out
+						if valuey["down"] == "down" then
+							loaded_chunks[keyxx][-keyyy][keyx][keyy+1]["block"] = valuey["block"]
+						end
+						if valuey["right"] == "right" then
+							loaded_chunks[keyxx][-keyyy][keyx+1][keyy]["block"] = valuey["block"]
+						end
+						if valuey["left"] == "left" then
+							loaded_chunks[keyxx][-keyyy][keyx-1][keyy]["block"] = valuey["block"]
+						end
+					end
+				end
+			end
+		end
+	end
+end
 --[[ a test
 for x = 1,10 do
 	local line = ""

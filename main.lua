@@ -57,7 +57,7 @@ function love.update(dt)
 	mine(key)
 	gravity(dt)
 	player.move_camera(dt)
-	
+	maplib.liquid_flow(dt)
 	--debug
 	if love.keyboard.isDown("space") then
 		print("clear")
