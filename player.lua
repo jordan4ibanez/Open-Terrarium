@@ -2,6 +2,8 @@
 player = {}
 player.playerx,player.playery = math.random(1,map_max),math.random(1,map_max)
 
+offsetx,offsety = 0,0
+
 player.mining = true
 
 player.selected = 2
@@ -117,11 +119,31 @@ function mine(key)
 	end
 end
 
+function player.move_camera(dt)
+
+	--x axis
+	if love.keyboard.isDown("left") then
+        offsetx = offsetx + 3
+    elseif love.keyboard.isDown("right") then
+		offsetx = offsetx - 3
+    end
+    
+    --y axis
+   	if love.keyboard.isDown("up") then
+        offsety = offsety + 3
+    elseif love.keyboard.isDown("down") then
+		offsety = offsety - 3
+    end
+
+end
+
+
+
 player_drawnx,player_drawny = 0,0
 
 function player.draw()
 	love.graphics.setFont(font)
 	love.graphics.setColor(255,0,0,255)
-	player_drawnx,player_drawny = ((scale*map_max)/2),((scale*map_max)/2)
+	player_drawnx,player_drawny = ((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
     love.graphics.print("8", player_drawnx,player_drawny  )
 end

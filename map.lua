@@ -245,7 +245,7 @@ function maplib.draw()
 					love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
 					
 					
-					love.graphics.print(ore[loaded_chunks[xx][-yy][x][y]["block"]]["image"], (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx), (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy))
+					love.graphics.print(ore[loaded_chunks[xx][-yy][x][y]["block"]]["image"], (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety)
 					--if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
 					--	love.graphics.print("X", x*scale, y*scale)
 					--end
