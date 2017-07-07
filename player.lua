@@ -74,6 +74,12 @@ function love.keypressed( key, scancode, isrepeat )
 	elseif key == "2" then
 		player.selected = 3
 	end
+	
+	if key == "=" then
+		scale = scale + 1
+	elseif key == "-" then
+		scale = scale - 1
+	end
 		
 
 end
