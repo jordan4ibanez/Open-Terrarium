@@ -278,7 +278,7 @@ function maplib.liquid_flow(dt)
 	flowtimer = flowtimer + dt
 	
 	local after_table = {}
-	if flowtimer > 1 then
+	if flowtimer > 0.5 then
 		flowtimer = 0
 		for xx  = -max_chunks,max_chunks do
 			after_table[xx] = {}
