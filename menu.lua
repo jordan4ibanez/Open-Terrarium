@@ -90,11 +90,8 @@ function menu.draw()
 	love.graphics.print("MX:"..mx.." MY:"..my, 400,220)
 	--debug selected item
 	love.graphics.setColor(255,255,255,255)
-	if player.selected == 1 then
-		love.graphics.print("ITEM: #", 400,250)
-	elseif player.selected == 2 then
-		love.graphics.print("ITEM: /", 400,250)
-	end
+	love.graphics.print("ITEM:", 400,250) love.graphics.draw(texture_table[player.selected],515,242,0,1.75,1.75)
+	
 	love.graphics.print("Chunkx:"..chunkx, 400,280)
 	love.graphics.print("Chunky:"..chunky, 400,320)
 end

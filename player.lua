@@ -69,10 +69,10 @@ function love.keypressed( key, scancode, isrepeat )
 	end
 	end
 	
-	if key == "1" then
-		player.selected = 2
-	elseif key == "2" then
-		player.selected = 3
+	--trick to get input as inventory change
+	--greater than 1 to not select air
+	if tonumber(key) and tonumber(key) > 1 and tonumber(key) <= table.getn(ore) then
+		player.selected = tonumber(key)
 	end
 	
 	if key == "=" then
