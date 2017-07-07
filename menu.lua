@@ -137,11 +137,11 @@ function menu.cursor()
 		if my < 1 then
 			my = my + map_max
 			selected_chunky = 1
-			print("up")
+			--print("up")
 		elseif my > map_max then
 			my = my - map_max
 			selected_chunky = -1
-			print("down")
+			--print("down")
 		--else
 			--my = 0
 		end
