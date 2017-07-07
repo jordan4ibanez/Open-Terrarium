@@ -155,5 +155,5 @@ function player.draw()
 	--love.graphics.setColor(255,0,0,255)
 	player_drawnx,player_drawny = ((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
     --love.graphics.print("8", player_drawnx,player_drawny  )
-    love.graphics.draw(playertexture,  player_drawnx+offsetx+(scale/4), player_drawny+offsety-4,0, scale/32, scale/32)
+    love.graphics.draw(playertexture,  player_drawnx+(scale/4), player_drawny-4,0, scale/32, scale/32)
 end
