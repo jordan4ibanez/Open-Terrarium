@@ -41,6 +41,8 @@ function love.load()
 		i = i + 1
 	end
 	
+	playertexture = love.graphics.newImage("textures/player.png")
+	
 end
 
 function love.quit( )
