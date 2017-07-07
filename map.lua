@@ -2,7 +2,7 @@
 maplib = {}
 
 
-chunkx,chunky = math.random(-1000,1000),math.random(-1000,1000)
+chunkx,chunky = math.random(-1000,1000),math.random(0,-3)
 
 --tile size
 map_max = 35

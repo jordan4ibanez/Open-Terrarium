@@ -50,6 +50,8 @@ function menu.animate()
 	end
 end
 
+selected_chunkx,selected_chunky = 0,0
+
 function menu.draw()
 	
 	menu.cursor()
@@ -109,10 +111,45 @@ function menu.cursor()
 
 	mx,my = player.playerx + (xx/scale),player.playery + (yy/scale)
 	
-	
+	selected_chunkx,selected_chunky = 0,0
 	--only change and draw if in boundaries
 	if ((mx >= 1 and mx <= map_max) and (my >= 1 and my <= map_max)) and (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
 		love.graphics.rectangle("line", player_drawnx+xx, player_drawny+yy-3, scale, scale )
+		
+	--reach outside of chunk
+	elseif (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
+
+		--ocal chunkex,chunkey = math.floor(mx/map_max),math.floor(my/map_max)
+		
+		--overreach x
+		if mx > map_max then
+			mx = mx - map_max
+			selected_chunkx = 1
+		elseif mx < 1 then
+			mx = mx + map_max
+			selected_chunkx = -1
+		else
+			--mx = 0
+		end
+		
+		
+		--overreach y
+		if my < 1 then
+			my = my + map_max
+			selected_chunky = 1
+			print("up")
+		elseif my > map_max then
+			my = my - map_max
+			selected_chunky = -1
+			print("down")
+		--else
+			--my = 0
+		end
+		--print("chunkey:"..chunkey.."|my:"..my)
+		
+		--print(selected_chunkx, selected_chunky)
+		love.graphics.rectangle("line", player_drawnx+xx, player_drawny+yy-3, scale, scale )
+		
 	else
 		mx,my = -1,-1
 	end
