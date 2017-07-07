@@ -1,3 +1,5 @@
+--textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
+
 --the directory
 dir = love.filesystem.getAppdataDirectory( )
 
