@@ -260,7 +260,7 @@ function maplib.draw()
 				for y = 1,map_max do
 					--love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
 					--print(loaded_chunks[xx][-yy][x][y]["block"])
-					love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4)
+					love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4,0, scale/16, scale/16)
 					--love.graphics.print(,, )
 					--if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
 					--	love.graphics.print("X", x*scale, y*scale)
