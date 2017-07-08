@@ -10,7 +10,47 @@ player.selected = 2
 
 score = 0
 
---controls
+playermovetimer = 0
+function move(dt)
+	playermovetimer = playermovetimer + dt
+	
+	if playermovetimer > 0.25 then
+		--local oldposx,oldposy = player.playerx,player.playery
+		local oldposx,oldposy
+		if love.keyboard.isDown("a","d","w") then
+			--print("gude")
+			oldposx,oldposy = player.playerx,player.playery
+			playermovetimer = 0
+		end
+		
+		if love.keyboard.isDown("a") then
+		  player.playerx = player.playerx - 1
+		end
+		if love.keyboard.isDown("d") then
+		  player.playerx = player.playerx + 1
+		end
+		
+		if love.keyboard.isDown("w") then
+			jump()
+		end
+		
+		if love.keyboard.isDown("a","d","w") then
+			--print("guude 2")
+			local collide = maplib.new_block(oldposx,oldposy)
+			
+			--footsteps
+			if oldposx ~= player.playerx or oldposy ~= player.playery then
+			if collide == true and collision(oldposx,oldposy) ~= true and oldposy < map_max and tiles[oldposx][oldposy+1]["block"] ~= 0 then
+				stepsound:setPitch(love.math.random(50,100)/100)
+				stepsound:stop()
+				stepsound:play()
+			end
+			end
+		end
+		
+	end
+end
+--controls for 1 hit things
 function love.keypressed( key, scancode, isrepeat )
 
 	--quit
@@ -18,20 +58,7 @@ function love.keypressed( key, scancode, isrepeat )
 		love.event.push('quit')
 	end
 
-	local oldposx,oldposy = player.playerx,player.playery
-	
-	if key == "a" then
-      player.playerx = player.playerx - 1
-	end
-	if key == "d" then
-      player.playerx = player.playerx + 1
-	end
-	
-	if key == "w" then
-		jump()
-	end
-	
-	local collide = maplib.new_block(oldposx,oldposy)
+
 	
 	--debug
 	if key == "f5" then
@@ -55,20 +82,7 @@ function love.keypressed( key, scancode, isrepeat )
 		maplib.createmap()
 	end
 	
-	
-	--footsteps
-	
-	--fix every button causing sound
-	--fix every button causing sound
-	
-	if oldposx ~= player.playerx or oldposy ~= player.playery then
-	if collide == true and collision(oldposx,oldposy) ~= true and oldposy < map_max and tiles[oldposx][oldposy+1]["block"] ~= 0 then
-		stepsound:setPitch(love.math.random(50,100)/100)
-		stepsound:stop()
-		stepsound:play()
-	end
-	end
-	
+
 	--trick to get input as inventory change
 	--greater than 1 to not select air
 	if tonumber(key) and tonumber(key) > 1 and tonumber(key) <= table.getn(ore) then

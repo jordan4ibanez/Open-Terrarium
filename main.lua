@@ -70,4 +70,5 @@ function love.update(dt)
 	if love.keyboard.isDown("space") then
 		print("clear")
 	end
+	move(dt)
 end
