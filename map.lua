@@ -14,10 +14,10 @@ ore_size_min = 1
 ore_size_max = 3
 
 --cave generation
-cave_min = 50
-cave_max = 60
-cave_size_min = 1
-cave_size_max = 2
+cave_min = 50 --normal 50
+cave_max = 60 --normal 60
+cave_size_min = 4 --normal 1
+cave_size_max = 6 --normal 2
 
 --the chunk y which the rock starts
 underground = 0
@@ -26,7 +26,7 @@ underground = 0
 earth_max = 2
 
 --max chunks loaded ( chunk x chunk )
-max_chunks = 3
+max_chunks = 5 --normal 3 --x * x chunks loaded --does -1 - 1 (-x to x) -- (x * 2) + 1 to get max chunks in memory
 
 --water height on the surface
 water_height = 17
@@ -150,7 +150,7 @@ render, and modify everything to work correctly with all loaded chunks
 
 ]]--
 
-max_chunks = 1 --x * x chunks loaded --does -1 - 1 (-x to x) -- (x * 2) + 1 to get max chunks in memory
+--max_chunks = 1 --x * x chunks loaded --does -1 - 1 (-x to x) -- (x * 2) + 1 to get max chunks in memory
 
 
 
@@ -346,7 +346,7 @@ function maplib.liquid_flow(dt)
 						elseif ore[block]["prop"] == "liquid"  and y + 1 > map_max and loaded_chunks[xx] and loaded_chunks[xx][-yy-1] and loaded_chunks[xx][-yy-1][x] and loaded_chunks[xx][-yy-1][x][1] and loaded_chunks[xx][-yy-1][x][1]["block"] == 1  then
 							--print("flow down")
 							--forward workaround for table sub elements that have not been created
-							if not after_table[xx+1] then
+							if not after_table[xx] then
 								after_table[xx] = {}
 							end
 							if not after_table[xx][-yy-1] then
