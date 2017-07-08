@@ -15,6 +15,10 @@ dofile("player.lua")
 --the scale of the map
 scale = 16
 
+screenwidth = love.graphics.getWidth( )
+
+screenheight = love.graphics.getHeight( )
+
 function love.draw()
 	maplib.draw()
 	player.draw()
