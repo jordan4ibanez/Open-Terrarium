@@ -2,7 +2,7 @@
 maplib = {}
 
 
-chunkx,chunky = math.random(-1000,1000),math.random(0,-3)
+chunkx,chunky = math.random(-100000000000000000000000000000000000000000000000000000,100000000000000000000000000000000000000000000000000000),math.random(-10000000000000000000000000000000000,-10000054500000000000000000000000000000)
 
 --tile size
 map_max = 35
@@ -16,8 +16,8 @@ ore_size_max = 3
 --cave generation
 cave_min = 50 --normal 50
 cave_max = 60 --normal 60
-cave_size_min = 4 --normal 1
-cave_size_max = 6 --normal 2
+cave_size_min = 1 --normal 1
+cave_size_max = 2 --normal 2
 
 --the chunk y which the rock starts
 underground = 0
@@ -26,7 +26,7 @@ underground = 0
 earth_max = 2
 
 --max chunks loaded ( chunk x chunk )
-max_chunks = 5 --normal 3 --x * x chunks loaded --does -1 - 1 (-x to x) -- (x * 2) + 1 to get max chunks in memory
+max_chunks = 1 --normal 1 -x to x * -x to x
 
 --water height on the surface
 water_height = 17
@@ -417,7 +417,7 @@ function maplib.liquid_flow(dt)
 							after_table[xx][-yy][x-1][y]["left"] = "left"
 						--flow into new chunk -1 x
 						elseif ore[block]["prop"] == "liquid"  and x == 1 and loaded_chunks[xx-1] and loaded_chunks[xx-1][-yy] and loaded_chunks[xx-1][-yy][map_max] and loaded_chunks[xx-1][-yy][map_max][y] and loaded_chunks[xx-1][-yy][map_max][y]["block"] == 1  then
-							print("Test")
+							--print("Test")
 							--hack to create new table sub element
 							if not after_table[xx-1] then
 								after_table[xx-1] = {}

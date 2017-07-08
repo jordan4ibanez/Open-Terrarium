@@ -14,6 +14,13 @@ playermovetimer = 0
 function move(dt)
 	playermovetimer = playermovetimer + dt
 	
+	--debug - stresstest
+	--if love.keyboard.isDown("f5") then
+	--	chunkx,chunky = math.random(-1000,1000),math.random(2,3)
+	--	maplib.createmap()
+		--print("generate random block")
+	--end
+	
 	if playermovetimer > 0.25 then
 		--local oldposx,oldposy = player.playerx,player.playery
 		local oldposx,oldposy
