@@ -8,12 +8,16 @@ chunkx,chunky = math.random(-1000,1000),math.random(0,-3)
 map_max = 35
 
 --ore generation
-ore_min = 0 -- the minimum amount of ore that'll be generated in a map block
+ore_min = 1 -- the minimum amount of ore that'll be generated in a map block
 ore_max = 5 -- the max
+ore_size_min = 1
+ore_size_max = 3
 
 --cave generation
-cave_min = 150
-cave_max = 200
+cave_min = 50
+cave_max = 60
+cave_size_min = 1
+cave_size_max = 2
 
 --the chunk y which the rock starts
 underground = 0
@@ -82,15 +86,16 @@ function maplib.generate_ore(tiles)
 	
 	
 	if limit ~= 0 then
-		for limit = 1,limit do
+		for limit = ore_min,ore_max do
+			local ore_size_local = math.random(ore_size_min,ore_size_max)
 			local x,y = math.random(1,map_max),math.random(1,map_max)
 			
 			--add this to the x,y
-			for w = -3,-1 do
-				for z = 1,3 do
+			for xer = -ore_size_local,ore_size_local do
+				for yer = -ore_size_local,ore_size_local do
 					--stay within map boundaries
-					if x + w >= 1 and y + z <= map_max then
-						tiles[x+w][y+z]["block"] = 3
+					if (x + xer > 0 and x+xer <= map_max) and (y+yer >0 and y + yer <= map_max) then
+						tiles[x+xer][y+yer]["block"] = 3
 					end
 					
 				end
@@ -110,14 +115,18 @@ function maplib.generate_cave(tiles)
 	
 	if limit ~= 0 then
 		for limit = 1,limit do
+			local cavesize = math.random(cave_size_min,cave_size_max)
 			local x,y = math.random(1,map_max),math.random(1,map_max)
 			
 			--add this to the x,y
-			for w = -3,-1 do
-				for z = 1,3 do
+			for xer = -cavesize,cavesize do
+				for yer = -cavesize,cavesize do
 					--stay within map boundaries
-					if x + w >= 1 and y + z <= map_max then
-						tiles[x+w][y+z]["block"] = 1
+					if (x + xer > 0 and x+xer <= map_max) and (y+yer >0 and y + yer <= map_max) then
+						--if y+yer > map_max-1 then
+						--	print(y+yer)
+						--end
+						tiles[x+xer][y+yer]["block"] = 1
 					end
 					
 				end
