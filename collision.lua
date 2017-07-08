@@ -6,7 +6,8 @@ function collision(oldposx,oldposy)
 	--	(player.playery < map_max and player.playery > 1) and 
 	--	loaded_chunks[0][0][player.playerx][player.playery]["block"] == 3 then
 	--	player.playery = player.playery - 1
-	if (player.playerx > map_max or player.playerx <= 0) or (player.playery > map_max or player.playery <= 0) or loaded_chunks[0][0][player.playerx][player.playery]["block"] ~= 1 then
+	if (player.playerx > map_max or player.playerx <= 0) or (player.playery > map_max or player.playery <= 0) or ore[loaded_chunks[0][0][player.playerx][player.playery]["block"]]["collide"] ~= false then
+		--print("collide")
 		player.playerx,player.playery = oldposx,oldposy
 		--can't move
 		oof:setPitch(love.math.random(65,100)/100)
@@ -29,7 +30,7 @@ function gravity(dt)
 	--	return
 	--end
 	gravtimer = gravtimer + dt
-	if player.playery ~= map_max and loaded_chunks[0][0][player.playerx][player.playery+1]["block"] == 1 then
+	if player.playery ~= map_max and ore[loaded_chunks[0][0][player.playerx][player.playery+1]["block"]]["collide"] == false then
 		
 		if gravtimer >= 0.2 then
 			local oldposx,oldposy = player.playerx,player.playery
@@ -40,13 +41,14 @@ function gravity(dt)
 			
 			gravtimer = 0
 		end
-	elseif player.playery == map_max and loaded_chunks[0][-1][player.playerx][1]["block"] == 1 then
+	elseif player.playery == map_max and ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
 		--print("applying new chunk gravity")
 		if gravtimer >= 0.2 then
 			player.playery = player.playery + 1
 			maplib.new_block()
 		end
 	else
+		--print("failure")
 		gravtimer = 0
 	end
 

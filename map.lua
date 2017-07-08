@@ -27,7 +27,7 @@ max_chunks = 3
 --makes player move to next map section
 function maplib.new_block(oldposx,oldposy)
 	if player.playerx < 1 then
-		if loaded_chunks[-1][0][map_max][player.playery]["block"] == 1 then
+		if ore[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
 			chunkx = chunkx - 1
 			maplib.createmap() -- create a new block
 			player.playerx = map_max -- put player on other side of screen		
@@ -37,7 +37,7 @@ function maplib.new_block(oldposx,oldposy)
 			print("something blocking -1 x")
 		end
 	elseif player.playerx > map_max then
-		if loaded_chunks[1][0][1][player.playery]["block"] == 1 then
+		if ore[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
 			chunkx = chunkx + 1
 			maplib.createmap() -- create a new block
 			player.playerx = 1 -- put player on other side of screen
@@ -48,7 +48,7 @@ function maplib.new_block(oldposx,oldposy)
 		end
 	
 	elseif player.playery < 1 then
-		if loaded_chunks[0][1][player.playerx][map_max]["block"] == 1 then
+		if ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
 			chunky = chunky + 1
 			maplib.createmap() -- create a new block
 			player.playery = map_max -- put player on other side of screen
@@ -58,7 +58,7 @@ function maplib.new_block(oldposx,oldposy)
 			print("something blocking 1 y")
 		end
 	elseif player.playery > map_max then
-		if loaded_chunks[0][-1][player.playerx][1]["block"] == 1 then
+		if ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
 			chunky = chunky - 1
 			maplib.createmap() -- create a new block
 			player.playery = 1 -- put player on other side of screen
@@ -256,6 +256,8 @@ function maplib.draw()
 	love.graphics.setFont(font)
 	for xx  = -max_chunks,max_chunks do
 		for yy  = -max_chunks,max_chunks do
+			--love.graphics.setColor(255,255,255)
+			
 			for x = 1,map_max do
 				for y = 1,map_max do
 					--love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
@@ -272,6 +274,7 @@ function maplib.draw()
 					--end
 				end
 			end
+			love.graphics.print(tostring(xx).." "..tostring(yy), (((1*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((1*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4, 0, 2, 2)
 		end
 	end
 end
@@ -286,28 +289,95 @@ function maplib.liquid_flow(dt)
 	if flowtimer > 0.5 then
 		flowtimer = 0
 		for xx  = -max_chunks,max_chunks do
-			after_table[xx] = {}
+			if not after_table[xx] then
+				after_table[xx] = {}
+			end
 			for yy  = -max_chunks,max_chunks do
-				after_table[xx][yy] = {}
+				if not after_table[xx][yy] then
+					after_table[xx][yy] = {}
+				end
 				for x = 1,map_max do
-					after_table[xx][yy][x] = {}
+					if not after_table[xx][yy][x] then
+						after_table[xx][yy][x] = {}
+					end
+					
 					for y = 1,map_max do
-						after_table[xx][yy][x][y] = {}
+						if not after_table[xx][yy][x][y] then
+							after_table[xx][yy][x][y] = {}
+						end
+						
 						local block = loaded_chunks[xx][-yy][x][y]["block"]
+						
+						--if block == 5 then
+						--	print(-yy-1)
+						--end
 						--downward flow
 						if ore[block]["prop"] == "liquid"  and y + 1 <= map_max and loaded_chunks[xx][-yy][x][y+1]["block"] == 1  then
 							after_table[xx][yy][x][y]["block"] = block
 							after_table[xx][yy][x][y]["down"] = "down"
+						--flow into new chunk -1 y
+						elseif ore[block]["prop"] == "liquid"  and y + 1 > map_max and loaded_chunks[xx][-yy-1][x][1]["block"] == 1  then
+							--print("flow down")
+							--forward workaround for table sub elements that have not been created
+							if not after_table[xx][-yy-1] then
+								after_table[xx][-yy-1]  = {}
+							end
+							if not after_table[xx][-yy-1][x] then
+								after_table[xx][-yy-1][x] = {}
+							end
+							if not after_table[xx][-yy-1][x][1] then
+								after_table[xx][-yy-1][x][1]= {}
+							end
+							after_table[xx][-yy-1][x][1]["block"] = block
+							after_table[xx][-yy-1][x][1]["newy"] = "newy"
 						end
 						--rightward flow
 						if ore[block]["prop"] == "liquid"  and x + 1 <= map_max and loaded_chunks[xx][-yy][x+1][y]["block"] == 1  then
 							after_table[xx][yy][x][y]["block"] = block
 							after_table[xx][yy][x][y]["right"] = "right"
+						--flow into new chunk +1 x
+						elseif ore[block]["prop"] == "liquid"  and x == map_max and loaded_chunks[xx+1][yy][1][y]["block"] == 1  then
+							--hack to create new table sub element
+							if not after_table[xx+1] then
+								after_table[xx+1] = {}
+							end
+							if not after_table[xx+1][yy] then
+								after_table[xx+1][yy]  = {}
+							end
+							if not after_table[xx+1][yy][1] then
+								after_table[xx+1][yy][1] = {}
+							end
+							if not after_table[xx+1][yy][1][y] then
+								--print("create new block element success")
+								after_table[xx+1][yy][1][y]= {}
+							end
+							--print(after_table[xx+1][yy][1][y]["block"])
+							after_table[xx+1][yy][1][y]["block"] = block
+							after_table[xx+1][yy][1][y]["xright"] = "xright"
 						end
 						--leftward flow
 						if ore[block]["prop"] == "liquid"  and x - 1 >= 1 and loaded_chunks[xx][-yy][x-1][y]["block"] == 1  then
 							after_table[xx][yy][x][y]["block"] = block
 							after_table[xx][yy][x][y]["left"] = "left"
+						--flow into new chunk -1 x
+						elseif ore[block]["prop"] == "liquid"  and x == 1 and loaded_chunks[xx-1][yy][map_max][y]["block"] == 1  then
+							--hack to create new table sub element
+							if not after_table[xx-1] then
+								after_table[xx-1] = {}
+							end
+							if not after_table[xx-1][yy] then
+								after_table[xx-1][yy]  = {}
+							end
+							if not after_table[xx-1][yy][map_max] then
+								after_table[xx-1][yy][map_max] = {}
+							end
+							if not after_table[xx-1][yy][map_max][y] then
+								--print("create new block element success")
+								after_table[xx-1][yy][map_max][y]= {}
+							end
+							--print(after_table[xx-1][yy][map_max][y]["block"])
+							after_table[xx-1][yy][map_max][y]["block"] = block
+							after_table[xx-1][yy][map_max][y]["xleft"] = "xleft"
 						end
 						--love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4,0, scale/16, scale/16)
 					end
@@ -321,7 +391,7 @@ function maplib.liquid_flow(dt)
 			for keyx, valuex in pairs(valueyy) do
 				for keyy,valuey in pairs(valuex) do
 					if valuey["block"] ~= nil then
-						--don't elseif, or will bug out
+						--flowing
 						if valuey["down"] == "down" then
 							loaded_chunks[keyxx][-keyyy][keyx][keyy+1]["block"] = valuey["block"]
 						end
@@ -330,6 +400,19 @@ function maplib.liquid_flow(dt)
 						end
 						if valuey["left"] == "left" then
 							loaded_chunks[keyxx][-keyyy][keyx-1][keyy]["block"] = valuey["block"]
+						end
+						--flowing to new chunk
+						if valuey["newy"] == "newy" then
+							--print(keyy)
+							loaded_chunks[keyxx][keyyy][keyx][keyy]["block"] = valuey["block"]
+						end
+						if valuey["xright"] == "xright" then
+							--print(keyy)
+							loaded_chunks[keyxx][keyyy][keyx][keyy]["block"] = valuey["block"]
+						end
+						if valuey["xleft"] == "xleft" then
+							--print(keyy)
+							loaded_chunks[keyxx][keyyy][keyx][keyy]["block"] = valuey["block"]
 						end
 					end
 				end
