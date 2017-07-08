@@ -100,9 +100,9 @@ end
 
 --try to jump
 function jump()
-	if (player.playery < map_max and loaded_chunks[0][0][player.playerx][player.playery+1]["block"] ~= 1) then
+	if player.playerx <= map_max and player.playerx >= 1 and (player.playery < map_max and loaded_chunks[0][0][player.playerx][player.playery+1]["block"] ~= 1) then
 		player.playery = player.playery - 1
-	elseif player.playery == map_max and loaded_chunks[0][-1][player.playerx][1]["block"] ~= 1 then
+	elseif player.playerx <= map_max and player.playerx >= 1 and player.playery == map_max and loaded_chunks[0][-1][player.playerx][1]["block"] ~= 1 then
 		player.playery = player.playery - 1
 	end
 
