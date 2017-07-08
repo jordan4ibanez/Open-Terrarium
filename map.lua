@@ -24,6 +24,9 @@ earth_max = 2
 --max chunks loaded ( chunk x chunk )
 max_chunks = 3
 
+--water height on the surface
+water_height = 10
+
 --makes player move to next map section
 function maplib.new_block(oldposx,oldposy)
 	if player.playerx < 1 then
@@ -189,6 +192,8 @@ function maplib.createmap()
 							--generate dirt as debug
 							if y == yer then
 								tiles[x][y]["block"] = 4
+							elseif y < yer and y  >= water_height then
+								tiles[x][y]["block"] = 5
 							elseif y < yer then
 								tiles[x][y]["block"] = 1
 							else
