@@ -41,7 +41,7 @@ function gravity(dt)
 			
 			gravtimer = 0
 		end
-	elseif player.playery == 1 and ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["float"] == false then
+	elseif player.playery == 1 and ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["float"] == true then
 		if gravtimer >= 0.2 then
 			player.playery = player.playery - 1
 			maplib.new_block()
