@@ -30,7 +30,24 @@ function gravity(dt)
 	--	return
 	--end
 	gravtimer = gravtimer + dt
-	if player.playery ~= map_max and ore[loaded_chunks[0][0][player.playerx][player.playery+1]["block"]]["collide"] == false then
+	--reverse gravity in water
+	if player.playery ~= 1 and ore[loaded_chunks[0][0][player.playerx][player.playery]["block"]]["float"] == true then
+		if gravtimer >= 0.2 then
+			local oldposx,oldposy = player.playerx,player.playery
+			
+			player.playery = player.playery - 1
+			
+			collision(oldposx,oldposy)
+			
+			gravtimer = 0
+		end
+	elseif player.playery == 1 and ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
+		if gravtimer >= 0.2 then
+			player.playery = player.playery - 1
+			maplib.new_block()
+		end
+	--else apply normal gravity
+	elseif player.playery ~= map_max and ore[loaded_chunks[0][0][player.playerx][player.playery+1]["block"]]["collide"] == false then
 		
 		if gravtimer >= 0.2 then
 			local oldposx,oldposy = player.playerx,player.playery
