@@ -25,7 +25,7 @@ earth_max = 2
 max_chunks = 3
 
 --water height on the surface
-water_height = 10
+water_height = 17
 
 --makes player move to next map section
 function maplib.new_block(oldposx,oldposy)
