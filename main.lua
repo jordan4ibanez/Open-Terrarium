@@ -35,6 +35,9 @@ function love.load()
 	placesound = love.audio.newSource("place.ogg", "static")
 	stepsound = love.audio.newSource("step.ogg", "static")
 	oof = love.audio.newSource("oof.ogg", "static")
+	menu_music = love.audio.newSource("sounds/menu_music.ogg")
+	menu_music:setLooping(true)
+	
 	
 	texture_table = {}
 	local i = 1
@@ -45,6 +48,7 @@ function love.load()
 	
 	playertexture = love.graphics.newImage("textures/player.png")
 	
+	menu_music:play()
 end
 
 function love.quit( )

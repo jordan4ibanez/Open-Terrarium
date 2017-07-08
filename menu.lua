@@ -94,6 +94,8 @@ function menu.draw()
 	
 	love.graphics.print("Chunkx:"..chunkx, 400,280)
 	love.graphics.print("Chunky:"..chunky, 400,320)
+	
+	love.graphics.print("Current FPS:"..tostring(love.timer.getFPS( )), 400, 360)
 end
 
 function menu.cursor()
