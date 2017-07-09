@@ -35,6 +35,7 @@ water_height = 17
 function maplib.new_block(oldposx,oldposy)
 	if player.playerx < 1 then
 		if ore[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
+			maplib.save_chunks()
 			chunkx = chunkx - 1
 			maplib.createmap() -- create a new block
 			player.playerx = map_max -- put player on other side of screen		
@@ -45,6 +46,7 @@ function maplib.new_block(oldposx,oldposy)
 		end
 	elseif player.playerx > map_max then
 		if ore[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
+			maplib.save_chunks()
 			chunkx = chunkx + 1
 			maplib.createmap() -- create a new block
 			player.playerx = 1 -- put player on other side of screen
@@ -56,6 +58,7 @@ function maplib.new_block(oldposx,oldposy)
 	
 	elseif player.playery < 1 then
 		if ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
+			maplib.save_chunks()
 			chunky = chunky + 1
 			maplib.createmap() -- create a new block
 			player.playery = map_max -- put player on other side of screen
@@ -66,6 +69,7 @@ function maplib.new_block(oldposx,oldposy)
 		end
 	elseif player.playery > map_max then
 		if ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
+			maplib.save_chunks()
 			chunky = chunky - 1
 			maplib.createmap() -- create a new block
 			player.playery = 1 -- put player on other side of screen
@@ -77,6 +81,15 @@ function maplib.new_block(oldposx,oldposy)
 	end
 	
 	return true
+end
+--saves all memory data into file
+function maplib.save_chunks()
+	for xx  = -max_chunks,max_chunks do
+		for yy  = -max_chunks,max_chunks do
+			love.filesystem.write( "/map/"..chunkx+xx.."_"..chunky+yy..".txt", TSerial.pack(loaded_chunks[xx][yy]))
+			print("saving:"..chunkx+xx.."_"..chunky+yy)
+		end
+	end
 end
 
 --generates ore

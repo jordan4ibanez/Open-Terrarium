@@ -143,7 +143,7 @@ function mine(key)
 				loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = player.selected
 				player.mining = false
 				love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
-					score = score + 1
+				score = score + 1
 			end
 		end
 	end
