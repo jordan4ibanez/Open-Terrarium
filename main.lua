@@ -52,7 +52,7 @@ function love.load()
 	
 	playertexture = love.graphics.newImage("textures/player.png")
 	
-	--menu_music:play()
+	menu_music:play()
 end
 
 function love.quit( )

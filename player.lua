@@ -29,7 +29,9 @@ function move(dt)
 			oldposx,oldposy = player.playerx,player.playery
 			playermovetimer = 0
 		end
-		
+		if love.keyboard.isDown("w") then
+			jump()
+		end
 		if love.keyboard.isDown("a") then
 		  player.playerx = player.playerx - 1
 		end
@@ -37,9 +39,7 @@ function move(dt)
 		  player.playerx = player.playerx + 1
 		end
 		
-		if love.keyboard.isDown("w") then
-			jump()
-		end
+		
 		
 		if love.keyboard.isDown("a","d","w") then
 			--print("guude 2")
