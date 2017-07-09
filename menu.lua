@@ -4,10 +4,10 @@ menu = {}
 mx,my = 1,1
 
 menutitle = {}
-menutitle.g = 50
-menutitle.a = 50
-menutitle.m = 50
-menutitle.e = 50
+menutitle.g = 35
+menutitle.a = 35
+menutitle.m = 35
+menutitle.e = 35
 
 menutimer = 0
 pause = false
@@ -55,47 +55,49 @@ selected_chunkx,selected_chunky = 0,0
 function menu.draw()
 	
 	menu.cursor()
-	
-	love.graphics.setFont(fontbig)
-	love.graphics.setColor(255,0,0,255)
-    love.graphics.print("D", 400, menutitle.g)
-    love.graphics.print("I", 440, menutitle.a)
-    love.graphics.print("G", 480, menutitle.m)
-    love.graphics.print("!", 520, menutitle.e)
-
+	--redo this as a table
+	--love.graphics.setFont(fontbig)
+	--love.graphics.setColor(255,0,0,255)
+    --love.graphics.print("D", 400, menutitle.g)
+    --love.graphics.print("I", 440, menutitle.a)
+    --love.graphics.print("G", 480, menutitle.m)
+    --love.graphics.print("!", 520, menutitle.e)
+	local xxer = 600
 	--score debug
-	love.graphics.setFont(fontmed)
+	love.graphics.setFont(font)
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("Score:"..tostring(score), 400,110)
+	love.graphics.print("Score:"..tostring(score),xxer,12)
 
 	
 	--debug mining
 	if player.mining == true then
 		love.graphics.setColor(255,0,0,255)
-		love.graphics.print("Mining", 400,180)
+		love.graphics.print("Mining", xxer,24)
 		love.graphics.setColor(128,128,128,255)
-		love.graphics.print("Placing", 560,180)
+		love.graphics.print("Placing", xxer+80,24)
 		
 	elseif player.mining == false then		
 		love.graphics.setColor(128,128,128,255)
-		love.graphics.print("Mining", 400,180)
+		love.graphics.print("Mining", xxer,24)
 		love.graphics.setColor(255,0,0,255)
-		love.graphics.print("Placing", 560,180)love.graphics.print("PosX:"..player.playerx.." PosY:"..player.playery, 400,150)
+		love.graphics.print("Placing", xxer+80,24)
+		
+		--love.graphics.print("PosX:"..player.playerx.." PosY:"..player.playery, 400,150)
 	end
 	--debug player's pos
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("PosX:"..(player.playerx+(chunkx*map_max)).." PosY:"..((map_max-player.playery)+(chunky*map_max)), 0,20)
 	--debug mouse's pos
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("MX:"..mx.." MY:"..my, 400,220)
+	love.graphics.print("MX:"..mx.." MY:"..my, xxer,36)
 	--debug selected item
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("ITEM:", 400,250) love.graphics.draw(texture_table[player.selected],515,242,0,1.75,1.75)
+	love.graphics.print("ITEM:", xxer,48) love.graphics.draw(texture_table[player.selected],xxer+60,45,0,0.8,0.8)
 	
-	love.graphics.print("Chunkx:"..chunkx, 400,280)
-	love.graphics.print("Chunky:"..chunky, 400,320)
+	love.graphics.print("Chunkx:"..chunkx, xxer,60)
+	love.graphics.print("Chunky:"..chunky, xxer,72)
 	
-	love.graphics.print("Current FPS:"..tostring(love.timer.getFPS( )), 400, 360)
+	love.graphics.print("Current FPS:"..tostring(love.timer.getFPS( )), xxer, 84)
 end
 
 function menu.cursor()

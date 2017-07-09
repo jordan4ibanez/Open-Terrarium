@@ -174,7 +174,7 @@ player_drawnx,player_drawny = 0,0
 function player.draw()
 	love.graphics.setFont(font)
 	--love.graphics.setColor(255,0,0,255)
-	player_drawnx,player_drawny = ((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
+	player_drawnx,player_drawny = screenwidth/2-(scale/32),screenheight/2-(scale/32)--((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
     --love.graphics.print("8", player_drawnx,player_drawny  )
     love.graphics.draw(playertexture,  player_drawnx+(scale/4), player_drawny-4,0, scale/32, scale/32)
 end
