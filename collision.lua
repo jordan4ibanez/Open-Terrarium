@@ -11,12 +11,18 @@ function collision(oldposx,oldposy)
 	--	loaded_chunks[0][0][player.playerx][player.playery]["block"] == 3 then
 	--	player.playery = player.playery - 1
 	local xer = {0.3,0.7}
-	local yer = {0.3,0.7}
+	local yer = {0,1}
 	for q = 1,2 do
 		for r = 1,2 do
 			local squarex1 = math.floor(player.playerx+xer[q])
 			local squarey1 = math.floor(player.playery+yer[r])
-			if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
+			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
+			if ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
+				--if q == 1 then
+					--print("left")
+				--end
+				player.inertiax = 0
+				player.inertiay = 0
 				--print("collide")
 				player.playerx,player.playery = oldposx,oldposy
 				return(true)

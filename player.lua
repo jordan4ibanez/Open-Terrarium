@@ -10,12 +10,9 @@ player.selected = 2
 
 score = 0
 
-playermovetimer = 0
 
 
-function move(dt)
-	playermovetimer = playermovetimer + dt
-	
+function move(dt)	
 	--debug - stresstest
 	--if love.keyboard.isDown("f5") then
 	--	chunkx,chunky = math.random(-1000,1000),math.random(2,3)
@@ -25,13 +22,17 @@ function move(dt)
 	
 	--local oldposx,oldposy = player.playerx,player.playery
 	local oldposx,oldposy
-	if love.keyboard.isDown("a","d","w") then
+	--if love.keyboard.isDown("a","d","w") then
 		--print("gude")
-		oldposx,oldposy = player.playerx,player.playery
-		playermovetimer = 0
-	end
+		--oldposx,oldposy = player.playerx,player.playery
+	--end
+	
 	if love.keyboard.isDown("w") then
-		jump()
+		--jump()
+		physics.player_mod_y(-0.01)
+	end
+	if love.keyboard.isDown("s") then
+		physics.player_mod_y(0.01)
 	end
 	if love.keyboard.isDown("a") then
 	  --player.playerx = player.playerx - 0.1
@@ -41,9 +42,13 @@ function move(dt)
 	  physics.player_mod_x(0.01)
 	end
 	
+	if love.keyboard.isDown("=") then
+		scale = scale + 1
+	elseif love.keyboard.isDown("-") then
+		scale = scale - 1
+	end
 	
-	
-	if love.keyboard.isDown("a","d","w") then
+	--if love.keyboard.isDown("a","d","w") then
 		--print("guude 2")
 		--local collide = maplib.new_block(oldposx,oldposy)
 		
@@ -57,7 +62,7 @@ function move(dt)
 		end
 		]]--
 		--end
-	end
+	--end
 end
 --controls for 1 hit things
 function love.keypressed( key, scancode, isrepeat )
@@ -102,12 +107,6 @@ function love.keypressed( key, scancode, isrepeat )
 		player.selected = tonumber(key)
 	end
 	
-	if key == "=" then
-		scale = scale + 1
-	elseif key == "-" then
-		scale = scale - 1
-	end
-		
 
 end
 
