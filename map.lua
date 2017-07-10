@@ -33,51 +33,52 @@ water_height = 17
 
 --makes player move to next map section
 function maplib.new_block(oldposx,oldposy)
-	if player.playerx < 1 then
-		if ore[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
+	--print(math.floor(player.playerx))
+	if math.floor(player.playerx) < 1 then
+		--if ore[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunkx = chunkx - 1
 			maplib.createmap() -- create a new block
 			player.playerx = map_max -- put player on other side of screen		
 			print(" block x -1")
 			return false
-		else
-			print("something blocking -1 x")
-		end
-	elseif player.playerx > map_max then
-		if ore[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
+		--else
+			--print("something blocking -1 x")
+		--end
+	elseif math.floor(player.playerx) > map_max then
+		--if ore[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunkx = chunkx + 1
 			maplib.createmap() -- create a new block
 			player.playerx = 1 -- put player on other side of screen
 			print("block x +1")
 			return false
-		else
-			print("something blocking 1 x")
-		end
+		--else
+			--print("something blocking 1 x")
+		--end
 	
-	elseif player.playery < 1 then
-		if ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
+	elseif math.floor(player.playery) < 1 then
+		--if ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunky = chunky + 1
 			maplib.createmap() -- create a new block
 			player.playery = map_max -- put player on other side of screen
 			print(" block y -1")
 			return false
-		else
-			print("something blocking 1 y")
-		end
-	elseif player.playery > map_max then
-		if ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
+		---else
+			--print("something blocking 1 y")
+		--end
+	elseif math.floor(player.playery) > map_max then
+		--if ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunky = chunky - 1
 			maplib.createmap() -- create a new block
 			player.playery = 1 -- put player on other side of screen
 			print("block y +1")
 			return false
-		else
-			print("something blocking -1 y")
-		end
+		--else
+			--print("something blocking -1 y")
+		--end
 	end
 	
 	return true

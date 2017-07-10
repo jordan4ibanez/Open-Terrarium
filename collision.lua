@@ -1,22 +1,28 @@
 --basic grid based collision detection
-
+----oof:setPitch(love.math.random(65,100)/100)
+--oof:stop()
+--oof:play()
+		
+--squared collision detection
 function collision(oldposx,oldposy)
 	--stairs
 	--if (player.playerx <= map_max and player.playerx > 1) and 
 	--	(player.playery < map_max and player.playery > 1) and 
 	--	loaded_chunks[0][0][player.playerx][player.playery]["block"] == 3 then
 	--	player.playery = player.playery - 1
-	if (player.playerx > map_max or player.playerx <= 0) or (player.playery > map_max or player.playery <= 0) or ore[loaded_chunks[0][0][player.playerx][player.playery]["block"]]["collide"] ~= false then
-		--print("collide")
-		player.playerx,player.playery = oldposx,oldposy
-		--can't move
-		oof:setPitch(love.math.random(65,100)/100)
-		oof:stop()
-		oof:play()
-		--print("return true")
-		return(true)
+	local xer = {0.3,0.7}
+	local yer = {0.3,0.7}
+	for q = 1,2 do
+		for r = 1,2 do
+			local squarex1 = math.floor(player.playerx+xer[q])
+			local squarey1 = math.floor(player.playery+yer[r])
+			if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
+				--print("collide")
+				player.playerx,player.playery = oldposx,oldposy
+				return(true)
+			end
+		end
 	end
-	
 end
 
 --make the player fall when in air
@@ -37,7 +43,7 @@ function gravity(dt)
 			
 			player.playery = player.playery - 1
 			
-			collision(oldposx,oldposy)
+			--collision(oldposx,oldposy)
 			
 			gravtimer = 0
 		end
@@ -54,7 +60,7 @@ function gravity(dt)
 			
 			player.playery = player.playery + 1
 			
-			collision(oldposx,oldposy)
+			--collision(oldposx,oldposy)
 			
 			gravtimer = 0
 		end

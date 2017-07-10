@@ -11,6 +11,7 @@ dofile("map.lua")
 dofile("menu.lua")
 dofile("collision.lua")
 dofile("player.lua")
+dofile("physics.lua")
 
 --the scale of the map
 scale = 16
@@ -63,7 +64,7 @@ end
 function love.update(dt)
 	menu.animate()
 	mine(key)
-	gravity(dt)
+	--gravity(dt)
 	player.move_camera(dt)
 	maplib.liquid_flow(dt)
 	--debug
@@ -71,4 +72,6 @@ function love.update(dt)
 		print("clear")
 	end
 	move(dt)
+	physics.player_x_apply(dt)
+	maplib.new_block(player.playerx,player.playery)
 end
