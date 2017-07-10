@@ -85,6 +85,7 @@ function maplib.new_block(oldposx,oldposy)
 end
 --saves all memory data into file
 function maplib.save_chunks()
+	local newthread = love.thread.newChannel()
 	for xx  = -max_chunks,max_chunks do
 		for yy  = -max_chunks,max_chunks do
 			love.filesystem.write( "/map/"..chunkx+xx.."_"..chunky+yy..".txt", TSerial.pack(loaded_chunks[xx][yy]))
