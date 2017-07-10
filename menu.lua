@@ -3,13 +3,15 @@ menu = {}
 
 mx,my = 1,1
 
-menutitle = {}
-menutitle.g = 35
-menutitle.a = 35
-menutitle.m = 35
-menutitle.e = 35
-
+menutitle = {"O","p","e","n"," ","T","e","r","r","a","r","i","u","m"," ","0",".","0",".","1"}
+menu_char = {}
+for i, v in ipairs(menutitle) do
+	--print(i)
+	menu_char[i] = 0
+end
+print(menutitle[1])
 menutimer = 0
+characters = table.getn(menutitle)
 pause = false
 
 letter = 1
@@ -18,35 +20,23 @@ function menu.animate()
 	if pause == false then
 		menutimer = menutimer + 1
 	end
-	if menutimer > 20 then
-	
-		if letter == 1 then
-			menutitle.g = menutitle.g + 2
-		elseif letter == 2 then
-			menutitle.a = menutitle.a + 2
-		elseif letter == 3 then
-			menutitle.m = menutitle.m + 2
-		elseif letter == 4 then
-			menutitle.e = menutitle.e + 2
-		end
-		if menutimer >= 40 then
+	if menutimer > 10 then
+		--push up
+		menu_char[letter] = menu_char[letter] + 2
+		if menutimer >= 20 then
 			menutimer = 0
 			letter = letter + 1
-			if letter > 4 then
+			--skip spaces
+			if menutitle[letter] == " " then
+				letter = letter + 1
+			end
+			if letter > characters then
 				letter = 1
 			end
 		end
-	elseif menutimer <= 20 then
-		if letter == 1 then
-			menutitle.g = menutitle.g - 2
-		elseif letter == 2 then
-			menutitle.a = menutitle.a - 2
-		elseif letter == 3 then
-			menutitle.m = menutitle.m - 2
-		elseif letter == 4 then
-			menutitle.e = menutitle.e - 2
-		end
-		
+	elseif menutimer <= 10 then
+		--push down
+		menu_char[letter] = menu_char[letter] - 2
 	end
 end
 
@@ -55,6 +45,12 @@ selected_chunkx,selected_chunky = 0,0
 function menu.draw()
 	
 	menu.cursor()
+	love.graphics.setFont(font)
+	love.graphics.setColor(255,0,0,255)
+	for i = 1,characters do
+		love.graphics.print(menutitle[i], screenwidth-260+(12*i),screenheight-10+menu_char[i] )
+		
+	end
 	--redo this as a table
 	--love.graphics.setFont(fontbig)
 	--love.graphics.setColor(255,0,0,255)
