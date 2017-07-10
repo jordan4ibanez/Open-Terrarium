@@ -48,7 +48,9 @@ function physics.gravity()
 		player.inertiay = 0
 		--player.on_block = false
 	else
-		player.inertiay = player.inertiay  + 0.01
+		if player.inertiay < 1 then
+			player.inertiay = player.inertiay  + 0.01
+		end
 	end
 
 end
