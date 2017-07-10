@@ -33,19 +33,6 @@ function collisiony(oldposy)
 			end
 		end
 	end
-	--check the corners
-	for q = 1,2 do
-		for r = 1,2 do
-			local squarex1 = math.floor(player.playerx+xer[q])
-			local squarey1 = math.floor(player.playery+yer[r])
-			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if (player.playerx <= map_max and player.playerx > 1) and (player.playery < map_max and player.playery > 1) and ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-				player.inertiax = 0
-				player.playerx = oldposx
-				print("stopping x inertia and pos")
-			end
-		end
-	end
 	if fall == true then
 		player.on_block = false
 	end
