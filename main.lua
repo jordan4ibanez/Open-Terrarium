@@ -29,6 +29,7 @@ function love.draw()
 	fpsGraph:draw()
 	memGraph:draw()
 	dtGraph:draw()
+	player.draw_health()
 end
 
 function love.load()
@@ -61,6 +62,7 @@ function love.load()
 	end
 	
 	playertexture = love.graphics.newImage("textures/player.png")
+	heart = love.graphics.newImage("textures/heart.png")
 	
 	--menu_music:play()
 end
