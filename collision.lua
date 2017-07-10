@@ -1,7 +1,5 @@
 --basic grid based collision detection
-----oof:setPitch(love.math.random(65,100)/100)
---oof:stop()
---oof:play()
+
 		
 --squared collision detection
 player.on_block = false

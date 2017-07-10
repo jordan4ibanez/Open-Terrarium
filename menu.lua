@@ -101,6 +101,8 @@ function menu.draw()
 	
 	love.graphics.print("Intx:"..tostring(player.inertiax), xxer, 96)
 	love.graphics.print("Inty:"..tostring(player.inertiay), xxer, 108)
+	
+	love.graphics.print("Deaths:"..tostring(deaths), xxer, 250)
 
 end
 

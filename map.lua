@@ -320,6 +320,20 @@ function maplib.draw()
 	end
 end
 
+function maplib.delete_map()
+	if love.filesystem.isDirectory("map") then
+		for _, child in pairs(love.filesystem.getDirectoryItems("map")) do
+			love.filesystem.remove("map/" .. child);
+		end
+	elseif love.filesystem.isFile(item) then
+		love.filesystem.remove("map");
+	end
+	
+	print("generating new map")
+	chunkx,chunky = math.random(-1000,1000),math.random(0,3)
+	maplib.createmap()
+end
+
 flowtimer = 0
 
 --make liquids flow

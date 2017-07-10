@@ -12,6 +12,8 @@ score = 0
 
 health = 10
 
+deaths = 0
+
 function move(dt)	
 	--debug - stresstest
 	--if love.keyboard.isDown("f5") then
@@ -85,18 +87,8 @@ function love.keypressed( key, scancode, isrepeat )
 		
 	--this creates a new map
 	elseif key == "f4" then
-		local depth = 0
-		if love.filesystem.isDirectory("map") then
-            for _, child in pairs(love.filesystem.getDirectoryItems("map")) do
-                love.filesystem.remove("map/" .. child);
-            end
-        elseif love.filesystem.isFile(item) then
-            love.filesystem.remove("map");
-        end
-        
-		print("generating new map")
-		chunkx,chunky = math.random(-1000,1000),math.random(0,3)
-		maplib.createmap()
+		--local depth = 0
+		maplib.delete_map()
 	--resets the offset
 	elseif key == "f3" then
 		offsetx, offsety = 0,0
@@ -112,6 +104,8 @@ function love.keypressed( key, scancode, isrepeat )
 	
 
 end
+
+
 
 --try to jump
 function jump()
@@ -196,5 +190,4 @@ function player.draw_health()
 	for i = 1,health do
 		love.graphics.draw(heart,  (i-1)*16, screenheight-16,0, 1,1)
 	end
-
 end
