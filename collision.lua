@@ -54,7 +54,7 @@ function collisionx(oldposx)
 			if (player.playerx <= map_max and player.playerx > 1) and (player.playery < map_max and player.playery > 1) and ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
 				player.inertiax = 0
 				player.playerx = oldposx
-				print("stopping x inertia and pos")
+				--print("stopping x inertia and pos")
 			end
 		end
 	end

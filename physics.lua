@@ -17,7 +17,7 @@ function physics.player_mod_y(value)
 	--print(player.inertiay+value)
 	--print(player.on_block)
 	if  player.on_block == true then
-		print("jump")
+		--print("jump")
 		player.inertiay = player.inertiay + value
 		player.on_block = false
 	end

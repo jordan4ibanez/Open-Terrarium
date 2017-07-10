@@ -5,7 +5,7 @@ maplib = {}
 chunkx,chunky = math.random(-1000,1000),math.random(-1000,-1000)
 
 --tile size
-map_max = 35
+map_max = 64
 
 --ore generation
 ore_min = 1 -- the minimum amount of ore that'll be generated in a map block

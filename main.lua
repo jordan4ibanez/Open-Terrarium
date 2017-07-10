@@ -1,3 +1,6 @@
+
+print("keep everything in memory until save, or until close game")
+
 --textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
 
 --the directory
