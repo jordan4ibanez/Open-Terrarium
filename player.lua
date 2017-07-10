@@ -131,10 +131,10 @@ function mine(key)
 	local right = love.mouse.isDown(2)
 	mx = math.floor(mx+0.5)
 	my = math.floor(my+0.5)
-	if mx ~= -1 and my ~= -1 then
+	if mx ~= -1 and my ~= -1 and mx >= 1 and mx <= map_max and my >= 1 and my <= map_max then
 		--play sound and remove tile
 		if left then
-			--print(mx,my)
+			print(mx,my)
 			if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
 				minesound:setPitch(love.math.random(50,100)/100)
 				minesound:stop()

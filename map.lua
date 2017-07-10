@@ -285,6 +285,12 @@ function maplib.draw()
 	love.graphics.setFont(font)
 	for xx  = -max_chunks,max_chunks do
 		for yy  = -max_chunks,max_chunks do
+			--draw sky
+			if chunky-yy > underground then
+				love.graphics.setColor(65,105,225,255)
+				love.graphics.rectangle( "fill", player_drawnx+scale+(map_max*scale*xx)-(player.playerx*scale), player_drawny+scale+(map_max*scale*yy)-(player.playery*scale), scale*map_max,scale*map_max )
+				love.graphics.setColor(255, 255, 255,255)
+			end
 			--love.graphics.setColor(255,255,255)
 			
 			for x = 1,map_max do
