@@ -279,6 +279,7 @@ end
 --	end
 --	
 --end
+--drawing the map
 function maplib.draw()
 	love.graphics.setFont(font)
 	for xx  = -max_chunks,max_chunks do
@@ -289,8 +290,13 @@ function maplib.draw()
 				for y = 1,map_max do
 					--love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
 					--print(loaded_chunks[xx][-yy][x][y]["block"])
-					local drawx = (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx
-					local drawy =  (((y*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4
+					--local drawx = (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx
+					--local drawy =  (((y*scale)-((player.playery)*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4
+					
+					local drawx = player_drawnx+(x*scale)+(map_max*scale*xx)-(player.playerx*scale)
+					local drawy = player_drawny+(y*scale)+(map_max*scale*yy)-(player.playery*scale)
+					
+					
 					
 					if drawx >= -scale and drawx < screenwidth and drawy >= -scale and drawy < screenheight then
 						love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  drawx,drawy,0, scale/16, scale/16)

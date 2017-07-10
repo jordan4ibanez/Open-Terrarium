@@ -87,6 +87,10 @@ function love.keypressed( key, scancode, isrepeat )
 		print("generating new map")
 		chunkx,chunky = math.random(-1000,1000),math.random(0,3)
 		maplib.createmap()
+	--resets the offset
+	elseif key == "f3" then
+		offsetx, offsety = 0,0
+		print("resetting offset")
 	end
 	
 
@@ -174,7 +178,7 @@ player_drawnx,player_drawny = 0,0
 function player.draw()
 	love.graphics.setFont(font)
 	--love.graphics.setColor(255,0,0,255)
-	player_drawnx,player_drawny = screenwidth/2-(scale/32),screenheight/2-(scale/32)--((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
+	player_drawnx,player_drawny = screenwidth/2-(scale/32)+offsetx,screenheight/2-(scale/32)+offsety--((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
     --love.graphics.print("8", player_drawnx,player_drawny  )
-    love.graphics.draw(playertexture,  player_drawnx+(scale/4), player_drawny-4,0, scale/32, scale/32)
+    love.graphics.draw(playertexture,  player_drawnx+(scale/4), player_drawny,0, scale/32, scale/32)
 end
