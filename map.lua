@@ -307,7 +307,7 @@ function maplib.draw()
 					--end
 				end
 			end
-			love.graphics.print(tostring(xx).." "..tostring(yy), (((1*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((1*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4, 0, 2, 2)
+			--love.graphics.print(tostring(xx).." "..tostring(yy), (((1*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx, (((1*scale)-(player.playery*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4, 0, 2, 2)
 		end
 	end
 end

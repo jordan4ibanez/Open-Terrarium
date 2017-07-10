@@ -86,7 +86,7 @@ function menu.draw()
 	end
 	--debug player's pos
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print("PosX:"..(player.playerx+(chunkx*map_max)).." PosY:"..((map_max-player.playery)+(chunky*map_max)), 0,20)
+	love.graphics.print("PosX:"..(player.playerx+(chunkx*map_max)).." PosY:"..((map_max-player.playery)+(chunky*map_max)), 5,5)
 	--debug mouse's pos
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("MX:"..mx.." MY:"..my, xxer,36)
