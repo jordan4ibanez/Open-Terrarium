@@ -9,8 +9,8 @@ dofile("tserial.lua")
 dofile("ore.lua")
 dofile("map.lua")
 dofile("menu.lua")
-dofile("collision.lua")
 dofile("player.lua")
+dofile("collision.lua")
 dofile("physics.lua")
 
 --the scale of the map
@@ -23,7 +23,8 @@ screenheight = love.graphics.getHeight( )
 function love.draw()
 	maplib.draw()
 	player.draw()
-	menu.draw()   
+	menu.draw()  
+	love.graphics.rectangle( "line", player_drawnx+(scale/4)+(scale/16), player_drawny, 0.4*scale,1*scale )
 end
 
 function love.load()
@@ -73,5 +74,6 @@ function love.update(dt)
 	end
 	move(dt)
 	physics.player_x_apply(dt)
+	physics.gravity()
 	maplib.new_block(player.playerx,player.playery)
 end

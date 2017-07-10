@@ -98,6 +98,10 @@ function menu.draw()
 	love.graphics.print("Chunky:"..chunky, xxer,72)
 	
 	love.graphics.print("Current FPS:"..tostring(love.timer.getFPS( )), xxer, 84)
+	
+	love.graphics.print("Intx:"..tostring(player.inertiax), xxer, 96)
+	love.graphics.print("Inty:"..tostring(player.inertiay), xxer, 108)
+
 end
 
 function menu.cursor()

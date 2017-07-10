@@ -29,11 +29,14 @@ function move(dt)
 	
 	if love.keyboard.isDown("w") then
 		--jump()
-		physics.player_mod_y(-0.01)
+		physics.player_mod_y(-0.2)
 	end
 	if love.keyboard.isDown("s") then
 		physics.player_mod_y(0.01)
 	end
+	
+	
+	
 	if love.keyboard.isDown("a") then
 	  --player.playerx = player.playerx - 0.1
 	  physics.player_mod_x(-0.01)
@@ -44,7 +47,7 @@ function move(dt)
 	
 	if love.keyboard.isDown("=") then
 		scale = scale + 1
-	elseif love.keyboard.isDown("-") then
+	elseif love.keyboard.isDown("-") and scale > 2 then
 		scale = scale - 1
 	end
 	
@@ -126,7 +129,8 @@ function mine(key)
 	--left mouse button (mine)
 	local left = love.mouse.isDown(1)
 	local right = love.mouse.isDown(2)
-
+	mx = math.floor(mx+0.5)
+	my = math.floor(my+0.5)
 	if mx ~= -1 and my ~= -1 then
 		--play sound and remove tile
 		if left then
