@@ -1,9 +1,10 @@
 --textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
 
 --the directory
-dir = love.filesystem.getAppdataDirectory( )
+debugGraph = require 'modules.debugGraph.debugGraph'
 
 math.randomseed(os.time())
+
 
 dofile("tserial.lua")
 dofile("ore.lua")
@@ -25,9 +26,16 @@ function love.draw()
 	player.draw()
 	menu.draw()  
 	love.graphics.rectangle( "line", player_drawnx+(scale/4)+(scale/16), player_drawny, 0.4*scale,1*scale )
+	fpsGraph:draw()
+	memGraph:draw()
+	dtGraph:draw()
 end
 
 function love.load()
+	fpsGraph = debugGraph:new('fps', 600, 120,100,50,0.01)
+	memGraph = debugGraph:new('mem', 600, 160,100,50,0.01)
+	dtGraph = debugGraph:new('custom', 600, 190,100,50,0.01)
+	
 	maplib.createmap()
 	
 	font = love.graphics.newFont("font.ttf", 12)
@@ -63,6 +71,12 @@ function love.quit( )
 end
 
 function love.update(dt)
+	fpsGraph:update(dt)
+	memGraph:update(dt)
+	-- Update our custom graph
+	dtGraph:update(dt, math.floor(dt * 1000))
+	dtGraph.label = 'DT: ' ..  dt
+	
 	menu.animate()
 	mine(key)
 	--gravity(dt)
