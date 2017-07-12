@@ -8,7 +8,7 @@ function collision(oldposx,oldposy)
 	
 	
 	
-	local xer = {0.3,0.7}
+	local xer = {-0.2,0.2}
 	local yer = {0,1}
 	local fall = true
 	
@@ -16,10 +16,20 @@ function collision(oldposx,oldposy)
 	player.playery = player.playery + player.inertiay
 	for q = 1,2 do
 		for r = 1,2 do
-			local squarex1 = math.floor(player.playerx+xer[q])
-			local squarey1 = math.floor(player.playery+yer[r])
+			local squarex = math.floor(player.playerx+xer[q])
+			local squarey = math.floor(player.playery+yer[r])
+			
+			--use this to detect outside chunk 00
+			local chunkerx = 0
+			local chunkery = 0
+			
+			if squarex < 1 or squarex > map_max then
+				print(squarex)
+			end
+			
+			
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if (player.playerx <= map_max and player.playerx > 1) and (player.playery < map_max and player.playery > 1) and ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
+			if (squarex <= map_max and squarex >= 1) and (squarey <= map_max and squarey >= 1) and ore[loaded_chunks[0][0][squarex][squarey]["block"]]["collide"] ~= false then
 				player.playery = oldposy
 				if r == 2 then
 					player.on_block = true
@@ -40,10 +50,10 @@ function collision(oldposx,oldposy)
 	player.playerx = player.playerx + player.inertiax
 	for q = 1,2 do
 		for r = 1,2 do
-			local squarex1 = math.floor(player.playerx+xer[q])
-			local squarey1 = math.floor(player.playery+yer[r])
+			local squarex = math.floor(player.playerx+xer[q])
+			local squarey = math.floor(player.playery+yer[r])
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if (player.playerx <= map_max and player.playerx > 1) and (player.playery < map_max and player.playery > 1) and ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
+			if (squarex <= map_max and squarex >= 1) and (squarey <= map_max and squarey >= 1) and ore[loaded_chunks[0][0][squarex][squarey]["block"]]["collide"] ~= false then
 				player.inertiax = 0
 				player.playerx = oldposx
 				--print("stopping x inertia and pos")
@@ -51,17 +61,7 @@ function collision(oldposx,oldposy)
 		end
 	end
 end
-function collisionx(oldposx)
-	--do stairs
 
-	
-	
-	local xer = {0.3,0.7}
-	local yer = {0,1}
-	local fall = true
-	
-	
-end
 
 --make the player fall when in air
 gravtimer = 0

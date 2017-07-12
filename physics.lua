@@ -44,6 +44,7 @@ end
 function physics.gravity()
 	if player.on_block == true then
 		--fall damage
+		--[[
 		if lastheight and math.floor(((map_max-player.playery)+(chunky*map_max))) < lastheight - 5 then 
 			--health = health - math.floor(player.inertiay*10)
 			health = health - ((lastheight - 5) - math.floor(((map_max-player.playery)+(chunky*map_max))))
@@ -57,6 +58,7 @@ function physics.gravity()
 				health = 10
 			end
 		end
+		]]--
 		player.inertiay = 0
 		lastheight = math.floor(((map_max-player.playery)+(chunky*map_max)))
 		--print(lastheight)

@@ -180,7 +180,7 @@ function player.draw()
 	--love.graphics.setColor(255,0,0,255)
 	player_drawnx,player_drawny = screenwidth/2-(scale/32)+offsetx,screenheight/2-(scale/32)+offsety--((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
     --love.graphics.print("8", player_drawnx,player_drawny  )
-    love.graphics.draw(playertexture,  player_drawnx+(scale/4), player_drawny,0, scale/32, scale/32)
+    love.graphics.draw(playertexture,  player_drawnx-(scale/4), player_drawny,0, scale/32, scale/32)
 end
 
 
