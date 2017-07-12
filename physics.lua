@@ -24,12 +24,10 @@ function physics.player_mod_y(value)
 end
 --apply left and right
 function physics.player_x_apply(dt)
-	local oldposx,oldposy = player.playerx,player.playery
+	--local oldposx,oldposy = player.playerx,player.playery
 	
-	player.playery = player.playery + player.inertiay
-	collisiony(oldposy)
-	player.playerx = player.playerx + player.inertiax
-	collisionx(oldposx)
+	collision(player.playerx,player.playery)
+	--collisionx(oldposx)
 	--print(player.inertiax)
 	if math.abs(player.inertiax) <= 0.005 then
 		player.inertiax = 0
