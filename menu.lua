@@ -46,7 +46,7 @@ function menu.draw()
 	
 	menu.cursor()
 	love.graphics.setFont(font)
-	love.graphics.setColor(0,0,0,255)
+	love.graphics.setColor(0,0,120,255)
 	for i = 1,characters do
 		love.graphics.print(menutitle[i], screenwidth-260+(12*i)-2,screenheight-10+menu_char[i]+2 )
 	end

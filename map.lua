@@ -5,7 +5,7 @@ maplib = {}
 chunkx,chunky = math.random(-1000,1000),math.random(-1000,-1000)
 
 --tile size
-map_max = 64
+map_max = 25
 
 --ore generation
 ore_min = 1 -- the minimum amount of ore that'll be generated in a map block
@@ -83,17 +83,19 @@ function maplib.new_block(oldposx,oldposy)
 	
 	return true
 end
+
+savethread = love.thread.newThread("saving.lua")
+
+savechannel = love.thread.getChannel("save")
+
+savethread:start()
+
 --saves all memory data into file
 function maplib.save_chunks()
-	local newthread = love.thread.newChannel()
-	for xx  = -max_chunks,max_chunks do
-		for yy  = -max_chunks,max_chunks do
-			love.filesystem.write( "/map/"..chunkx+xx.."_"..chunky+yy..".txt", TSerial.pack(loaded_chunks[xx][yy]))
-			print("saving:"..chunkx+xx.."_"..chunky+yy)
-		end
-	end
+	--print("saving chunks")
+	savechannel:push{max_chunks,chunkx,chunky,loaded_chunks}
 end
-
+--maplib.save_chunks()
 --generates ore
 function maplib.generate_ore(tiles)
 
