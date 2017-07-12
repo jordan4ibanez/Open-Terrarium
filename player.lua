@@ -129,25 +129,29 @@ function mine(key)
 		--play sound and remove tile
 		if left then
 			--print(mx,my)
-			if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
-				minesound:setPitch(love.math.random(50,100)/100)
-				minesound:stop()
-				minesound:play()
-				loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
-				player.mining = true
-				--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
-				
-				score = score + 1
+			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
+				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
+					minesound:setPitch(love.math.random(50,100)/100)
+					minesound:stop()
+					minesound:play()
+					loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
+					player.mining = true
+					--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+					
+					score = score + 1
+				end
 			end
 		elseif right then
-			if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
-				placesound:setPitch(love.math.random(50,100)/100)
-				placesound:stop()
-				placesound:play()
-				loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = player.selected
-				player.mining = false
-				--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
-				score = score + 1
+			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
+				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
+					placesound:setPitch(love.math.random(50,100)/100)
+					placesound:stop()
+					placesound:play()
+					loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = player.selected
+					player.mining = false
+					--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+					score = score + 1
+				end
 			end
 		end
 	end

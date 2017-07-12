@@ -44,14 +44,16 @@ function collision(oldposx,oldposy)
 			--print(chunkerx, chunkery, "|", squarex,squarey)
 			--print( loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"])
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if ore[loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"]]["collide"] ~= false then
-				player.playery = oldposy
-				if r == 2 then
-					player.on_block = true
-					fall = false
-				end
-				if r == 1 then
-					player.on_block = false
+			if loaded_chunks[chunkerx] and loaded_chunks[chunkerx][chunkery] and loaded_chunks[chunkerx][chunkery][squarex] and loaded_chunks[chunkerx][chunkery][squarex][squarey] then
+				if ore[loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"]]["collide"] ~= false then
+					player.playery = oldposy
+					if r == 2 then
+						player.on_block = true
+						fall = false
+					end
+					if r == 1 then
+						player.on_block = false
+					end
 				end
 			end
 		end
@@ -92,10 +94,12 @@ function collision(oldposx,oldposy)
 			end
 			
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if ore[loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"]]["collide"] ~= false then
-				player.inertiax = 0
-				player.playerx = oldposx
-				--print("stopping x inertia and pos")
+			if loaded_chunks[chunkerx] and loaded_chunks[chunkerx][chunkery] and loaded_chunks[chunkerx][chunkery][squarex] and loaded_chunks[chunkerx][chunkery][squarex][squarey] then
+				if ore[loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"]]["collide"] ~= false then
+					player.inertiax = 0
+					player.playerx = oldposx
+					--print("stopping x inertia and pos")
+				end
 			end
 		end
 	end

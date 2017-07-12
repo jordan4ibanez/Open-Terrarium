@@ -76,6 +76,8 @@ function love.quit( )
 end
 
 function love.update(dt)
+
+	maplib.load_chunks()
 	fpsGraph:update(dt)
 	memGraph:update(dt)
 	-- Update our custom graph
