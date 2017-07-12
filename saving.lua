@@ -10,7 +10,7 @@ dofile("tserial.lua")
 --debug info
 
 while true do
-	print("test")
+	--print("test")
 	if savechannel:getCount( ) > 0 then
 		local x = savechannel:pop()
 		local doing = x[1]

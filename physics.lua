@@ -42,31 +42,37 @@ function physics.player_x_apply(dt)
 end
 
 function physics.gravity()
-	if player.on_block == true then
-		--fall damage
-		--[[
-		if lastheight and math.floor(((map_max-player.playery)+(chunky*map_max))) < lastheight - 5 then 
-			--health = health - math.floor(player.inertiay*10)
-			health = health - ((lastheight - 5) - math.floor(((map_max-player.playery)+(chunky*map_max))))
-			oof:setPitch(love.math.random(65,100)/100)
-			oof:stop()
-			oof:play()
-			if health <= 0 then
-				print("died, deleting map")
-				deaths = deaths + 1
-				maplib.delete_map()
-				health = 10
+	if player_in_unloaded_chunk == false then
+		if player.on_block == true then
+			--fall damage
+			--[[
+			if lastheight and math.floor(((map_max-player.playery)+(chunky*map_max))) < lastheight - 5 then 
+				--health = health - math.floor(player.inertiay*10)
+				health = health - ((lastheight - 5) - math.floor(((map_max-player.playery)+(chunky*map_max))))
+				oof:setPitch(love.math.random(65,100)/100)
+				oof:stop()
+				oof:play()
+				if health <= 0 then
+					print("died, deleting map")
+					deaths = deaths + 1
+					maplib.delete_map()
+					health = 10
+				end
+			end
+			]]--
+			player.inertiay = 0
+			lastheight = math.floor(((map_max-player.playery)+(chunky*map_max)))
+			--print(lastheight)
+			--player.on_block = false
+		else
+			if player.inertiay < 0.5 then
+				player.inertiay = player.inertiay  + 0.01
 			end
 		end
-		]]--
-		player.inertiay = 0
-		lastheight = math.floor(((map_max-player.playery)+(chunky*map_max)))
-		--print(lastheight)
-		--player.on_block = false
 	else
-		if player.inertiay < 0.5 then
-			player.inertiay = player.inertiay  + 0.01
-		end
+		print("player in unloaded chunk")
+		player.inertiay = 0
+		player.inertiax = 0
 	end
 
 end

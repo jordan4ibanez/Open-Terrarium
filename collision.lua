@@ -5,6 +5,7 @@
 player.on_block = false
 function collision(oldposx,oldposy)
 	--do stairs
+	player_in_unloaded_chunk = false
 	
 	
 	
@@ -55,6 +56,8 @@ function collision(oldposx,oldposy)
 						player.on_block = false
 					end
 				end
+			else
+				player_in_unloaded_chunk = true
 			end
 		end
 	end
@@ -100,60 +103,11 @@ function collision(oldposx,oldposy)
 					player.playerx = oldposx
 					--print("stopping x inertia and pos")
 				end
+			else
+				player_in_unloaded_chunk = true
 			end
 		end
 	end
 end
 
 
---make the player fall when in air
-gravtimer = 0
-
-function gravity(dt)
-	--don't apply gravity if at bottom
-	--if player.playery == map_max then
-	--	player.playery = player.playery + 1
-	--	maplib.new_block()
-	--	return
-	--end
-	gravtimer = gravtimer + dt
-	--reverse gravity in water
-	if player.playery ~= 1 and ore[loaded_chunks[0][0][player.playerx][player.playery]["block"]]["float"] == true then
-		if gravtimer >= 0.2 then
-			local oldposx,oldposy = player.playerx,player.playery
-			
-			player.playery = player.playery - 1
-			
-			--collision(oldposx,oldposy)
-			
-			gravtimer = 0
-		end
-	elseif player.playery == 1 and ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["float"] == true then
-		if gravtimer >= 0.2 then
-			player.playery = player.playery - 1
-			maplib.new_block()
-		end
-	--else apply normal gravity
-	elseif player.playery ~= map_max and ore[loaded_chunks[0][0][player.playerx][player.playery+1]["block"]]["collide"] == false then
-		
-		if gravtimer >= 0.2 then
-			local oldposx,oldposy = player.playerx,player.playery
-			
-			player.playery = player.playery + 1
-			
-			--collision(oldposx,oldposy)
-			
-			gravtimer = 0
-		end
-	elseif player.playery == map_max and ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
-		--print("applying new chunk gravity")
-		if gravtimer >= 0.2 then
-			player.playery = player.playery + 1
-			maplib.new_block()
-		end
-	else
-		--print("failure")
-		gravtimer = 0
-	end
-
-end

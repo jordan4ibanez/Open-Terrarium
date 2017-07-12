@@ -86,7 +86,6 @@ function love.update(dt)
 	
 	menu.animate()
 	mine(key)
-	--gravity(dt)
 	player.move_camera(dt)
 	maplib.liquid_flow(dt)
 	--debug
