@@ -31,7 +31,7 @@ function move(dt)
 	
 	if love.keyboard.isDown("w") then
 		--jump()
-		physics.player_mod_y(-0.15)
+		physics.player_mod_y(-0.01)
 	end
 	if love.keyboard.isDown("s") then
 		physics.player_mod_y(0.01)

@@ -3,7 +3,7 @@ maplib = {}
 
 
 --chunkx,chunky = math.random(-1000,1000),math.random(-1000,-1000)
-chunkx,chunky = 5,1
+chunkx,chunky = 0,0
 
 --tile size
 map_max = 25
@@ -100,25 +100,48 @@ function maplib.save_chunks()
 end
 --maplib.save_chunks()
 
-
 --watches and tells game to load up map tiles
+buffer = {}
 function maplib.load_chunks()
-	for xx  = -max_chunks,max_chunks do
-		for yy  = -max_chunks,max_chunks do
-			--tell thread to load chunk
+
+	for xx  = chunkx-max_chunks,chunkx+max_chunks do
+		if buffer[xx] == nil then
+			buffer[xx] = {}
+		end
+		if loaded_chunks[xx] == nil then
+			loaded_chunks[xx] = {}
+		end
+		for yy  = chunky-max_chunks,chunky+max_chunks do
+
+			--print(xx,yy)
+			if loaded_chunks[xx][yy] == nil and buffer[xx][yy] == nil then
+				--print("MABLIB LOADCHUNKS")
+				--print("push load")
+				savechannel:push{"load_old",max_chunks,loaded_chunks,xx,yy}
+				buffer[xx][yy] = true
+			end
+		end
+	end
+	
+	
+	local count = loadchannel:getCount()
+	--tell thread to load chunk
+	if count > 0 then
+	
+		--for i = 1,count do
+			print(count)
+		
 			local chunkeyy = loadchannel:pop()
+			
 			local data,xxer,yyer
 			if chunkeyy then
 				data = chunkeyy[1] 
 				xxer = chunkeyy[2]
 				yyer = chunkeyy[3]
 			end
-			if xxer == xx and yyer == yy and loaded_chunks[xx][yy] == nil then
-				loaded_chunks[xx][yy] = data
-			elseif loaded_chunks[xx][yy] == nil then
-				savechannel:push{"load_old",max_chunks,chunkx,chunky,loaded_chunks,xx,yy}
-			end
-		end
+			
+			loaded_chunks[xxer][yyer] = data
+		--end
 	end
 end
 
@@ -195,23 +218,23 @@ render, and modify everything to work correctly with all loaded chunks
 
 --max_chunks = 1 --x * x chunks loaded --does -1 - 1 (-x to x) -- (x * 2) + 1 to get max chunks in memory
 
-
+--create stuff
+if loaded_chunks == nil then
+	loaded_chunks = {} --chunks in mememory
+end
+if not love.filesystem.exists("map") then
+	love.filesystem.createDirectory( "map" )
+end
 
 --generates tile blocks
-function maplib.createmap()
-
-	loaded_chunks = {} --chunks in mememory
-	
-	for xx  = -max_chunks,max_chunks do
-		loaded_chunks[xx] = {}
-		for yy  = -max_chunks,max_chunks do 
-		
-			
-			if not love.filesystem.exists("map") then
-				love.filesystem.createDirectory( "map" )
-			end
-			
-			local block_exists = love.filesystem.exists("/map/"..chunkx+xx.."_"..chunky+yy..".txt")
+function maplib.createmap()	
+	for xx  = chunkx-max_chunks,chunkx+max_chunks do
+		--if loaded_chunks[xx] == nil then
+		--	loaded_chunks[xx] = {}
+		--end
+		for yy  = chunky-max_chunks,chunky+max_chunks do 
+				
+			local block_exists = love.filesystem.exists("/map/"..xx.."_"..yy..".txt")
 			
 			
 			local number = 0
@@ -239,6 +262,9 @@ function maplib.createmap()
 					for x = 1,map_max do
 						tiles[x] = {}
 						yer =  yer + math.random(-1,1)
+						if yer == 1 then
+							yer = 2
+						end
 						for y = 1,map_max do
 							tiles[x][y] =  {}
 							--generate dirt as debug
@@ -277,8 +303,9 @@ function maplib.createmap()
 				end
 				
 				--save
-				love.filesystem.write( "/map/"..chunkx+xx.."_"..chunky+yy..".txt", TSerial.pack(tiles))
-				loaded_chunks[xx][yy] = tiles
+				--love.filesystem.write( "/map/"..xx.."_"..yy..".txt", TSerial.pack(tiles))
+				savechannel:push{"save_new",tiles,xx,yy}
+				--loaded_chunks[xx][yy] = tiles
 			end
 		end
 	end
@@ -307,13 +334,14 @@ end
 --end
 --drawing the map
 function maplib.draw()
-	love.graphics.setFont(font)
-	for xx  = -max_chunks,max_chunks do
-		for yy  = -max_chunks,max_chunks do
+	--love.graphics.setFont(font)
+	for xx  = chunkx-max_chunks,chunkx+max_chunks do
+		for yy  = chunky-max_chunks,chunky+max_chunks do
 			--draw sky
-			if chunky-yy > underground then
+			
+			if yy > underground then
 				love.graphics.setColor(65,105,225,255)
-				love.graphics.rectangle( "fill", player_drawnx+scale+(map_max*scale*xx)-(player.playerx*scale), player_drawny+scale+(map_max*scale*yy)-(player.playery*scale), scale*map_max,scale*map_max )
+				love.graphics.rectangle( "fill", player_drawnx+scale+(map_max*scale*(xx-chunkx))-(player.playerx*scale), player_drawny+scale+(map_max*scale*(chunky-yy))-(player.playery*scale), scale*map_max,scale*map_max )
 				love.graphics.setColor(255, 255, 255,255)
 			end
 			--love.graphics.setColor(255,255,255)
@@ -325,14 +353,15 @@ function maplib.draw()
 					--local drawx = (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx
 					--local drawy =  (((y*scale)-((player.playery)*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4
 					
-					local drawx = player_drawnx+(x*scale)+(map_max*scale*xx)-(player.playerx*scale)
-					local drawy = player_drawny+(y*scale)+(map_max*scale*yy)-(player.playery*scale)
+					local drawx = player_drawnx+(x*scale)+(map_max*scale*(xx-chunkx))-(player.playerx*scale)
+					local drawy = player_drawny+(y*scale)+(map_max*scale*(chunky-yy))-(player.playery*scale)
 					
 					
 					
 					if drawx >= -scale and drawx < screenwidth and drawy >= -scale and drawy < screenheight then
-						if loaded_chunks[xx][-yy] and loaded_chunks[xx][-yy][x] and loaded_chunks[xx][-yy][x][y] then
-							love.graphics.draw(texture_table[loaded_chunks[xx][-yy][x][y]["block"]],  drawx,drawy,0, scale/16, scale/16)
+						if loaded_chunks[xx] and loaded_chunks[xx][yy] and loaded_chunks[xx][yy][x] and loaded_chunks[xx][yy][x][y] then
+							--print("Drawing")
+							love.graphics.draw(texture_table[loaded_chunks[xx][yy][x][y]["block"]],  drawx,drawy,0, scale/16, scale/16)
 						end
 					end
 					--love.graphics.print(,, )
@@ -369,11 +398,11 @@ function maplib.liquid_flow(dt)
 	local after_table = {}
 	if flowtimer > 0.1 then
 		flowtimer = 0
-		for xx  = -max_chunks,max_chunks do
+		for xx  = chunkx-max_chunks,chunkx+max_chunks do
 			--if not after_table[xx] then
 			--	after_table[xx] = {}
 			--end
-			for yy  = -max_chunks,max_chunks do
+			for yy  = chunky-max_chunks,chunky+max_chunks do
 				--if not after_table[xx][yy] then
 				--	after_table[xx][yy] = {}
 				--end
