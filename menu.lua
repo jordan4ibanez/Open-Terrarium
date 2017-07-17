@@ -115,9 +115,11 @@ function menu.cursor()
 	local xx,yy = math.floor((x-player_drawnx)/scale)*scale,math.floor((y-player_drawny)/scale)*scale
 
 
-	mx,my = player.playerx + (xx/scale),player.playery + (yy/scale)
+	mx,my = math.floor(player.playerx + (xx/scale) + 0.5),math.floor(player.playery + (yy/scale) + 0.5)
 	
-	selected_chunkx,selected_chunky = 0,0
+	
+	
+	selected_chunkx,selected_chunky = chunkx,chunky
 	--only change and draw if in boundaries
 	if ((mx >= 1 and mx <= map_max) and (my >= 1 and my <= map_max)) and (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
 		love.graphics.rectangle("line", player_drawnx+xx, player_drawny+yy, scale, scale )
@@ -130,26 +132,27 @@ function menu.cursor()
 		--overreach x
 		if mx > map_max then
 			mx = mx - map_max
-			selected_chunkx = 1
+			selected_chunkx = chunkx + 1
 		elseif mx < 1 then
 			mx = mx + map_max
-			selected_chunkx = -1
+			selected_chunkx = chunkx - 1
 		else
-			--mx = 0
+			--selected_chunkx = chunkx
 		end
 		
 		
 		--overreach y
 		if my < 1 then
 			my = my + map_max
-			selected_chunky = 1
-			--print("up")
+			selected_chunky = chunky + 1
+			print("up")
 		elseif my > map_max then
 			my = my - map_max
-			selected_chunky = -1
-			--print("down")
-		--else
-			--my = 0
+			selected_chunky = chunky - 1
+			print("down")
+		else
+			--print("current")
+			--selected_chunky = chunky
 		end
 		--print("chunkey:"..chunkey.."|my:"..my)
 		

@@ -45,8 +45,8 @@ function collision(oldposx,oldposy)
 			--print(chunkerx, chunkery, "|", squarex,squarey)
 			--print( loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"])
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if loaded_chunks[chunkerx] and loaded_chunks[chunkerx][chunkery] and loaded_chunks[chunkerx][chunkery][squarex] and loaded_chunks[chunkerx][chunkery][squarex][squarey] then
-				if ore[loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"]]["collide"] ~= false then
+			if loaded_chunks[chunkx+chunkerx] and loaded_chunks[chunkx+chunkerx][chunkery+chunky] and loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex] and loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex][squarey] then
+				if ore[loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex][squarey]["block"]]["collide"] ~= false then
 					player.playery = oldposy
 					if r == 2 then
 						player.on_block = true
@@ -73,6 +73,7 @@ function collision(oldposx,oldposy)
 			local squarex = math.floor(player.playerx+xer[q])
 			local squarey = math.floor(player.playery+yer[r])
 			
+			--print(squarex)
 			--use this to detect outside chunk 00
 			local chunkerx = 0
 			local chunkery = 0
@@ -97,8 +98,8 @@ function collision(oldposx,oldposy)
 			end
 			
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or ore[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
-			if loaded_chunks[chunkerx] and loaded_chunks[chunkerx][chunkery] and loaded_chunks[chunkerx][chunkery][squarex] and loaded_chunks[chunkerx][chunkery][squarex][squarey] then
-				if ore[loaded_chunks[chunkerx][chunkery][squarex][squarey]["block"]]["collide"] ~= false then
+			if loaded_chunks[chunkx+chunkerx] and loaded_chunks[chunkx+chunkerx][chunkery+chunky] and loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex] and loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex][squarey] then
+				if ore[loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex][squarey]["block"]]["collide"] ~= false then
 					player.inertiax = 0
 					player.playerx = oldposx
 					--print("stopping x inertia and pos")

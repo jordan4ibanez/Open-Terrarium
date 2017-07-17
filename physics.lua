@@ -16,7 +16,7 @@ end
 function physics.player_mod_y(value)
 	--print(player.inertiay+value)
 	--print(player.on_block)
-	player.inertiay = player.inertiay + value
+	--player.inertiay = player.inertiay + value
 	
 	if  player.on_block == true then
 		--print("jump")
@@ -29,44 +29,10 @@ function physics.player_x_apply(dt)
 	--local oldposx,oldposy = player.playerx,player.playery
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	--DEBUG
-	
-	--
-	--collision(player.playerx,player.playery)
-	--
-	
-	player.playery = player.playery + player.inertiay
-	player.playerx = player.playerx + player.inertiax
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+	collision(player.playerx,player.playery)
+
 	--collisionx(oldposx)
 	--print(player.inertiax)
 	if math.abs(player.inertiax) <= 0.005 then
@@ -105,12 +71,12 @@ function physics.gravity()
 			--print(lastheight)
 			--player.on_block = false
 		else
-			if player.inertiay < 0.5 then
+			if player.inertiay < 0.3 then
 				player.inertiay = player.inertiay  + 0.01
 			end
 		end
 	else
-		--print("player in unloaded chunk")
+		print("player in unloaded chunk")
 		--player.inertiay = 0
 		--player.inertiax = 0
 	end
