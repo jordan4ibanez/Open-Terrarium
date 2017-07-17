@@ -6,7 +6,7 @@ maplib = {}
 chunkx,chunky = 0,0
 
 --tile size
-map_max = 25
+map_max = 32
 
 --ore generation
 ore_min = 1 -- the minimum amount of ore that'll be generated in a map block
@@ -28,7 +28,7 @@ earth_max = 2
 
 --max chunks loaded ( chunk x chunk )
 --the render distance
-max_chunks = 3 --normal 1 -x to x * -x to x
+max_chunks = 1 --normal 1 -x to x * -x to x
 
 --water height on the surface
 water_height = 17

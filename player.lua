@@ -49,7 +49,7 @@ function move(dt)
 	
 	if love.keyboard.isDown("=") and scale < 80 then
 		scale = scale + 1
-	elseif love.keyboard.isDown("-") and scale > 15 then
+	elseif love.keyboard.isDown("-") and scale > 15 then --15
 		scale = scale - 1
 	end
 	
