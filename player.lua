@@ -47,9 +47,9 @@ function move(dt)
 	  physics.player_mod_x(0.01)
 	end
 	
-	if love.keyboard.isDown("=") then
+	if love.keyboard.isDown("=") and scale < 80 then
 		scale = scale + 1
-	elseif love.keyboard.isDown("-") and scale > 2 then
+	elseif love.keyboard.isDown("-") and scale > 15 then
 		scale = scale - 1
 	end
 	

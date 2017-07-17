@@ -28,7 +28,7 @@ while true do
 				for yy  = chunky-max_chunks,chunky+max_chunks do
 					if loaded_chunks[xx] and loaded_chunks[xx][yy] then
 						love.filesystem.write( "/map/"..xx.."_"..yy..".txt", TSerial.pack(loaded_chunks[xx][yy]))
-						print("saving:"..xx.."_"..yy)
+						--print("saving:"..xx.."_"..yy)
 					end
 				end
 			end

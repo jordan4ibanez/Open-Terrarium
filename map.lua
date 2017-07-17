@@ -27,7 +27,8 @@ underground = 0
 earth_max = 2
 
 --max chunks loaded ( chunk x chunk )
-max_chunks = 1 --normal 1 -x to x * -x to x
+--the render distance
+max_chunks = 3 --normal 1 -x to x * -x to x
 
 --water height on the surface
 water_height = 17
@@ -40,7 +41,7 @@ function maplib.new_block(oldposx,oldposy)
 			maplib.save_chunks()
 			chunkx = chunkx - 1
 			maplib.createmap() -- create a new block
-			player.playerx = map_max -- put player on other side of screen		
+			player.playerx = player.playerx+map_max -- put player on other side of screen		
 			print(" block x -1")
 			return false
 		--else
@@ -51,7 +52,7 @@ function maplib.new_block(oldposx,oldposy)
 			maplib.save_chunks()
 			chunkx = chunkx + 1
 			maplib.createmap() -- create a new block
-			player.playerx = 1 -- put player on other side of screen
+			player.playerx = player.playerx - map_max -- put player on other side of screen
 			print("block x +1")
 			return false
 		--else
@@ -63,7 +64,7 @@ function maplib.new_block(oldposx,oldposy)
 			maplib.save_chunks()
 			chunky = chunky + 1
 			maplib.createmap() -- create a new block
-			player.playery = map_max -- put player on other side of screen
+			player.playery = player.playery+map_max  -- put player on other side of screen
 			print(" block y -1")
 			return false
 		---else
@@ -74,7 +75,7 @@ function maplib.new_block(oldposx,oldposy)
 			maplib.save_chunks()
 			chunky = chunky - 1
 			maplib.createmap() -- create a new block
-			player.playery = 1 -- put player on other side of screen
+			player.playery = player.playery - map_max -- put player on other side of screen
 			print("block y +1")
 			return false
 		--else
@@ -129,7 +130,7 @@ function maplib.load_chunks()
 	if count > 0 then
 	
 		--for i = 1,count do
-			print(count)
+			--print(count)
 		
 			local chunkeyy = loadchannel:pop()
 			
