@@ -335,9 +335,6 @@ end
 --end
 --drawing the map
 function maplib.draw()
-
-	--OPTIMIZE THIS FOR ONLY LOCAL CHUNKS
-
 	--love.graphics.setFont(font)
 	for xx  = chunkx-max_chunks,chunkx+max_chunks do
 		for yy  = chunky-max_chunks,chunky+max_chunks do

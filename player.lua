@@ -177,17 +177,6 @@ end
 
 
 
-player_drawnx,player_drawny = 0,0
-
-function player.draw()
-	love.graphics.setFont(font)
-	--love.graphics.setColor(255,0,0,255)
-	player_drawnx,player_drawny = screenwidth/2-(scale/32)+offsetx,screenheight/2-(scale/32)+offsety--((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
-    --love.graphics.print("8", player_drawnx,player_drawny  )
-    love.graphics.draw(playertexture,  player_drawnx-(scale/4), player_drawny,0, scale/32, scale/32)
-end
-
-
 function player.draw_health()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("Health:", 4,screenheight-32)
@@ -195,3 +184,109 @@ function player.draw_health()
 		love.graphics.draw(heart,  (i-1)*16, screenheight-16,0, 1,1)
 	end
 end
+
+
+--render player with animation
+
+--load up the player's character textures
+function load_player_textures()
+
+	
+	player_head = love.graphics.newImage("textures/player_head.png")
+	player_arm = love.graphics.newImage("textures/player_arm.png")
+	player_body = love.graphics.newImage("textures/player_body.png")
+	player_leg = love.graphics.newImage("textures/player_leg.png")
+	
+end
+
+player_drawnx,player_drawny = 0,0
+
+leg_animation = 0
+leg_animation_up = true
+
+
+arm_animation = 0
+arm_animation_up = true
+function player.draw()
+	--love.graphics.setFont(font)
+	--love.graphics.setColor(255,0,0,255)
+	player_drawnx,player_drawny = screenwidth/2-(scale/32)+offsetx,screenheight/2-(scale/32)+offsety--((scale*map_max)/2)+offsetx,((scale*map_max)/2)+offsety
+    --love.graphics.print("8", player_drawnx,player_drawny  )
+    
+    --[[
+    NOTE, THE MULTIPLIER BY X AND Y IS HOW MANY PIXELS
+    
+    x is how many pixels, subtracting from drawn x is left, adding is to the right
+    
+    player_drawnx-((scale/32)*x)
+    
+    ]]--
+    
+    --leg animation
+	if leg_animation_up == true then
+		leg_animation = leg_animation + math.abs(player.inertiax)
+
+		if leg_animation >= 1 then
+			leg_animation_up = false
+		end
+	elseif leg_animation_up == false then
+		leg_animation = leg_animation - math.abs(player.inertiax)
+
+		if leg_animation <= -1 then
+			leg_animation_up = true
+		end
+	end
+	
+	
+	--arm animation
+	if arm_animation_up == true then
+		arm_animation = arm_animation + math.abs(player.inertiax)
+
+		if arm_animation >= 1 then
+			arm_animation_up = false
+		end
+	elseif arm_animation_up == false then
+		arm_animation = arm_animation - math.abs(player.inertiax)
+
+		if arm_animation <= -1 then
+			arm_animation_up = true
+		end
+	end
+    
+    
+    
+	
+	--left leg
+	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/32)*20),leg_animation, scale/32, scale/32,2,0)
+	
+	--right leg
+	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/32)*20),-leg_animation, scale/32, scale/32,2,0)
+	
+	
+	
+	--left arm
+	love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),arm_animation, scale/32, scale/32,2,0)
+	
+	--body
+	love.graphics.draw(player_body,  player_drawnx, player_drawny+((scale/32)*8),0, scale/32, scale/32,2,0)
+	
+	--right arm
+	love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),-arm_animation, scale/32, scale/32,2,0)
+	
+	--head
+	love.graphics.draw(player_head,  player_drawnx, player_drawny+((scale/32)*4),0, scale/32, scale/32,4,4)
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+    
+    love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny, 0.4*scale,1*scale )
+end
+
+

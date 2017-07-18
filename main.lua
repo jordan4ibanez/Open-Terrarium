@@ -18,7 +18,7 @@ dofile("collision.lua")
 dofile("physics.lua")
 
 --the scale of the map
-scale = 16
+scale = 280
 
 screenwidth = love.graphics.getWidth( )
 
@@ -28,7 +28,6 @@ function love.draw()
 	maplib.draw()
 	player.draw()
 	menu.draw()  
-	love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny, 0.4*scale,1*scale )
 	fpsGraph:draw()
 	memGraph:draw()
 	dtGraph:draw()
@@ -36,6 +35,12 @@ function love.draw()
 end
 
 function love.load()
+
+
+	love.graphics.setDefaultFilter( "nearest", "nearest", 0 )
+	
+	load_player_textures()
+	
 	fpsGraph = debugGraph:new('fps', 600, 120,100,50,0.01)
 	memGraph = debugGraph:new('mem', 600, 160,100,50,0.01)
 	dtGraph = debugGraph:new('custom', 600, 190,100,50,0.01)
@@ -64,7 +69,7 @@ function love.load()
 		i = i + 1
 	end
 	
-	playertexture = love.graphics.newImage("textures/player.png")
+	--playertexture = love.graphics.newImage("textures/player.png")
 	heart = love.graphics.newImage("textures/heart.png")
 	
 	--menu_music:play()
