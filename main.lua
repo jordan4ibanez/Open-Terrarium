@@ -10,6 +10,7 @@ math.randomseed(os.time())
 
 
 dofile("tserial.lua")
+dofile("pause.lua")
 dofile("ore.lua")
 dofile("map.lua")
 dofile("menu.lua")
@@ -74,7 +75,7 @@ function love.load()
 	--playertexture = love.graphics.newImage("textures/player.png")
 	heart = love.graphics.newImage("textures/heart.png")
 	
-	--menu_music:play()
+	menu_music:play()
 end
 
 function love.quit( )
@@ -84,6 +85,8 @@ end
 
 function love.update(dt)
 
+	pause_game()
+	
 	maplib.load_chunks()
 	fpsGraph:update(dt)
 	memGraph:update(dt)

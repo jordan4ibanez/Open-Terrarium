@@ -75,6 +75,7 @@ function love.keypressed( key, scancode, isrepeat )
 	--quit
 	if key == "escape" then
 		love.event.push('quit')
+		--pause = true
 	end
 
 
@@ -129,7 +130,9 @@ function load_mining_textured()
 
 end
 
-mine_process = 0 
+mine_process = 0
+
+old_mine_process = 0
 
 function mine(key,dt)
 	--left mouse button (mine)
@@ -144,15 +147,25 @@ function mine(key,dt)
 			--print(mx,my)
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
 				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
+					
+					player.mining = true
+					
 					mine_process = mine_process + 0.1
 					
+					if math.ceil(mine_process) > math.ceil(old_mine_process) then
+						minesound:setPitch(love.math.random(70,90)/100)
+						minesound:stop()
+						minesound:play()
+					end
+					
+					old_mine_process = mine_process
 					if mine_process >= 10 then
 						mine_process = 0
-						minesound:setPitch(love.math.random(50,100)/100)
+						minesound:setPitch(love.math.random(90,100)/100)
 						minesound:stop()
 						minesound:play()
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
-						player.mining = true
+						
 						--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
 						
 						score = score + 1
@@ -161,6 +174,7 @@ function mine(key,dt)
 			end
 		elseif right then
 			mine_process = 0
+			old_mine_process = 0
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
 				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
 					placesound:setPitch(love.math.random(50,100)/100)
@@ -174,6 +188,7 @@ function mine(key,dt)
 			end
 		else 
 			mine_process = 0
+			old_mine_process = 0
 		end
 	end
 end
