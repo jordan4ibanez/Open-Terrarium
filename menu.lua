@@ -122,7 +122,9 @@ function menu.cursor()
 	selected_chunkx,selected_chunky = chunkx,chunky
 	--only change and draw if in boundaries
 	if ((mx >= 1 and mx <= map_max) and (my >= 1 and my <= map_max)) and (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
-		love.graphics.rectangle("line", player_drawnx+xx, player_drawny+yy, scale, scale )
+		local draw_selection_x = player_drawnx+(mx*scale)-(player.playerx*scale)
+		local draw_selection_y = player_drawny+(my*scale)-(player.playery*scale)
+		love.graphics.rectangle("line",draw_selection_x, draw_selection_y, scale, scale )
 		
 	--reach outside of chunk
 	elseif (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
@@ -157,7 +159,9 @@ function menu.cursor()
 		--print("chunkey:"..chunkey.."|my:"..my)
 		
 		--print(selected_chunkx, selected_chunky)
-		love.graphics.rectangle("line", player_drawnx+xx, player_drawny+yy, scale, scale )
+		local draw_selection_x = player_drawnx+(mx*scale)+(map_max*scale*(selected_chunkx-chunkx))-(player.playerx*scale)
+		local draw_selection_y = player_drawny+(my*scale)+(map_max*scale*(selected_chunky-chunky))-(player.playery*scale)
+		love.graphics.rectangle("line", draw_selection_x, draw_selection_y, scale, scale )
 		
 	else
 		mx,my = -1,-1
