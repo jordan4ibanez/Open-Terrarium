@@ -138,13 +138,13 @@ function mine(key,dt)
 	mx = math.floor(mx+0.5)
 	my = math.floor(my+0.5)
 	if mx ~= -1 and my ~= -1 and mx >= 1 and mx <= map_max and my >= 1 and my <= map_max then
-		print(mine_process)
+		--print(mine_process)
 		--play sound and remove tile
 		if left then
 			--print(mx,my)
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
 				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
-					mine_process = mine_process + 0.5
+					mine_process = mine_process + 0.1
 					
 					if mine_process >= 10 then
 						mine_process = 0
@@ -228,6 +228,13 @@ leg_animation_up = true
 
 arm_animation = 0
 arm_animation_up = true
+
+
+mining_animation = 0
+mining_animation_up = false
+
+
+
 function player.draw()
 	--love.graphics.setFont(font)
 	--love.graphics.setColor(255,0,0,255)
@@ -306,6 +313,39 @@ function player.draw()
 		end
 	end
     
+    --mining animation
+    --get to -1.5
+    
+	if mine_process ~= 0 then
+		if mining_animation_up == true then
+			mining_animation = mining_animation + 0.1
+
+			if mining_animation >= -0.8 then
+				mining_animation_up = false
+			end
+		elseif mining_animation_up == false then
+			mining_animation = mining_animation - 0.1
+
+			if mining_animation <= -2.2 then
+				mining_animation_up = true
+			end
+		end
+	else --return animation to normal
+		--print("return to normal "..mining_animation)
+		--return to 0 
+		if mining_animation > -0.05 and mining_animation < 0.05 then
+			mining_animation = 0
+		end
+	
+		--push back
+		if mining_animation > 0 then
+			print("animation down")
+			mining_animation = mining_animation - 0.05
+		elseif mining_animation < 0 then
+			print("animation up")
+			mining_animation = mining_animation + 0.05
+		end
+	end
     
     
 	
@@ -323,8 +363,13 @@ function player.draw()
 	--body
 	love.graphics.draw(player_body,  player_drawnx, player_drawny+((scale/32)*8),0, scale/32, scale/32,2,0)
 	
-	--right arm
-	love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),-arm_animation, scale/32, scale/32,2,0)
+	--mining animation
+	if mine_process == 0 and mining_animation == 0 then
+		--right arm
+		love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),-arm_animation, scale/32, scale/32,2,0)
+	else
+		love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),mining_animation, scale/32, scale/32,2,0)
+	end
 	
 	--head
 	love.graphics.draw(player_head,  player_drawnx, player_drawny+((scale/32)*4),0, scale/32, scale/32,4,4)

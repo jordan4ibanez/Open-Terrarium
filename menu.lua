@@ -115,7 +115,7 @@ function menu.cursor()
 	local xx,yy = math.floor((x-player_drawnx)/scale)*scale,math.floor((y-player_drawny)/scale)*scale
 
 
-	mx,my = math.floor(player.playerx + (xx/scale) + 0.5),math.floor(player.playery + (yy/scale) + 0.5)
+	mx,my = math.floor(player.playerx + (xx/scale)),math.floor(player.playery + (yy/scale))
 	
 	
 	
