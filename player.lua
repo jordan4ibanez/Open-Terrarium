@@ -340,13 +340,13 @@ function player.draw()
     
 	if mine_process ~= 0 then
 		if mining_animation_up == true then
-			mining_animation = mining_animation + 0.1
+			mining_animation = mining_animation + 0.4
 
 			if mining_animation >= -0.8 then
 				mining_animation_up = false
 			end
 		elseif mining_animation_up == false then
-			mining_animation = mining_animation - 0.1
+			mining_animation = mining_animation - 0.4
 
 			if mining_animation <= -2.2 then
 				mining_animation_up = true
