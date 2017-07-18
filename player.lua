@@ -339,10 +339,10 @@ function player.draw()
 	
 		--push back
 		if mining_animation > 0 then
-			print("animation down")
+			--print("animation down")
 			mining_animation = mining_animation - 0.05
 		elseif mining_animation < 0 then
-			print("animation up")
+			--print("animation up")
 			mining_animation = mining_animation + 0.05
 		end
 	end

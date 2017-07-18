@@ -114,26 +114,11 @@ function menu.cursor()
 	--local xx,yy = math.floor(x/scale),math.floor((y+3)/scale)
 	local xx,yy = ((x-player_drawnx)/scale)*scale,((y-player_drawny)/scale)*scale
 
-
-	local adderx = 0
-	local addery = 0
-
-	if chunkx < 0 then
-		adderx = 0.5
-	elseif chunkx > 0 then
-		adderx = -0.5
-	end
-	
-	if chunky < 0 then
-		addery = 0.5
-	elseif chunky > 0 then
-		addery = -0.5 
-	end
 		
 
 	mx,my = math.floor(player.playerx + (xx/scale)),math.floor(player.playery + (yy/scale))
 	
-	print(mx,my)
+	--print(mx,my)
 	
 	
 	
