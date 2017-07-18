@@ -223,33 +223,65 @@ function player.draw()
     ]]--
     
     --leg animation
-	if leg_animation_up == true then
-		leg_animation = leg_animation + math.abs(player.inertiax)
+    if player.inertiax ~= 0 then
+		if leg_animation_up == true then
+			leg_animation = leg_animation + math.abs(player.inertiax)
 
-		if leg_animation >= 1 then
-			leg_animation_up = false
+			if leg_animation >= 1 then
+				leg_animation_up = false
+			end
+		elseif leg_animation_up == false then
+			leg_animation = leg_animation - math.abs(player.inertiax)
+
+			if leg_animation <= -1 then
+				leg_animation_up = true
+			end
 		end
-	elseif leg_animation_up == false then
-		leg_animation = leg_animation - math.abs(player.inertiax)
-
-		if leg_animation <= -1 then
-			leg_animation_up = true
+	else --return animation to normal
+		--return to 0 
+		if leg_animation > -0.05 and leg_animation < 0.05 then
+			leg_animation = 0
+		end
+	
+		--push back
+		if leg_animation > 0 then
+			--print("animation down")
+			leg_animation = leg_animation - 0.05
+		elseif leg_animation < 0 then
+			--print("animation up")
+			leg_animation = leg_animation + 0.05
 		end
 	end
 	
 	
 	--arm animation
-	if arm_animation_up == true then
-		arm_animation = arm_animation + math.abs(player.inertiax)
+	if player.inertiax ~= 0 then
+		if arm_animation_up == true then
+			arm_animation = arm_animation + math.abs(player.inertiax)
 
-		if arm_animation >= 1 then
-			arm_animation_up = false
+			if arm_animation >= 1 then
+				arm_animation_up = false
+			end
+		elseif arm_animation_up == false then
+			arm_animation = arm_animation - math.abs(player.inertiax)
+
+			if arm_animation <= -1 then
+				arm_animation_up = true
+			end
 		end
-	elseif arm_animation_up == false then
-		arm_animation = arm_animation - math.abs(player.inertiax)
-
-		if arm_animation <= -1 then
-			arm_animation_up = true
+	else --return animation to normal
+		--return to 0 
+		if arm_animation > -0.05 and arm_animation < 0.05 then
+			arm_animation = 0
+		end
+	
+		--push back
+		if arm_animation > 0 then
+			--print("animation down")
+			arm_animation = arm_animation - 0.05
+		elseif leg_animation < 0 then
+			--print("animation up")
+			arm_animation = arm_animation + 0.05
 		end
 	end
     
