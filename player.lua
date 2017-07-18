@@ -239,7 +239,7 @@ player_drawnx,player_drawny = 0,0
 
 leg_animation = 0
 leg_animation_up = true
-
+old_leg_animation = 0
 
 arm_animation = 0
 arm_animation_up = true
@@ -296,6 +296,13 @@ function player.draw()
 		end
 	end
 	
+	if (leg_animation > -0.1 and leg_animation < 0.1) and not (old_leg_animation > -0.1 and old_leg_animation < 0.1) then
+		stepsound:setPitch(love.math.random(80,100)/100)
+		stepsound:stop()
+		stepsound:play()
+	end
+	
+	old_leg_animation = leg_animation
 	
 	--arm animation
 	if player.inertiax ~= 0 then

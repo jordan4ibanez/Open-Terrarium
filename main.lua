@@ -57,10 +57,10 @@ function love.load()
 	love.graphics.setFont(font)
 	
 	
-	minesound = love.audio.newSource("mine.ogg", "static")
-	placesound = love.audio.newSource("place.ogg", "static")
-	stepsound = love.audio.newSource("step.ogg", "static")
-	oof = love.audio.newSource("oof.ogg", "static")
+	minesound = love.audio.newSource("sounds/mine.ogg", "static")
+	placesound = love.audio.newSource("sounds/place.ogg", "static")
+	stepsound = love.audio.newSource("sounds/step.ogg", "static")
+	oof = love.audio.newSource("sounds/oof.ogg", "static")
 	menu_music = love.audio.newSource("sounds/menu_music.ogg")
 	menu_music:setLooping(true)
 	
