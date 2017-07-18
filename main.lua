@@ -19,7 +19,7 @@ dofile("collision.lua")
 dofile("physics.lua")
 
 --the scale of the map
-scale = 280
+scale = 150
 
 screenwidth = love.graphics.getWidth( )
 
