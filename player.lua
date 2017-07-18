@@ -119,29 +119,48 @@ function jump()
 end
 
 --mining and placing
-function mine(key)
+
+function load_mining_textured()
+	mining_texture = {}
+	
+	for i = 1,10 do
+		mining_texture[i] = love.graphics.newImage("textures/mining_"..tostring(i)..".png")
+	end
+
+end
+
+mine_process = 0 
+
+function mine(key,dt)
 	--left mouse button (mine)
 	local left = love.mouse.isDown(1)
 	local right = love.mouse.isDown(2)
 	mx = math.floor(mx+0.5)
 	my = math.floor(my+0.5)
 	if mx ~= -1 and my ~= -1 and mx >= 1 and mx <= map_max and my >= 1 and my <= map_max then
+		print(mine_process)
 		--play sound and remove tile
 		if left then
 			--print(mx,my)
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
 				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
-					minesound:setPitch(love.math.random(50,100)/100)
-					minesound:stop()
-					minesound:play()
-					loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
-					player.mining = true
-					--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+					mine_process = mine_process + 0.5
 					
-					score = score + 1
+					if mine_process >= 10 then
+						mine_process = 0
+						minesound:setPitch(love.math.random(50,100)/100)
+						minesound:stop()
+						minesound:play()
+						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
+						player.mining = true
+						--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+						
+						score = score + 1
+					end
 				end
 			end
 		elseif right then
+			mine_process = 0
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
 				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
 					placesound:setPitch(love.math.random(50,100)/100)
@@ -153,6 +172,8 @@ function mine(key)
 					score = score + 1
 				end
 			end
+		else 
+			mine_process = 0
 		end
 	end
 end
@@ -309,15 +330,6 @@ function player.draw()
 	love.graphics.draw(player_head,  player_drawnx, player_drawny+((scale/32)*4),0, scale/32, scale/32,4,4)
 	
 	
-	
-	
-	
-	
-	
-	
-
-	
-    
     love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny, 0.4*scale,1*scale )
 end
 

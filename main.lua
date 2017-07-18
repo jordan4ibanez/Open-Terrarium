@@ -39,6 +39,8 @@ function love.load()
 
 	love.graphics.setDefaultFilter( "nearest", "nearest", 0 )
 	
+	load_mining_textured()
+	
 	load_player_textures()
 	
 	fpsGraph = debugGraph:new('fps', 600, 120,100,50,0.01)
@@ -90,7 +92,7 @@ function love.update(dt)
 	dtGraph.label = 'DT: ' ..  dt
 	
 	menu.animate()
-	mine(key)
+	mine(key,dt)
 	player.move_camera(dt)
 	maplib.liquid_flow(dt)
 	--debug

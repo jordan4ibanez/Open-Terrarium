@@ -125,6 +125,9 @@ function menu.cursor()
 		local draw_selection_x = player_drawnx+(mx*scale)-(player.playerx*scale)
 		local draw_selection_y = player_drawny+(my*scale)-(player.playery*scale)
 		love.graphics.rectangle("line",draw_selection_x, draw_selection_y, scale, scale )
+		if mine_process > 0 then
+			love.graphics.draw(mining_texture[math.ceil(mine_process)],  draw_selection_x, draw_selection_y,0, scale/16, scale/16,0,0)
+		end
 		
 	--reach outside of chunk
 	elseif (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
@@ -160,9 +163,12 @@ function menu.cursor()
 		
 		--print(selected_chunkx, selected_chunky)
 		local draw_selection_x = player_drawnx+(mx*scale)+(map_max*scale*(selected_chunkx-chunkx))-(player.playerx*scale)
-		local draw_selection_y = player_drawny+(my*scale)+(map_max*scale*(selected_chunky-chunky))-(player.playery*scale)
-		love.graphics.rectangle("line", draw_selection_x, draw_selection_y, scale, scale )
+		local draw_selection_y = player_drawny+(my*scale)+(map_max*scale*(chunky-selected_chunky))-(player.playery*scale)
 		
+		love.graphics.rectangle("line", draw_selection_x, draw_selection_y, scale, scale )
+		if mine_process > 0 then
+			love.graphics.draw(mining_texture[math.ceil(mine_process)],  draw_selection_x, draw_selection_y,0, scale/16, scale/16,0,0)
+		end
 	else
 		mx,my = -1,-1
 	end
