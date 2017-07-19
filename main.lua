@@ -92,7 +92,10 @@ function love.quit( )
 	return nil
 end
 
-function love.update(dt)
+function love.update(dt)	
+	physics.gravity()
+	move(dt)
+	physics.player_x_apply(dt)
 
 	pause_game()
 	
@@ -111,8 +114,7 @@ function love.update(dt)
 	if love.keyboard.isDown("space") then
 		print("clear")
 	end
-	move(dt)
-	physics.player_x_apply(dt)
-	physics.gravity()
-	maplib.new_block(player.playerx,player.playery)
+	
+	maplib.new_block(player.playerx,player.playery)	
+	
 end

@@ -24,7 +24,7 @@ function inventory_add(item)
 	--for slot,table in pairs(inventory) do
 	for i = 1,table.getn(inventory) do
 		local table = inventory[i]
-		if table["id"] == item then
+		if table["id"] == item and table["count"] < 64 then
 --			print("HERE")
 			inventory[i]["count"] = inventory[i]["count"] + 1
 			return

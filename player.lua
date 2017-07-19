@@ -174,7 +174,7 @@ function mine(key,dt)
 					
 					player.mining = true
 					
-					mine_process = mine_process + 0.5
+					mine_process = mine_process + 1
 					
 					if math.ceil(mine_process) > math.ceil(old_mine_process) then
 						minesound:setPitch(love.math.random(70,90)/100)
