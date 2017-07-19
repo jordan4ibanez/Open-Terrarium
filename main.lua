@@ -1,5 +1,9 @@
 
-print("keep everything in memory until save, or until close game")
+for i = 1,100 do
+
+	print("Fix collision detection on chunk border")
+	
+end
 
 --textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
 
@@ -75,7 +79,7 @@ function love.load()
 	--playertexture = love.graphics.newImage("textures/player.png")
 	heart = love.graphics.newImage("textures/heart.png")
 	
-	menu_music:play()
+	--menu_music:play()
 end
 
 function love.quit( )

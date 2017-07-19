@@ -176,6 +176,11 @@ function menu.cursor()
 		mx,my = -1,-1
 	end
 	
+	if mine_process ~= 0 and (mx ~= old_mx or my ~= old_my) then
+		mine_process = 0
+	end
 	
+	
+	old_mx,old_my = mx,my
 
 end
