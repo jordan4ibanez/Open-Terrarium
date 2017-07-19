@@ -42,6 +42,9 @@ function love.draw()
 end
 
 function love.load()
+
+	player_restore()
+	
 	load_inventory_textures()
 
 	love.graphics.setDefaultFilter( "nearest", "nearest", 0 )

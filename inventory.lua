@@ -7,14 +7,17 @@ inventory = {}
 inventory_selection = 1
 
 
-for i = 1,inventory_size do
-	inventory[i] = {}
-	--if i > table.getn(blocks) then
-	--	inventory[i] = {id = i-table.getn(blocks),name = blocks[i-table.getn(blocks)]["name"],image = blocks[i-table.getn(blocks)]["image"],count = 1}
-	--else
-	--	inventory[i] = {id = i,name = blocks[i]["name"],image = blocks[i]["image"],count = 1}
-	--end
-end
+--function new_inventory()
+	for i = 1,inventory_size do
+		inventory[i] = {}
+		--if i > table.getn(blocks) then
+		--	inventory[i] = {id = i-table.getn(blocks),name = blocks[i-table.getn(blocks)]["name"],image = blocks[i-table.getn(blocks)]["image"],count = 1}
+		--else
+		--	inventory[i] = {id = i,name = blocks[i]["name"],image = blocks[i]["image"],count = 1}
+		--end
+	end
+--end
+--new_inventory()
 
 function inventory_add(item)
 	--add the item 

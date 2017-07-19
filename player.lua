@@ -69,11 +69,35 @@ function move(dt)
 		--end
 	--end
 end
---controls for 1 hit things
+--restore stuff
+function player_restore()
+	local file = love.filesystem.read("/map/player.txt")
+	
+	if file then
+		local data =  TSerial.unpack(file)
+		if  data then
+			for i,t in pairs(data) do
+				--print(i,t)
+			end
+			inventory = data[1]
+			chunkx = data[2]
+			chunky = data[3]
+			player.playerx = data[4]
+			player.playery = data[5]
+		end
+	end
+
+end
+
 function love.keypressed( key, scancode, isrepeat )
 
 	--quit
 	if key == "escape" then
+		maplib.save_chunks()
+		love.filesystem.write( "/map/player.txt", TSerial.pack({inventory,chunkx,chunky,player.playerx,player.playery}))
+		
+		love.timer.sleep(3)
+		
 		love.event.push('quit')
 		--pause = true
 	end
@@ -146,11 +170,11 @@ function mine(key,dt)
 		if left then
 			--print(mx,my)
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
-				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 then
+				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 and blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["mineable"] ~= false then
 					
 					player.mining = true
 					
-					mine_process = mine_process + 0.1
+					mine_process = mine_process + 0.5
 					
 					if math.ceil(mine_process) > math.ceil(old_mine_process) then
 						minesound:setPitch(love.math.random(70,90)/100)
