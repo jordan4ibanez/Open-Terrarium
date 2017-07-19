@@ -1,9 +1,9 @@
 
-for i = 1,100 do
+--for i = 1,100 do
 
-	print("Fix collision detection on chunk border")
+--	print("Fix collision detection on chunk border")
 	
-end
+--end
 
 --textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
 
@@ -21,6 +21,7 @@ dofile("menu.lua")
 dofile("player.lua")
 dofile("collision.lua")
 dofile("physics.lua")
+dofile("inventory.lua")
 
 --the scale of the map
 scale = 150
@@ -37,10 +38,11 @@ function love.draw()
 	memGraph:draw()
 	dtGraph:draw()
 	player.draw_health()
+	render_inventory()
 end
 
 function love.load()
-
+	load_inventory_textures()
 
 	love.graphics.setDefaultFilter( "nearest", "nearest", 0 )
 	
