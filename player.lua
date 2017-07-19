@@ -176,11 +176,14 @@ function mine(key,dt)
 			mine_process = 0
 			old_mine_process = 0
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
-				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 and (mx ~= player.playerx or my ~= player.playery) then
+				if ore[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["placeable"] == true or  loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 then
 					placesound:setPitch(love.math.random(50,100)/100)
 					placesound:stop()
 					placesound:play()
-					loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = player.selected
+					
+					if inventory[inventory_selection]["tabler"] == "ore" then
+						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = inventory[inventory_selection]["id"]
+					end
 					player.mining = false
 					--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
 					score = score + 1
