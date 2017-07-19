@@ -21,17 +21,21 @@ inventory_selection = 1
 
 function inventory_add(item)
 	--add the item 
-	for slot,table in pairs(inventory) do
+	--for slot,table in pairs(inventory) do
+	for i = 1,table.getn(inventory) do
+		local table = inventory[i]
 		if table["id"] == item then
 --			print("HERE")
-			inventory[slot]["count"] = inventory[slot]["count"] + 1
+			inventory[i]["count"] = inventory[i]["count"] + 1
 			return
 		end
 	end
 	--else create new slot
-	for slot,table in pairs(inventory) do
+	--for slot,table in pairs(inventory) do
+	for i = 1,table.getn(inventory) do
+		local table = inventory[i]
 		if not table["id"] then
-			inventory[slot] = {id = item, name = blocks[item]["name"], image = blocks[item]["image"], count = 1}
+			inventory[i] = {id = item, name = blocks[item]["name"], image = blocks[item]["image"], count = 1}
 			return
 		end
 	end
