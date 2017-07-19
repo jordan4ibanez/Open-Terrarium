@@ -37,7 +37,7 @@ water_height = 17
 function maplib.new_block(oldposx,oldposy)
 	--print(math.floor(player.playerx))
 	if math.floor(player.playerx) < 1 then
-		--if ore[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
+		--if blocks[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunkx = chunkx - 1
 			maplib.createmap() -- create a new block
@@ -48,7 +48,7 @@ function maplib.new_block(oldposx,oldposy)
 			--print("something blocking -1 x")
 		--end
 	elseif math.floor(player.playerx) > map_max then
-		--if ore[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
+		--if blocks[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunkx = chunkx + 1
 			maplib.createmap() -- create a new block
@@ -60,7 +60,7 @@ function maplib.new_block(oldposx,oldposy)
 		--end
 	
 	elseif math.floor(player.playery) < 1 then
-		--if ore[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
+		--if blocks[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunky = chunky + 1
 			maplib.createmap() -- create a new block
@@ -71,7 +71,7 @@ function maplib.new_block(oldposx,oldposy)
 			--print("something blocking 1 y")
 		--end
 	elseif math.floor(player.playery) > map_max then
-		--if ore[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
+		--if blocks[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunky = chunky - 1
 			maplib.createmap() -- create a new block
@@ -324,8 +324,8 @@ end
 --	
 --	for x = 1,map_max do
 --		for y = 1,map_max do
---			love.graphics.setColor(ore[tiles[x][y]["block"]]["rgb"][1],ore[tiles[x][y]["block"]]["rgb"][2],ore[tiles[x][y]["block"]]["rgb"][3],255)
---			love.graphics.print(ore[tiles[x][y]["block"]]["image"], x*scale, y*scale)
+--			love.graphics.setColor(blocks[tiles[x][y]["block"]]["rgb"][1],blocks[tiles[x][y]["block"]]["rgb"][2],blocks[tiles[x][y]["block"]]["rgb"][3],255)
+--			love.graphics.print(blocks[tiles[x][y]["block"]]["image"], x*scale, y*scale)
 --			if x == math.floor(map_max / 2) and y == math.floor(map_max / 2) then
 --				love.graphics.print("X", x*scale, y*scale)
 --			end
@@ -349,7 +349,7 @@ function maplib.draw()
 			
 			for x = 1,map_max do
 				for y = 1,map_max do
-					--love.graphics.setColor(ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],ore[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
+					--love.graphics.setColor(blocks[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][1],blocks[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][2],blocks[loaded_chunks[xx][-yy][x][y]["block"]]["rgb"][3],255)
 					--print(loaded_chunks[xx][-yy][x][y]["block"])
 					--local drawx = (((x*scale)-(player.playerx*scale))+((scale*map_max)/2))+(map_max*scale*xx)+offsetx
 					--local drawy =  (((y*scale)-((player.playery)*scale))+((scale*map_max)/2))+(map_max*scale*yy)+offsety-4
@@ -425,7 +425,7 @@ function maplib.liquid_flow(dt)
 							--	print(yy-1)
 							--end
 							--downward flow
-							if ore[block]["prop"] == "liquid"  and y + 1 <= map_max and loaded_chunks[xx][yy][x][y+1]["block"] == 1  then
+							if blocks[block]["prop"] == "liquid"  and y + 1 <= map_max and loaded_chunks[xx][yy][x][y+1]["block"] == 1  then
 								if not after_table[xx] then
 									after_table[xx] = {}
 								end
@@ -442,7 +442,7 @@ function maplib.liquid_flow(dt)
 								after_table[xx][yy][x][y+1]["block"] = block
 								after_table[xx][yy][x][y+1]["down"] = "down"
 							--flow into new chunk -1 y
-							elseif ore[block]["prop"] == "liquid"  and y + 1 > map_max and loaded_chunks[xx] and loaded_chunks[xx][yy-1] and loaded_chunks[xx][yy-1][x] and loaded_chunks[xx][yy-1][x][1] and loaded_chunks[xx][yy-1][x][1]["block"] == 1  then
+							elseif blocks[block]["prop"] == "liquid"  and y + 1 > map_max and loaded_chunks[xx] and loaded_chunks[xx][yy-1] and loaded_chunks[xx][yy-1][x] and loaded_chunks[xx][yy-1][x][1] and loaded_chunks[xx][yy-1][x][1]["block"] == 1  then
 								--print("flow down")
 								--forward workaround for table sub elements that have not been created
 								if not after_table[xx] then
@@ -462,7 +462,7 @@ function maplib.liquid_flow(dt)
 								after_table[xx][yy-1][x][1]["newy"] = "newy"
 							end
 							--rightward flow
-							if ore[block]["prop"] == "liquid"  and x + 1 <= map_max and loaded_chunks[xx][yy][x+1][y]["block"] == 1  then
+							if blocks[block]["prop"] == "liquid"  and x + 1 <= map_max and loaded_chunks[xx][yy][x+1][y]["block"] == 1  then
 								if not after_table[xx] then
 									after_table[xx] = {}
 								end
@@ -478,7 +478,7 @@ function maplib.liquid_flow(dt)
 								after_table[xx][yy][x+1][y]["block"] = block
 								after_table[xx][yy][x+1][y]["right"] = "right"
 							--flow into new chunk +1 x
-							elseif ore[block]["prop"] == "liquid"  and x == map_max and loaded_chunks[xx+1] and loaded_chunks[xx+1][yy] and loaded_chunks[xx+1][yy][1] and loaded_chunks[xx+1][yy][1][y] and loaded_chunks[xx+1][yy][1][y]["block"] == 1  then
+							elseif blocks[block]["prop"] == "liquid"  and x == map_max and loaded_chunks[xx+1] and loaded_chunks[xx+1][yy] and loaded_chunks[xx+1][yy][1] and loaded_chunks[xx+1][yy][1][y] and loaded_chunks[xx+1][yy][1][y]["block"] == 1  then
 								--hack to create new table sub element
 								if not after_table[xx+1] then
 									after_table[xx+1] = {}
@@ -499,7 +499,7 @@ function maplib.liquid_flow(dt)
 							end
 							--print(xx-1)
 							--leftward flow
-							if ore[block]["prop"] == "liquid"  and x - 1 >= 1 and loaded_chunks[xx][yy][x-1][y]["block"] == 1  then
+							if blocks[block]["prop"] == "liquid"  and x - 1 >= 1 and loaded_chunks[xx][yy][x-1][y]["block"] == 1  then
 								if not after_table[xx] then
 									after_table[xx] = {}
 								end
@@ -515,7 +515,7 @@ function maplib.liquid_flow(dt)
 								after_table[xx][yy][x-1][y]["block"] = block
 								after_table[xx][yy][x-1][y]["left"] = "left"
 							--flow into new chunk -1 x
-							elseif ore[block]["prop"] == "liquid"  and x == 1 and loaded_chunks[xx-1] and loaded_chunks[xx-1][yy] and loaded_chunks[xx-1][yy][map_max] and loaded_chunks[xx-1][yy][map_max][y] and loaded_chunks[xx-1][yy][map_max][y]["block"] == 1  then
+							elseif blocks[block]["prop"] == "liquid"  and x == 1 and loaded_chunks[xx-1] and loaded_chunks[xx-1][yy] and loaded_chunks[xx-1][yy][map_max] and loaded_chunks[xx-1][yy][map_max][y] and loaded_chunks[xx-1][yy][map_max][y]["block"] == 1  then
 								--print("Test")
 								--hack to create new table sub element
 								if not after_table[xx-1] then

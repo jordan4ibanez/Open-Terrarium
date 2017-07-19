@@ -99,8 +99,8 @@ function love.keypressed( key, scancode, isrepeat )
 
 	--trick to get input as inventory change
 	--greater than 1 to not select air
-	if tonumber(key) and tonumber(key) > 1 and tonumber(key) <= table.getn(ore) then
-		player.selected = tonumber(key)
+	if tonumber(key) and tonumber(key) > 0 and tonumber(key) <= table.getn(inventory) then
+		inventory_selection = tonumber(key)
 	end
 	
 
@@ -164,6 +164,9 @@ function mine(key,dt)
 						minesound:setPitch(love.math.random(90,100)/100)
 						minesound:stop()
 						minesound:play()
+						
+						inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
+						
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
 						
 						--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
@@ -176,17 +179,24 @@ function mine(key,dt)
 			mine_process = 0
 			old_mine_process = 0
 			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
-				if ore[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["placeable"] == true or  loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 then
-					placesound:setPitch(love.math.random(50,100)/100)
-					placesound:stop()
-					placesound:play()
+				if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["placeable"] == true or  loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 then
 					
-					if inventory[inventory_selection]["tabler"] == "ore" then
+					if inventory[inventory_selection]["id"] then
+					
+						--if inventory[inventory_selection]["tabler"] == "ore" then
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = inventory[inventory_selection]["id"]
+						
+						inventory_remove(inventory_selection,inventory[inventory_selection]["id"])
+						
+						placesound:setPitch(love.math.random(50,100)/100)
+						placesound:stop()
+						placesound:play()
+						score = score + 1
+						player.mining = false
+						--end
+						
+						--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
 					end
-					player.mining = false
-					--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
-					score = score + 1
 				end
 			end
 		else 

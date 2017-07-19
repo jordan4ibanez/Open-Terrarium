@@ -73,7 +73,7 @@ function love.load()
 	
 	texture_table = {}
 	local i = 1
-	for key,value in pairs(ore) do
+	for key,value in pairs(blocks) do
 		texture_table[i] = love.graphics.newImage("textures/"..value.image)
 		i = i + 1
 	end

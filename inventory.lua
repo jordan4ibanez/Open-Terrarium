@@ -8,11 +8,48 @@ inventory_selection = 1
 
 
 for i = 1,inventory_size do
-	if i > table.getn(ore) then
-		inventory[i] = {tabler = "ore",id = i-table.getn(ore),name = ore[i-table.getn(ore)]["name"],image = ore[i-table.getn(ore)]["image"]}
-	else
-		inventory[i] = {tabler = "ore",id = i,name = ore[i]["name"],image = ore[i]["image"]}
+	inventory[i] = {}
+	--if i > table.getn(blocks) then
+	--	inventory[i] = {id = i-table.getn(blocks),name = blocks[i-table.getn(blocks)]["name"],image = blocks[i-table.getn(blocks)]["image"],count = 1}
+	--else
+	--	inventory[i] = {id = i,name = blocks[i]["name"],image = blocks[i]["image"],count = 1}
+	--end
+end
+
+function inventory_add(item)
+	--add the item 
+	for slot,table in pairs(inventory) do
+		if table["id"] == item then
+--			print("HERE")
+			inventory[slot]["count"] = inventory[slot]["count"] + 1
+			return
+		end
 	end
+	--else create new slot
+	for slot,table in pairs(inventory) do
+		if not table["id"] then
+			inventory[slot] = {id = item, name = blocks[item]["name"], image = blocks[item]["image"], count = 1}
+			return
+		end
+	end
+end
+
+function inventory_remove(slot,item)
+	if slot and inventory[slot]["count"] then
+		
+		inventory[slot]["count"] = inventory[slot]["count"] - 1
+		
+		if inventory[slot]["count"] <= 0 then
+			inventory[slot] = {}
+		end
+	end
+	--0for slot,table in pairs(inventory) do
+	--	if table["id"] == item then
+	--		print("HERE")
+	--		inventory[slot]["count"] = inventory[slot]["count"] + 1
+	--		break
+	--	end
+	--end
 end
 
 function load_inventory_textures()
@@ -54,9 +91,10 @@ function render_inventory()
 	for i = 1,table.getn(inventory) do
 		--print(inventory[i]["id"])
 		--texture_table[loaded_chunks[xx][yy][x][y]["block"]]
-		if inventory[i]["tabler"] == "ore" then
-			--love.graphics.draw(texture_table[inventory[i]["id"]],  drawx,drawy,0, scale/16, scale/16)
+		--love.graphics.draw(texture_table[inventory[i]["id"]],  drawx,drawy,0, scale/16, scale/16)
+		if inventory[i]["id"] then
 			love.graphics.draw(texture_table[inventory[i]["id"]],  inventory_x+(i*(inv_slot_width/2))+5, inventory_y+4,0, 1*2.1, 1*2.1)
+			love.graphics.print( inventory[i]["count"], inventory_x+(i*(inv_slot_width/2))+22, inventory_y+28, 0, 1, 1)
 		end
 	end
 	

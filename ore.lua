@@ -1,5 +1,5 @@
 --ore definitions
-ore = {
+blocks = {
 	{name = "air", image = "air.png", collide = false},   --id 1
 	{name = "rock", image = "stone.png"}, --id 2
 	{name = "dirt", image = "dirt.png"},    --id 3
