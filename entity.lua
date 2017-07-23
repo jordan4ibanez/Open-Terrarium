@@ -294,19 +294,13 @@ function entity.item_magnet(i)
 	entity_table[i]["magnetized"] = false
 	
 	if calc1 <= magnet_radius * magnet_radius + magnet_radius then
-		if realx > 0 then
-			entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + 0.02
-		elseif realx < 0 then
-			entity_table[i]["inertiax"] = entity_table[i]["inertiax"] - 0.02
-		end
-		
-		if realy > 0 then
-			entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + 0.02
-		elseif realy < 0 then
-			entity_table[i]["inertiay"] = entity_table[i]["inertiay"] - 0.02
-		end
+		local normalx,normaly,length = math.normalize(player.playerx-entity_table[i]["posx"],player.playery-entity_table[i]["posy"])
+		normalx,normaly = normalx*0.1,normaly*0.1
+		entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + normalx
+		entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + normaly
 		entity_table[i]["magnetized"] = true
 	end
+	
 	if calc1 <= add_inventory_radius * add_inventory_radius + add_inventory_radius then
 		inventory_add(entity_table[i]["item"])
 		--entity_table[i] = nil

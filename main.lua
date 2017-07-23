@@ -13,6 +13,7 @@ debugGraph = require 'modules.debugGraph.debugGraph'
 math.randomseed(os.time())
 
 
+dofile("math.lua")
 dofile("tserial.lua")
 dofile("pause.lua")
 dofile("ore.lua")
