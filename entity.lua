@@ -41,7 +41,7 @@ function entity.render_entity()
 		for i = 1,entity_count do
 			local drawx = (player_drawnx+(entity_table[i]["posx"]*scale)+(map_max*scale*(entity_table[i]["chunkx"]-chunkx))-(player.playerx*scale))-((entity_table[i]["sizex"]/2)*scale)
 			local drawy = (player_drawny+(entity_table[i]["posy"]*scale)+(map_max*scale*(chunky-entity_table[i]["chunky"]))-(player.playery*scale))-((entity_table[i]["sizey"]/2)*scale)
-			love.graphics.draw(entity_table[i]["texture"],  drawx,drawy,0, scale*entity_table[i]["sizex"]/16, scale*entity_table[i]["sizey"]/16)--,scale*(entity_table[i]["sizex"]),scale*(entity_table[i]["sizey"]))
+			love.graphics.draw(entity_table[i]["texture"],  drawx,drawy,0, scale*entity_table[i]["sizex"]/21, scale*entity_table[i]["sizey"]/21)--,scale*(entity_table[i]["sizex"]),scale*(entity_table[i]["sizey"]))
 			--love.graphics.circle( "fill", drawx+((entity_table[i]["sizex"]/2)*scale), drawy+((entity_table[i]["sizey"]/2)*scale), 3 )
 		end
 	end
