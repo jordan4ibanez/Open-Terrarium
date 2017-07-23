@@ -125,7 +125,7 @@ function love.keypressed( key, scancode, isrepeat )
 	end
 	
 	if key == "n" then
-		entity.create_entity("item",0.2,0.2,texture_table[2],chunkx,chunky,player.playerx,player.playery)
+		entity.create_entity("item",0.4,0.4,texture_table[2],chunkx,chunky,player.playerx,player.playery,0,0,nil)
 	end
 	
 
@@ -198,6 +198,9 @@ function mine(key,dt)
 						minesound:play()
 						
 						inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
+						
+						print(math.random(10,50)/1000)
+						entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx,my,math.random(-30,30)/1000,math.random(10,50)/1000,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
 						
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
 						

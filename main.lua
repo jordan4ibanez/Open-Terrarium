@@ -117,6 +117,11 @@ function love.update(dt)
 		print("clear")
 	end
 	
-	maplib.new_block(player.playerx,player.playery)	
+	entity.gravity()
+	
+	entity.physics_apply(dt)
+	
+	
+	maplib.new_block(player.playerx,player.playery)
 	
 end
