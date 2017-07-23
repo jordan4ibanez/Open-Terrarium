@@ -28,6 +28,7 @@ function entity.create_entity(type,sizex,sizey,texture,chunkx,chunky,posx,posy,i
 	
 	if item then
 		entity_table[entity_count]["texture"] = texture_table[item]
+		entity_table[entity_count]["magnetized"] = false
 	else
 		entity_table[entity_count]["texture"] = texture
 	end
@@ -38,12 +39,15 @@ end
 
 --draw entities
 function entity.render_entity()
-	if entity_count > 0 then
-		for i = 1,entity_count do
-			local drawx = (player_drawnx+(entity_table[i]["posx"]*scale)+(map_max*scale*(entity_table[i]["chunkx"]-chunkx))-(player.playerx*scale))-((entity_table[i]["sizex"]/2)*scale)
-			local drawy = (player_drawny+(entity_table[i]["posy"]*scale)+(map_max*scale*(chunky-entity_table[i]["chunky"]))-(player.playery*scale))-((entity_table[i]["sizey"]/2)*scale)
-			love.graphics.draw(entity_table[i]["texture"],  drawx,drawy,0, scale*entity_table[i]["sizex"]/21, scale*entity_table[i]["sizey"]/21)--,scale*(entity_table[i]["sizex"]),scale*(entity_table[i]["sizey"]))
-			--love.graphics.circle( "fill", drawx+((entity_table[i]["sizex"]/2)*scale), drawy+((entity_table[i]["sizey"]/2)*scale), 3 )
+	if table.getn(entity_table) > 0 then
+		for i = 1,table.getn(entity_table) do
+			--print(i,entity_table[i])
+			if entity_table[i] then
+				local drawx = (player_drawnx+(entity_table[i]["posx"]*scale)+(map_max*scale*(entity_table[i]["chunkx"]-chunkx))-(player.playerx*scale))-((entity_table[i]["sizex"]/2)*scale)
+				local drawy = (player_drawny+(entity_table[i]["posy"]*scale)+(map_max*scale*(chunky-entity_table[i]["chunky"]))-(player.playery*scale))-((entity_table[i]["sizey"]/2)*scale)
+				love.graphics.draw(entity_table[i]["texture"],  drawx,drawy,0, scale*entity_table[i]["sizex"]/21, scale*entity_table[i]["sizey"]/21)--,scale*(entity_table[i]["sizex"]),scale*(entity_table[i]["sizey"]))
+				--love.graphics.circle( "fill", drawx+((entity_table[i]["sizex"]/2)*scale), drawy+((entity_table[i]["sizey"]/2)*scale), 3 )
+			end
 		end
 	end
 end
@@ -51,25 +55,29 @@ end
 
 --entity gravity
 function entity.gravity()
-	if entity_count > 0 then
-		for i = 1,entity_count do
-			if entity_table[i]["entity_in_unloaded_chunk"] == false then
-				--print(entity_table[i]["on_block"])
-				if entity_table[i]["on_block"] == true then
-					entity_table[i]["inertiay"] = 0
-					--lastheight = math.floor(((map_max-player.playery)+(chunky*map_max)))
-					--print(lastheight)
-					--player.on_block = false
-				else
-					if entity_table[i]["inertiay"] < 0.3 then
-						entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + 0.01
-						--print(entity_table[i]["inertiay"])
+	if table.getn(entity_table) > 0 then
+		for i = 1,table.getn(entity_table) do
+			if entity_table[i] then
+				if entity_table[i]["magnetized"] == false then
+					if entity_table[i]["entity_in_unloaded_chunk"] == false then
+						--print(entity_table[i]["on_block"])
+						if entity_table[i]["on_block"] == true then
+							entity_table[i]["inertiay"] = 0
+							--lastheight = math.floor(((map_max-player.playery)+(chunky*map_max)))
+							--print(lastheight)
+							--player.on_block = false
+						else
+							if entity_table[i]["inertiay"] < 0.3 then
+								entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + 0.01
+								--print(entity_table[i]["inertiay"])
+							end
+						end
+					else
+						--print("entity "..i.." in unloaded chunk")
+						entity_table[i]["inertiax"] = 0
+						entity_table[i]["inertiay"] = 0
 					end
 				end
-			else
-				--print("entity "..i.." in unloaded chunk")
-				entity_table[i]["inertiax"] = 0
-				entity_table[i]["inertiay"] = 0
 			end
 		end
 	end
@@ -80,24 +88,29 @@ function entity.physics_apply(dt)
 	--local oldposx,oldposy = player.playerx,player.playery
 	
 	
-	if entity_count > 0 then
-		for i = 1,entity_count do
+	if table.getn(entity_table) > 0 then
+		for i = 1,table.getn(entity_table) do
 
 
-			entity.collision(i,entity_table[i].posx,entity_table[i].posy)
+			if entity_table[i] then
 
-			entity.new_chunk(i,entity_table[i].posx,entity_table[i].posy)
+				entity.collision(i,entity_table[i].posx,entity_table[i].posy)
 
-			--collisionx(oldposx)
-			--print(entity_table[i].inertiax)
-			if math.abs(entity_table[i].inertiax) <= 0.005 then
-				entity_table[i].inertiax = 0
-			elseif entity_table[i].inertiax < 0 then
-				entity_table[i].inertiax = entity_table[i].inertiax + 0.005
-			elseif entity_table[i].inertiax > 0 then
-				entity_table[i].inertiax = entity_table[i].inertiax - 0.005
-			else
-				entity_table[i].inertiax = entity_table[i].inertiax 
+				entity.new_chunk(i,entity_table[i].posx,entity_table[i].posy)
+
+				--collisionx(oldposx)
+				--print(entity_table[i].inertiax)
+				if math.abs(entity_table[i].inertiax) <= 0.005 then
+					entity_table[i].inertiax = 0
+				elseif entity_table[i].inertiax < 0 then
+					entity_table[i].inertiax = entity_table[i].inertiax + 0.005
+				elseif entity_table[i].inertiax > 0 then
+					entity_table[i].inertiax = entity_table[i].inertiax - 0.005
+				else
+					entity_table[i].inertiax = entity_table[i].inertiax 
+				end
+				
+				entity.item_magnet(i)
 			end
 		end
 	end
@@ -265,4 +278,40 @@ function entity.new_chunk(i,posx,posy)
 	end
 	
 	return true
+end
+
+
+--magnetize items towards player
+--taken from sfan5's nuke mod in Minetest - https://forum.minetest.net/viewtopic.php?id=638
+function entity.item_magnet(i)
+	local realx = player.playerx - entity_table[i]["posx"]
+	local realy = player.playery - entity_table[i]["posy"]
+	local x = realx--math.abs(realx)
+	local y = realy--math.abs(realy)
+	
+	local calc1 = x*x+y*y --optimize
+	
+	entity_table[i]["magnetized"] = false
+	
+	if calc1 <= magnet_radius * magnet_radius + magnet_radius then
+		if realx > 0 then
+			entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + 0.02
+		elseif realx < 0 then
+			entity_table[i]["inertiax"] = entity_table[i]["inertiax"] - 0.02
+		end
+		
+		if realy > 0 then
+			entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + 0.02
+		elseif realy < 0 then
+			entity_table[i]["inertiay"] = entity_table[i]["inertiay"] - 0.02
+		end
+		entity_table[i]["magnetized"] = true
+	end
+	if calc1 <= add_inventory_radius * add_inventory_radius + add_inventory_radius then
+		inventory_add(entity_table[i]["item"])
+		--entity_table[i] = nil
+		table.remove(entity_table,i)
+		entity_count = entity_count - 1
+		print("add to inventory")
+	end
 end

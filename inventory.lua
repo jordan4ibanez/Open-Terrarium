@@ -107,9 +107,9 @@ function render_inventory()
 	
 end
 
-
+--throw item
 function throw_item()
-	print(inventory[inventory_selection]["id"])
+	--print(inventory[inventory_selection]["id"])
 	if inventory[inventory_selection]["id"] ~= nil then
 		--do it in this order to avoid nil
 		entity.create_entity("item",0.4,0.4,nil,chunkx,chunky,player.playerx,player.playery+0.5,math.random(-300,300)/1000,math.random(-150,-240)/1000,inventory[inventory_selection]["id"])

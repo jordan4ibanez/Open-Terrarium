@@ -14,6 +14,10 @@ health = 10
 
 deaths = 0
 
+magnet_radius = 5
+
+add_inventory_radius = 0.5
+
 function move(dt)	
 	--debug - stresstest
 	--if love.keyboard.isDown("f5") then
