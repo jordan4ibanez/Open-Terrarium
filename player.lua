@@ -124,6 +124,10 @@ function love.keypressed( key, scancode, isrepeat )
 		print("resetting offset")
 	end
 	
+	if key == "n" then
+		entity.create_entity("item",0.2,0.2,texture_table[2],chunkx,chunky,player.playerx,player.playery)
+	end
+	
 
 	--trick to get input as inventory change
 	--greater than 1 to not select air
@@ -442,7 +446,7 @@ function player.draw()
 	
     --love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny-(scale/1.1), 0.4*scale,1.71*scale )
     
-    --love.graphics.circle( "fill", player_drawnx, player_drawny, 3 )
+	love.graphics.circle( "fill", player_drawnx, player_drawny, 3 ) --center
 end
 
 

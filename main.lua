@@ -22,6 +22,7 @@ dofile("player.lua")
 dofile("collision.lua")
 dofile("physics.lua")
 dofile("inventory.lua")
+dofile("entity.lua")
 
 --the scale of the map
 scale = 150
@@ -39,6 +40,7 @@ function love.draw()
 	dtGraph:draw()
 	player.draw_health()
 	render_inventory()
+	entity.render_entity()
 end
 
 function love.load()
