@@ -106,6 +106,7 @@ function love.keypressed( key, scancode, isrepeat )
 	
 	--debug
 	if key == "f5" then
+		maplib.save_chunks()
 		chunkx,chunky = math.random(-1000,1000),math.random(2,3)
 		maplib.createmap()
 		--print("generate random block")
@@ -114,6 +115,9 @@ function love.keypressed( key, scancode, isrepeat )
 	elseif key == "f4" then
 		--local depth = 0
 		maplib.delete_map()
+		
+		
+		
 	--resets the offset
 	elseif key == "f3" then
 		offsetx, offsety = 0,0
@@ -434,7 +438,9 @@ function player.draw()
 	love.graphics.draw(player_head,  player_drawnx, player_drawny+((scale/32)*4),0, scale/32, scale/32,4,4)
 	
 	
-    love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny, 0.4*scale,1*scale )
+    love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny-(scale/1.11), 0.4*scale,1.8*scale )
+    
+    love.graphics.circle( "fill", player_drawnx, player_drawny, 3 )
 end
 
 

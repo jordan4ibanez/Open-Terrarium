@@ -40,7 +40,7 @@ function maplib.new_block(oldposx,oldposy)
 		--if blocks[loaded_chunks[-1][0][map_max][player.playery]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunkx = chunkx - 1
-			--maplib.createmap() -- create a new block
+			maplib.createmap() -- create a new block
 			player.playerx = player.playerx+map_max -- put player on other side of screen		
 			print(" block x -1")
 			return false
@@ -51,7 +51,7 @@ function maplib.new_block(oldposx,oldposy)
 		--if blocks[loaded_chunks[1][0][1][player.playery]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunkx = chunkx + 1
-			--maplib.createmap() -- create a new block
+			maplib.createmap() -- create a new block
 			player.playerx = player.playerx - map_max -- put player on other side of screen
 			print("block x +1")
 			return false
@@ -63,7 +63,7 @@ function maplib.new_block(oldposx,oldposy)
 		--if blocks[loaded_chunks[0][1][player.playerx][map_max]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunky = chunky + 1
-			--maplib.createmap() -- create a new block
+			maplib.createmap() -- create a new block
 			player.playery = player.playery+map_max  -- put player on other side of screen
 			print(" block y -1")
 			return false
@@ -74,7 +74,7 @@ function maplib.new_block(oldposx,oldposy)
 		--if blocks[loaded_chunks[0][-1][player.playerx][1]["block"]]["collide"] == false then
 			maplib.save_chunks()
 			chunky = chunky - 1
-			--maplib.createmap() -- create a new block
+			maplib.createmap() -- create a new block
 			player.playery = player.playery - map_max -- put player on other side of screen
 			print("block y +1")
 			return false

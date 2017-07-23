@@ -1,5 +1,8 @@
 --basic grid based collision detection
 
+--{-x,+x,-y,+y}
+player_collision_box = {-0.2,0.2,-0.9,0.8}
+
 		
 --squared collision detection
 player.on_block = false
@@ -9,8 +12,8 @@ function collision(oldposx,oldposy)
 	
 	
 	
-	local xer = {-0.2,0.2}
-	local yer = {0,1}
+	local xer = {player_collision_box[1],player_collision_box[2]}
+	local yer = {player_collision_box[3],player_collision_box[4]}
 	local fall = true
 	
 	--check the corners (y)
@@ -47,7 +50,9 @@ function collision(oldposx,oldposy)
 			--if (squarex1 > map_max or squarex1 <= 0) or (squarey1 > map_max or squarey1 <= 0) or blocks[loaded_chunks[0][0][squarex1][squarey1]["block"]]["collide"] ~= false then
 			if loaded_chunks[chunkx+chunkerx] and loaded_chunks[chunkx+chunkerx][chunkery+chunky] and loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex] and loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex][squarey] then
 				if blocks[loaded_chunks[chunkx+chunkerx][chunkery+chunky][squarex][squarey]["block"]]["collide"] ~= false then
+				
 					player.playery = oldposy
+					
 					if r == 2 then
 						player.on_block = true
 						fall = false
@@ -69,9 +74,18 @@ function collision(oldposx,oldposy)
 	--check the corners(x)
 	player.playerx = player.playerx + player.inertiax
 	for q = 1,2 do
-		for r = 1,2 do
+		for r = 1,3 do
 			local squarex = math.floor(player.playerx+xer[q])
-			local squarey = math.floor(player.playery+yer[r])
+			
+			local squarey
+			
+			if r < 3 then
+				 squarey = math.floor(player.playery+yer[r])
+				 
+			else
+				squarey = math.floor(player.playery)
+			end
+				
 			
 			--print(squarex)
 			--use this to detect outside chunk 00
