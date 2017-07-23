@@ -1,9 +1,9 @@
 
---for i = 1,100 do
+for i = 1,100 do
 
---	print("Fix collision detection on chunk border")
+	print("do function to play sounds at random pitches")
 	
---end
+end
 
 --textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
 

@@ -32,6 +32,7 @@ function entity.create_entity(type,sizex,sizey,texture,chunkx,chunky,posx,posy,i
 		entity_table[entity_count]["texture"] = texture
 	end
 	
+	print(entity_count)
 	
 end
 
@@ -84,6 +85,8 @@ function entity.physics_apply(dt)
 
 
 			entity.collision(i,entity_table[i].posx,entity_table[i].posy)
+
+			entity.new_chunk(i,entity_table[i].posx,entity_table[i].posy)
 
 			--collisionx(oldposx)
 			--print(entity_table[i].inertiax)
@@ -232,3 +235,34 @@ function entity.collision(i,oldposx,oldposy)
 	end
 end
 
+
+--move entity into new chunk
+function entity.new_chunk(i,posx,posy)
+	--print(math.floor(player.playerx))
+	if math.floor(posx) < 1 then
+	
+			entity_table[i]["chunkx"] = entity_table[i]["chunkx"] - 1
+			entity_table[i]["posx"]   = entity_table[i]["posx"] + map_max -- put entity on other side of screen		
+			--print(" block x -1")
+			return false
+	elseif math.floor(posx) > map_max then
+
+			entity_table[i]["chunkx"] = entity_table[i]["chunkx"] + 1
+			entity_table[i]["posx"]   = entity_table[i]["posx"] - map_max -- put entity on other side of screen
+			--print("block x +1")
+			return false
+	
+	elseif math.floor(posy) < 1 then
+			entity_table[i]["chunky"] = entity_table[i]["chunky"] + 1
+			entity_table[i]["posy"]   = entity_table[i]["posy"] + map_max  -- put entity on other side of screen
+			--print(" block y -1")
+			return false
+	elseif math.floor(posy) > map_max then
+			entity_table[i]["chunky"] = entity_table[i]["chunky"] - 1
+			entity_table[i]["posy"]   = entity_table[i]["posy"] - map_max -- put entity on other side of screen
+			--print("block y +1")
+			return false
+	end
+	
+	return true
+end
