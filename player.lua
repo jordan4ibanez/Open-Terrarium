@@ -413,34 +413,36 @@ function player.draw()
     
 	
 	--left leg
-	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/32)*20),leg_animation, scale/32, scale/32,2,0)
+	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/17.7)*2),leg_animation, scale/17.7, scale/17.7,2,0)
 	
 	--right leg
-	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/32)*20),-leg_animation, scale/32, scale/32,2,0)
+	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/17.7)*2),-leg_animation, scale/17.7, scale/17.7,2,0)
 	
 	
 	
 	--left arm
-	love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),arm_animation, scale/32, scale/32,2,0)
+	love.graphics.draw(player_arm,  player_drawnx, player_drawny-((scale/17.7)*8),arm_animation, scale/17.7, scale/17.7,2,0)
 	
 	--body
-	love.graphics.draw(player_body,  player_drawnx, player_drawny+((scale/32)*8),0, scale/32, scale/32,2,0)
+	love.graphics.draw(player_body,  player_drawnx, player_drawny-((scale/17.7)*8),0, scale/17.7, scale/17.7,2,0)
 	
 	--mining animation
 	if mine_process == 0 and mining_animation == 0 then
 		--right arm
-		love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),-arm_animation, scale/32, scale/32,2,0)
+		love.graphics.draw(player_arm,  player_drawnx, player_drawny-((scale/17.7)*8),-arm_animation, scale/17.7, scale/17.7,2,0)
 	else
-		love.graphics.draw(player_arm,  player_drawnx, player_drawny+((scale/32)*8),mining_animation, scale/32, scale/32,2,0)
+		love.graphics.draw(player_arm,  player_drawnx, player_drawny-((scale/17.7)*8),mining_animation, scale/17.7, scale/17.7,2,0)
 	end
 	
 	--head
-	love.graphics.draw(player_head,  player_drawnx, player_drawny+((scale/32)*4),0, scale/32, scale/32,4,4)
+	love.graphics.draw(player_head,  player_drawnx, player_drawny-((scale/17.7)*12),0, scale/17.7, scale/17.7,4,4)
 	
 	
-    love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny-(scale/1.11), 0.4*scale,1.8*scale )
+	--THIS IS DEBUG INFO FOR THE COLLISION DETECTION
+	
+    --love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny-(scale/1.1), 0.4*scale,1.71*scale )
     
-    love.graphics.circle( "fill", player_drawnx, player_drawny, 3 )
+    --love.graphics.circle( "fill", player_drawnx, player_drawny, 3 )
 end
 
 
