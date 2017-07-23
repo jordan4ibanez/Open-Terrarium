@@ -10,7 +10,7 @@ entity_count = 0
 
 
 --create entities
-function entity.create_entity(type,sizex,sizey,texture,chunkx,chunky,posx,posy,inertiax,inertiay,item)
+function entity.create_entity(type,sizex,sizey,texture,chunkx,chunky,posx,posy,inertiax,inertiay,item,timer)
 	entity_count = entity_count + 1
 	entity_table[entity_count] = {}
 	entity_table[entity_count]["sizex"] = sizex
@@ -24,6 +24,13 @@ function entity.create_entity(type,sizex,sizey,texture,chunkx,chunky,posx,posy,i
 	entity_table[entity_count]["on_block"] = false
 	entity_table[entity_count]["entity_in_unloaded_chunk"] = false
 	entity_table[entity_count]["item"] = item
+	
+	--allow for dropping items
+	if timer then
+		entity_table[entity_count]["timer"] = timer
+	else
+		entity_table[entity_count]["timer"] = 0
+	end
 	
 	
 	if item then
@@ -40,6 +47,7 @@ end
 --draw entities
 function entity.render_entity()
 	if table.getn(entity_table) > 0 then
+		print(table.getn(entity_table))
 		for i = 1,table.getn(entity_table) do
 			--print(i,entity_table[i])
 			if entity_table[i] then
@@ -97,6 +105,8 @@ function entity.physics_apply(dt)
 				entity.collision(i,entity_table[i].posx,entity_table[i].posy)
 
 				entity.new_chunk(i,entity_table[i].posx,entity_table[i].posy)
+
+				entity_table[i]["timer"] = entity_table[i]["timer"] + dt
 
 				--collisionx(oldposx)
 				--print(entity_table[i].inertiax)
@@ -299,7 +309,8 @@ function entity.item_magnet(i)
 	
 	entity_table[i]["magnetized"] = false
 	
-	if calc1 <= magnet_radius * magnet_radius + magnet_radius then
+	--item magnet
+	if entity_table[i]["timer"] > time_before_add and calc1 <= magnet_radius * magnet_radius + magnet_radius then
 		local normalx,normaly,length = math.normalize(x,y)
 		normalx,normaly = normalx*0.05,normaly*0.05
 		entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + normalx
@@ -307,7 +318,8 @@ function entity.item_magnet(i)
 		entity_table[i]["magnetized"] = true
 	end
 	
-	if calc1 <= add_inventory_radius * add_inventory_radius + add_inventory_radius then
+	--inventory magnet add
+	if entity_table[i]["timer"] > time_before_add and  calc1 <= add_inventory_radius * add_inventory_radius + add_inventory_radius then
 		inventory_add(entity_table[i]["item"])
 		--entity_table[i] = nil
 		table.remove(entity_table,i)

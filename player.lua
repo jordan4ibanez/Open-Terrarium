@@ -16,7 +16,9 @@ deaths = 0
 
 magnet_radius = 2
 
-add_inventory_radius = 0.5
+add_inventory_radius = 0.35
+
+time_before_add = 2
 
 function move(dt)	
 	--debug - stresstest
@@ -129,7 +131,7 @@ function love.keypressed( key, scancode, isrepeat )
 	end
 	
 	if key == "n" then
-		entity.create_entity("item",0.4,0.4,texture_table[2],chunkx,chunky,player.playerx,player.playery,0,0,nil)
+		entity.create_entity("item",0.4,0.4,texture_table[2],chunkx,chunky,player.playerx,player.playery,0,0,nil,0)
 	end
 	
 	--throw stuff
@@ -209,7 +211,7 @@ function mine(key,dt)
 						--inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
 						
 						--print(math.random(10,50)/1000)
-						entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
+						entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"],time_before_add)
 						
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
 						
