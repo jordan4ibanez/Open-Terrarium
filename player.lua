@@ -14,7 +14,7 @@ health = 10
 
 deaths = 0
 
-magnet_radius = 5
+magnet_radius = 2
 
 add_inventory_radius = 0.5
 

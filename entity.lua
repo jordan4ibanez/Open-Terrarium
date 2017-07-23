@@ -284,17 +284,23 @@ end
 --magnetize items towards player
 --taken from sfan5's nuke mod in Minetest - https://forum.minetest.net/viewtopic.php?id=638
 function entity.item_magnet(i)
-	local realx = player.playerx - entity_table[i]["posx"]
-	local realy = player.playery - entity_table[i]["posy"]
-	local x = realx--math.abs(realx)
-	local y = realy--math.abs(realy)
+	local x = player.playerx - entity_table[i]["posx"]
+	local y = player.playery - entity_table[i]["posy"]
+	
+	--adjust for chunk border
+	if chunkx ~= entity_table[i]["chunkx"] then
+		x = ((entity_table[i]["chunkx"]-chunkx)*map_max-x)*-1
+	end
+	if chunky ~= entity_table[i]["chunky"] then
+		y = ((chunky-entity_table[i]["chunky"])*map_max-y)*-1
+	end
 	
 	local calc1 = x*x+y*y --optimize
 	
 	entity_table[i]["magnetized"] = false
 	
 	if calc1 <= magnet_radius * magnet_radius + magnet_radius then
-		local normalx,normaly,length = math.normalize(player.playerx-entity_table[i]["posx"],player.playery-entity_table[i]["posy"])
+		local normalx,normaly,length = math.normalize(x,y)
 		normalx,normaly = normalx*0.05,normaly*0.05
 		entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + normalx
 		entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + normaly
@@ -306,7 +312,7 @@ function entity.item_magnet(i)
 		--entity_table[i] = nil
 		table.remove(entity_table,i)
 		entity_count = entity_count - 1
-		print("add to inventory")
+		--print("add to inventory")
 		item_magnet_pickup:setPitch(love.math.random(80,120)/100)
 		item_magnet_pickup:stop()
 		item_magnet_pickup:play()
