@@ -73,6 +73,7 @@ function love.load()
 	placesound = love.audio.newSource("sounds/place.ogg", "static")
 	stepsound = love.audio.newSource("sounds/step.ogg", "static")
 	oof = love.audio.newSource("sounds/oof.ogg", "static")
+	item_magnet_pickup = love.audio.newSource("sounds/item_magnet.ogg", "static")
 	menu_music = love.audio.newSource("sounds/menu_music.ogg")
 	menu_music:setLooping(true)
 	

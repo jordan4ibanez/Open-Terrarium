@@ -295,7 +295,7 @@ function entity.item_magnet(i)
 	
 	if calc1 <= magnet_radius * magnet_radius + magnet_radius then
 		local normalx,normaly,length = math.normalize(player.playerx-entity_table[i]["posx"],player.playery-entity_table[i]["posy"])
-		normalx,normaly = normalx*0.1,normaly*0.1
+		normalx,normaly = normalx*0.05,normaly*0.05
 		entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + normalx
 		entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + normaly
 		entity_table[i]["magnetized"] = true
@@ -307,5 +307,8 @@ function entity.item_magnet(i)
 		table.remove(entity_table,i)
 		entity_count = entity_count - 1
 		print("add to inventory")
+		item_magnet_pickup:setPitch(love.math.random(80,120)/100)
+		item_magnet_pickup:stop()
+		item_magnet_pickup:play()
 	end
 end
