@@ -32,7 +32,7 @@ function entity.create_entity(type,sizex,sizey,texture,chunkx,chunky,posx,posy,i
 		entity_table[entity_count]["texture"] = texture
 	end
 	
-	print(entity_count)
+	--print(entity_count)
 	
 end
 
@@ -67,7 +67,7 @@ function entity.gravity()
 					end
 				end
 			else
-				print("entity "..i.." in unloaded chunk")
+				--print("entity "..i.." in unloaded chunk")
 				entity_table[i]["inertiax"] = 0
 				entity_table[i]["inertiay"] = 0
 			end
