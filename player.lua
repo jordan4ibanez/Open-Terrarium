@@ -199,7 +199,7 @@ function mine(key,dt)
 						
 						inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
 						
-						print(math.random(10,50)/1000)
+						--print(math.random(10,50)/1000)
 						entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
 						
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
