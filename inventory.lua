@@ -2,13 +2,15 @@
 
 inventory_size = 9
 
+inventory_height = 5
+
 inventory = {}
 
 inventory_selection = 1
 
 
 --function new_inventory()
-	for i = 1,inventory_size do
+	for i = 1,inventory_size*inventory_height do
 		inventory[i] = {}
 		--if i > table.getn(blocks) then
 		--	inventory[i] = {id = i-table.getn(blocks),name = blocks[i-table.getn(blocks)]["name"],image = blocks[i-table.getn(blocks)]["image"],count = 1}
@@ -78,9 +80,9 @@ function love.wheelmoved(x, y)
 	inventory_selection = inventory_selection + y
 	
 	if inventory_selection < 1 then
-		inventory_selection = inventory_selection + table.getn(inventory)
-	elseif inventory_selection > table.getn(inventory) then
-		inventory_selection = inventory_selection - table.getn(inventory)
+		inventory_selection = inventory_selection + inventory_size
+	elseif inventory_selection > inventory_size then
+		inventory_selection = inventory_selection - inventory_size
 	end
 
 end
@@ -88,14 +90,14 @@ end
 
 function render_inventory()
 	--draw inventory
-	for i = 1,table.getn(inventory) do
+	for i = 1,inventory_size do
 		love.graphics.draw(inventory_slot,  inventory_x+(i*(inv_slot_width/2)), inventory_y,0, 1/2, 1/2)
 	end
 	--draw selection
 	
 	love.graphics.draw(inventory_slot_selection,  inventory_x+(inventory_selection*(inv_slot_width/2)), inventory_y,0, 1/2, 1/2)
 	
-	for i = 1,table.getn(inventory) do
+	for i = 1,inventory_size do
 		--print(inventory[i]["id"])
 		--texture_table[loaded_chunks[xx][yy][x][y]["block"]]
 		--love.graphics.draw(texture_table[inventory[i]["id"]],  drawx,drawy,0, scale/16, scale/16)

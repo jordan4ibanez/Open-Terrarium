@@ -130,14 +130,20 @@ function love.keypressed( key, scancode, isrepeat )
 		print("resetting offset")
 	end
 	
-	if key == "n" then
-		entity.create_entity("item",0.4,0.4,texture_table[2],chunkx,chunky,player.playerx,player.playery,0,0,nil,0)
-	end
+	--if key == "n" then
+	--	entity.create_entity("item",0.4,0.4,texture_table[2],chunkx,chunky,player.playerx,player.playery,0,0,nil,0)
+	--end
 	
 	--throw stuff
 	if key == "q" then
 		throw_item()
 	end
+	
+	--open inventory
+	if key == "e" then
+		crafting_open = not crafting_open
+	end
+			
 
 	--trick to get input as inventory change
 	--greater than 1 to not select air
@@ -177,90 +183,92 @@ mine_process = 0
 old_mine_process = 0
 
 function mine(key,dt)
-	--left mouse button (mine)
-	local left = love.mouse.isDown(1)
-	local right = love.mouse.isDown(2)
-	mx = math.floor(mx+0.5)
-	my = math.floor(my+0.5)
-	if mx ~= -1 and my ~= -1 and mx >= 1 and mx <= map_max and my >= 1 and my <= map_max then
-		--print(mine_process)
-		--play sound and remove tile
-		if left then
-			--print(mx,my)
-			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
-				if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 and blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["mineable"] ~= false then
-					
-					player.mining = true
-					
-					mine_process = mine_process + 0.5
-					
-					if math.ceil(mine_process) > math.ceil(old_mine_process) then
-					--	minesound:setPitch(love.math.random(70,80)/100)
-					--	minesound:stop()
-					--	minesound:play()
-					end
-					
-					old_mine_process = mine_process
-					if mine_process >= 10 then
-						mine_process = 0
-						minesound:setPitch(love.math.random(90,100)/100)
-						minesound:stop()
-						minesound:play()
-						particle.create_particle(type,5,0.1,0.1,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,-350,350, -100,-140,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"],3)
+	if crafting_open == false then
+		--left mouse button (mine)
+		local left = love.mouse.isDown(1)
+		local right = love.mouse.isDown(2)
+		mx = math.floor(mx+0.5)
+		my = math.floor(my+0.5)
+		if mx ~= -1 and my ~= -1 and mx >= 1 and mx <= map_max and my >= 1 and my <= map_max then
+			--print(mine_process)
+			--play sound and remove tile
+			if left then
+				--print(mx,my)
+				if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
+					if loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] ~= 1 and blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["mineable"] ~= false then
 						
-						--THIS
-						--inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
+						player.mining = true
 						
-						--print(math.random(10,50)/1000)
-						local drop
-						local amount = 1
-						if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop"] then
-							drop = blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop"]
-							if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop_amount"] then
-								amount = blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop_amount"]
+						mine_process = mine_process + 8--0.5
+						
+						if math.ceil(mine_process) > math.ceil(old_mine_process) then
+						--	minesound:setPitch(love.math.random(70,80)/100)
+						--	minesound:stop()
+						--	minesound:play()
+						end
+						
+						old_mine_process = mine_process
+						if mine_process >= 10 then
+							mine_process = 0
+							minesound:setPitch(love.math.random(90,100)/100)
+							minesound:stop()
+							minesound:play()
+							particle.create_particle(type,5,0.1,0.1,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,-350,350, -100,-140,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"],3)
+							
+							--THIS
+							--inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
+							
+							--print(math.random(10,50)/1000)
+							local drop
+							local amount = 1
+							if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop"] then
+								drop = blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop"]
+								if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop_amount"] then
+									amount = blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop_amount"]
+								end
+							else
+								drop = loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]
 							end
-						else
-							drop = loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]
+							for ii = 1,amount do
+								entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,drop,time_before_add)
+							end
+							
+							loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
+							
+							--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+							
+							score = score + 1
 						end
-						for ii = 1,amount do
-							entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,drop,time_before_add)
-						end
-						
-						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
-						
-						--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
-						
-						score = score + 1
 					end
 				end
-			end
-		elseif right then
-			mine_process = 0
-			old_mine_process = 0
-			if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
-				if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["placeable"] == true or  loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 then
-					
-					if inventory[inventory_selection]["id"] then
-					
-						--if inventory[inventory_selection]["tabler"] == "ore" then
-						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = inventory[inventory_selection]["id"]
+			elseif right then
+				mine_process = 0
+				old_mine_process = 0
+				if loaded_chunks[selected_chunkx] and loaded_chunks[selected_chunkx][selected_chunky] and loaded_chunks[selected_chunkx][selected_chunky][mx] and loaded_chunks[selected_chunkx][selected_chunky][mx][my] then
+					if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["placeable"] == true or  loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] == 1 then
 						
-						inventory_remove(inventory_selection,inventory[inventory_selection]["id"])
+						if inventory[inventory_selection]["id"] then
 						
-						placesound:setPitch(love.math.random(50,100)/100)
-						placesound:stop()
-						placesound:play()
-						score = score + 1
-						player.mining = false
-						--end
-						
-						--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+							--if inventory[inventory_selection]["tabler"] == "ore" then
+							loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = inventory[inventory_selection]["id"]
+							
+							inventory_remove(inventory_selection,inventory[inventory_selection]["id"])
+							
+							placesound:setPitch(love.math.random(50,100)/100)
+							placesound:stop()
+							placesound:play()
+							score = score + 1
+							player.mining = false
+							--end
+							
+							--love.filesystem.write( "/map/"..chunkx+selected_chunkx.."_"..chunky+selected_chunky..".txt", TSerial.pack(loaded_chunks[selected_chunkx][selected_chunky]))
+						end
 					end
 				end
+			else 
+				mine_process = 0
+				old_mine_process = 0
 			end
-		else 
-			mine_process = 0
-			old_mine_process = 0
 		end
 	end
 end

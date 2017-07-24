@@ -24,6 +24,7 @@ dofile("player.lua")
 dofile("collision.lua")
 dofile("physics.lua")
 dofile("inventory.lua")
+dofile("crafting.lua")
 dofile("entity.lua")
 dofile("particles.lua")
 
@@ -45,6 +46,7 @@ function love.draw()
 	render_inventory()
 	entity.render_entity()
 	particle.render_particle()
+	crafting.render_crafting()
 end
 
 function love.load()
