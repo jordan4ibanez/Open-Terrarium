@@ -19,8 +19,8 @@ function schematics.load(tiles,x,y,schem)
 		for yerr = y-schem.sizey+1,y do
 			ysch = ysch + 1
 			--print(yerr)
-			if xerr > 0 and xerr < map_max then
-			if yerr > 0 and yerr < map_max then
+			if xerr >= 1 and xerr <= map_max then
+			if yerr >= 1 and yerr <= map_max then
 				if not tiles[xerr] then
 					tiles[xerr] = {}
 				end
@@ -63,7 +63,7 @@ tree_schem = {sizex = 2,sizey = 5,
 {
 [1]={block=6,},
 [2]={block=6,},
-[3]={block=6,},
+[3]={block=7,},
 [4]={block=7,},
 [5]={block=7,},
 },

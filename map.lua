@@ -283,7 +283,7 @@ function maplib.createmap()
 					--generate trees
 					for x = 1,map_max do
 					for y = 1,map_max do 
-						if tiles[x][y]["block"] == 4 and math.random() > 0.91 then
+						if tiles[x][y]["block"] == 4 and math.random() > 0.87 then
 							tiles = schematics.load(tiles,x,y,tree_schem)
 						end
 					end
