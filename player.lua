@@ -212,7 +212,19 @@ function mine(key,dt)
 						--inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])
 						
 						--print(math.random(10,50)/1000)
-						entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"],time_before_add)
+						local drop
+						local amount = 1
+						if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop"] then
+							drop = blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop"]
+							if blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop_amount"] then
+								amount = blocks[loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]]["drop_amount"]
+							end
+						else
+							drop = loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]
+						end
+						for ii = 1,amount do
+							entity.create_entity("item",0.4,0.4,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,math.random(-100,100)/1000,math.random(-100,-140)/1000,drop,time_before_add)
+						end
 						
 						loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = 1
 						

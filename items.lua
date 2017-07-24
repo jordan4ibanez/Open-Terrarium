@@ -1,4 +1,4 @@
---ore definitions
+--block definitions
 blocks = {
 	{name = "air", image = "air.png", collide = false},   --id 1
 	{name = "rock", image = "stone.png"}, --id 2
@@ -6,19 +6,14 @@ blocks = {
 	{name = "grass", image = "grass.png"},   --id 4
 	{name = "water", image = "water.png", prop = "liquid", collide = false,water = true, placeable = true,mineable = false}, --id 5
 	{name = "leaves", image = "leaves.png"},   --id 6
-	{name = "tree", image = "tree.png"},   --id 7
+	{name = "tree", image = "tree.png", drop = 8, drop_amount = 4},   --id 7
+	{name = "wood", image = "wood.png"},   --id 8
 	
-		
-		
 }
 
---create water
+items = {
+	{name = "air", image = "air.png", collide = false},   --id 1
+}
 
 --lighting
 
---fix collision
-
---fix consistent maps
-
-
---print(ore[1]["name"])

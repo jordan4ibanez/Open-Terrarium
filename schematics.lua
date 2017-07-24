@@ -14,7 +14,7 @@ function schematics.load(tiles,x,y,schem)
 	ysch = 0
 	for xerr = x-schem.sizex,x+schem.sizex do
 		xsch = xsch + 1
-		print(xsch)
+		--print(xsch)
 		ysch = 0
 		for yerr = y-schem.sizey+1,y do
 			ysch = ysch + 1
