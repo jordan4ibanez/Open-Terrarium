@@ -43,7 +43,7 @@ end
 tree_schem = {sizex = 2,sizey = 5,
 [1]=
 {
-[1]={block=6,},
+[1]={block=1,},
 [2]={block=6,},
 [3]={block=6,},
 [4]={block=1,},
@@ -79,7 +79,7 @@ tree_schem = {sizex = 2,sizey = 5,
 
 [5]=
 {
-[1]={block=6,},
+[1]={block=1,},
 [2]={block=6,},
 [3]={block=6,},
 [4]={block=1,},
