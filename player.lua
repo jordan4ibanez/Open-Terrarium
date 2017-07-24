@@ -456,12 +456,24 @@ function player.draw()
 	--head
 	love.graphics.draw(player_head,  player_drawnx, player_drawny-((scale/17.7)*12),0, scale/17.7, scale/17.7,4,4)
 	
+	--wielded item
+	-- block loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]
+	-- render texture_table[inventory[i]["id"]]
+	if inventory[inventory_selection]["id"] then
+		--mining animation
+		if mine_process == 0 and mining_animation == 0 then
+			love.graphics.draw(texture_table[inventory[inventory_selection]["id"]],  player_drawnx, player_drawny-((scale/17.7)*8),-arm_animation, scale/45, scale/45,-5,-15)
+		else
+			love.graphics.draw(texture_table[inventory[inventory_selection]["id"]],  player_drawnx, player_drawny-((scale/17.7)*8),mining_animation, scale/45, scale/45,-5,-15)
+		end
+	end
+	
 	
 	--THIS IS DEBUG INFO FOR THE COLLISION DETECTION
 	
     --love.graphics.rectangle( "line", player_drawnx-(scale/5), player_drawny-(scale/1.1), 0.4*scale,1.71*scale )
     
-	love.graphics.circle( "fill", player_drawnx, player_drawny, 3 ) --center
+	--love.graphics.circle( "fill", player_drawnx, player_drawny, 3 ) --center
 end
 
 
