@@ -130,7 +130,7 @@ function love.update(dt)
 	
 	particle.gravity()
 	particle.physics_apply(dt)
-	
+	crafting.move_items()
 	
 	maplib.new_block(player.playerx,player.playery)
 	

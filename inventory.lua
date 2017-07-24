@@ -21,9 +21,28 @@ inventory_selection = 1
 --end
 --new_inventory()
 
-function inventory_add(item)
+function inventory_add(item,slot)
 	--add the item 
 	--for slot,table in pairs(inventory) do
+	if slot then
+		local table = inventory[slot]
+		if table["id"] == item and table["count"] < 64 then
+--			print("HERE")
+			inventory[slot]["count"] = inventory[slot]["count"] + 1
+			return
+		end
+	end
+	
+	if slot then
+		--for i = 1,table.getn(inventory) do
+			local table = inventory[slot]
+			if not table["id"] then
+				inventory[slot] = {id = item, name = blocks[item]["name"], image = blocks[item]["image"], count = 1}
+				return
+			end
+		--end
+	end
+	
 	for i = 1,table.getn(inventory) do
 		local table = inventory[i]
 		if table["id"] == item and table["count"] < 64 then

@@ -54,8 +54,42 @@ function crafting.render_crafting()
 				ystep = ystep + 1
 				xstep = 0
 			end
-		end
-		
-		
+		end		
 	end
+end
+
+old_left_mouse = false
+old_selected_slot = 0
+selected_slot = 0
+function crafting.move_items()
+	local left = love.mouse.isDown(1)
+	--local right = love.mouse.isDown(2) --split stack in half
+	
+	if crafting_open == true then
+		if left and old_left_mouse == false then
+			if crafting_selection_x > 0 and crafting_selection_y > 0 then
+				if selected_slot > 0 and old_selected_slot ~= selected_slot and inventory[selected_slot]["id"] then
+					print("removeing")
+					local old_slot = inventory[selected_slot]
+					
+					inventory_remove(selected_slot,nil)
+					
+					selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+					
+					inventory_add(old_slot["id"],selected_slot)
+					
+					crafting_selection_x,crafting_selection_y = -1,-1
+					selected_slot = -1
+					
+					old_selected_slot = selected_slot
+				else
+					print("test")
+					selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+				end
+				
+			end
+		end
+	end
+	
+	old_left_mouse = left
 end
