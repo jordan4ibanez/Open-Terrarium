@@ -192,13 +192,13 @@ function mine(key,dt)
 					
 					player.mining = true
 					
-					mine_process = mine_process + 8
+					mine_process = mine_process + 0.5
 					
-					--if math.ceil(mine_process) > math.ceil(old_mine_process) then
+					if math.ceil(mine_process) > math.ceil(old_mine_process) then
 					--	minesound:setPitch(love.math.random(70,80)/100)
 					--	minesound:stop()
 					--	minesound:play()
-					--end
+					end
 					
 					old_mine_process = mine_process
 					if mine_process >= 10 then
@@ -206,6 +206,7 @@ function mine(key,dt)
 						minesound:setPitch(love.math.random(90,100)/100)
 						minesound:stop()
 						minesound:play()
+						particle.create_particle(type,5,0.1,0.1,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,-350,350, -100,-140,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"],3)
 						
 						--THIS
 						--inventory_add(loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"])

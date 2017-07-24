@@ -24,6 +24,7 @@ dofile("collision.lua")
 dofile("physics.lua")
 dofile("inventory.lua")
 dofile("entity.lua")
+dofile("particles.lua")
 
 --the scale of the map
 scale = 150
@@ -42,6 +43,7 @@ function love.draw()
 	player.draw_health()
 	render_inventory()
 	entity.render_entity()
+	particle.render_particle()
 end
 
 function love.load()
@@ -119,9 +121,12 @@ function love.update(dt)
 		print("clear")
 	end
 	
-	entity.gravity()
 	
+	entity.gravity()
 	entity.physics_apply(dt)
+	
+	particle.gravity()
+	particle.physics_apply(dt)
 	
 	
 	maplib.new_block(player.playerx,player.playery)
