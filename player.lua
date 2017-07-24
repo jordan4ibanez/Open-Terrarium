@@ -113,7 +113,7 @@ function love.keypressed( key, scancode, isrepeat )
 	--debug
 	if key == "f5" then
 		maplib.save_chunks()
-		chunkx,chunky = math.random(-1000,1000),math.random(2,3)
+		chunkx,chunky = math.random(-1000,1000),1
 		maplib.createmap()
 		--print("generate random block")
 		

@@ -47,7 +47,7 @@ end
 --draw entities
 function entity.render_entity()
 	if table.getn(entity_table) > 0 then
-		print(table.getn(entity_table))
+		--print(table.getn(entity_table))
 		for i = 1,table.getn(entity_table) do
 			--print(i,entity_table[i])
 			if entity_table[i] then

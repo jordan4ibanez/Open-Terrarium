@@ -32,23 +32,25 @@ while true do
 					end
 				end
 			end
-		elseif doing == "load_old" then
-				--print("load old")
-				local max_chunks = x[2]
-				local loaded_chunks = x[3]
-				local xx = x[4]
-				local yy = x[5]
-				
-				--print("pushing")
-				--print(xx,yy)
-				local file = love.filesystem.read("/map/"..xx.."_"..yy..".txt")
-				--print("failure")
-				--print(file)
-				
-				loadchannel:push{TSerial.unpack(file),xx,yy}
-				--print("succesfully loaded "..xx.."_"..yy)
-				--print("file doesn't exist")
-		elseif doing == "save_new" then
+		end
+		if doing == "load_old" then
+			--print("load old")
+			local max_chunks = x[2]
+			local loaded_chunks = x[3]
+			local xx = x[4]
+			local yy = x[5]
+			
+			--print("pushing")
+			--print(xx,yy)
+			local file = love.filesystem.read("/map/"..xx.."_"..yy..".txt")
+			--print("failure")
+			--print(file)
+			
+			loadchannel:push{TSerial.unpack(file),xx,yy}
+			--print("succesfully loaded "..xx.."_"..yy)
+			--print("file doesn't exist")
+		end
+		if doing == "save_new" then
 			--print("saving new")
 			local data = x[2]
 			local xx = x[3]
