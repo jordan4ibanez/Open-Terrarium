@@ -12,6 +12,7 @@ debugGraph = require 'modules.debugGraph.debugGraph'
 
 math.randomseed(os.time())
 
+debugger = false
 
 dofile("math.lua")
 dofile("schematics.lua")
@@ -39,9 +40,6 @@ function love.draw()
 	maplib.draw()
 	player.draw()
 	menu.draw()  
-	fpsGraph:draw()
-	memGraph:draw()
-	dtGraph:draw()
 	player.draw_health()
 	render_inventory()
 	entity.render_entity()

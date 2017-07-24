@@ -130,6 +130,10 @@ function love.keypressed( key, scancode, isrepeat )
 		print("resetting offset")
 	end
 	
+	if key == "f6" then
+		debugger = not debugger
+	end
+	
 	--if key == "n" then
 	--	entity.create_entity("item",0.4,0.4,texture_table[2],chunkx,chunky,player.playerx,player.playery,0,0,nil,0)
 	--end
