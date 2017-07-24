@@ -280,6 +280,14 @@ function maplib.createmap()
 							end								
 						end
 					end
+					--generate trees
+					for x = 1,map_max do
+					for y = 1,map_max do 
+						if tiles[x][y]["block"] == 4 and math.random() > 0.91 then
+							tiles = schematics.load(tiles,x,y,tree_schem)
+						end
+					end
+					end
 				--generate dirt under grass
 				elseif chunky+yy < earth_max and chunky+yy > underground then
 					--print("test")
@@ -386,7 +394,7 @@ function maplib.delete_map()
 	end
 	
 	print("generating new map")
-	chunkx,chunky = math.random(-1000,1000),math.random(0,3)
+	chunkx,chunky = math.random(-1000,1000),1
 	maplib.createmap()
 end
 

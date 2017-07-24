@@ -1,9 +1,9 @@
 
-for i = 1,100 do
+--for i = 1,100 do
 
-	print("do function to play sounds at random pitches")
+	--print("do function to play sounds at random pitches")
 	
-end
+--end
 
 --textures: https://github.com/minetest-texturepacks/Good-Morning-Craft-Minetest
 
@@ -14,6 +14,7 @@ math.randomseed(os.time())
 
 
 dofile("math.lua")
+dofile("schematics.lua")
 dofile("tserial.lua")
 dofile("pause.lua")
 dofile("ore.lua")

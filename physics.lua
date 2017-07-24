@@ -76,7 +76,7 @@ function physics.gravity()
 			end
 		end
 	else
-		print("player in unloaded chunk")
+		--print("player in unloaded chunk")
 		--player.inertiay = 0
 		--player.inertiax = 0
 	end
