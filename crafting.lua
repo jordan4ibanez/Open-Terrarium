@@ -152,7 +152,7 @@ old_selected_slot = 0
 selected_slot = 0
 function crafting.move_items()
 	local left = love.mouse.isDown(1)
-	--local right = love.mouse.isDown(2) --split stack in half
+	local right = love.mouse.isDown(2) --split stack in half
 	
 	if crafting_open == true then
 		if left and old_left_mouse == false then
@@ -264,8 +264,120 @@ function crafting.move_items()
 				--end
 				
 			end
+		--place 1 or split stack
+		elseif right and old_right_mouse == false then
+			--the full inventory
+			if crafting_selection_x > 0 and crafting_selection_y > 0 then
+				--print("full")
+				if not crafting.held_item["id"] then
+					crafting.held_item["id"] = inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"]
+					crafting.held_item["count"] = math.floor(inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"]/2)
+					
+					inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"] = math.ceil(inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"]/2)
+					--[[
+					print("removeing")
+					local old_slot = inventory[selected_slot]
+					
+					inventory_remove(selected_slot,nil)
+					
+					selected_slot = 
+					
+					inventory_add(old_slot["id"],selected_slot)
+					
+					crafting_selection_x,crafting_selection_y = -1,-1
+					selected_slot = -1
+					
+					old_selected_slot = selected_slot
+					]]--
+				--else
+				--	print("test")
+				--	selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+				else
+					if not inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"] then
+						inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"] = crafting.held_item["id"]
+						inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"] = 1
+					
+						crafting.held_item["count"] = crafting.held_item["count"] - 1
+					end
+				end
+				
+			--the crafting inventory
+			elseif craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0 then
+
+				if not crafting.held_item["id"] then
+					--print("inventory")
+					--print("nothing here: "..(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size)))
+					crafting.held_item["id"] = crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"]
+					crafting.held_item["count"] = math.floor(crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"]/2)
+					crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"] = math.ceil(crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"]/2)
+					--[[
+					print("removeing")
+					local old_slot = inventory[selected_slot]
+					
+					inventory_remove(selected_slot,nil)
+					
+					selected_slot = 
+					
+					inventory_add(old_slot["id"],selected_slot)
+					
+					crafting_selection_x,crafting_selection_y = -1,-1
+					selected_slot = -1
+					
+					old_selected_slot = selected_slot
+					]]--
+				--else
+				--	print("test")
+				--	selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+				else
+					if not crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"] then
+						--print("test2")
+						crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"] = crafting.held_item["id"]
+						crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"] = 1
+						
+						crafting.held_item["count"] = crafting.held_item["count"] - 1
+					end
+				end
+			
+			--only allow grabbing from output
+			elseif craft_output_selection_x > 0 and craft_output_selection_y > 0 then
+
+				--if not crafting.held_item["id"] then
+				--	--print("nothing here: "..(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size)))
+				--	crafting.held_item["id"] = crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["id"]
+				--	crafting.held_item["count"] = crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["count"]
+				--	crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))] = {}
+					--[[
+					print("removeing")
+					local old_slot = inventory[selected_slot]
+					
+					inventory_remove(selected_slot,nil)
+					
+					selected_slot = 
+					
+					inventory_add(old_slot["id"],selected_slot)
+					
+					crafting_selection_x,crafting_selection_y = -1,-1
+					selected_slot = -1
+					
+					old_selected_slot = selected_slot
+					]]--
+				--else
+				--	print("test")
+				--	selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+				--else
+					if not crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["id"] then
+						--print("test2")
+						crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["id"] = crafting.held_item["id"]
+						crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["count"] = crafting.held_item["count"]
+						
+						crafting.held_item = {}
+					end
+				--end
+				
+			end
 		end
 	end
 	
-	old_left_mouse = left
+	old_left_mouse  = left
+	old_right_mouse = right
 end
