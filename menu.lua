@@ -57,6 +57,7 @@ function menu.draw()
 	for i = 1,characters do
 		love.graphics.print(menutitle[i], screenwidth-260+(12*i),screenheight-10+menu_char[i] )
 	end
+	love.graphics.setColor(255,255,255,255)
 	if debugger == true then
 		love.graphics.setColor(255,255,255,255)
 		fpsGraph:draw()
@@ -110,6 +111,12 @@ function menu.draw()
 		love.graphics.print("Inty:"..tostring(player.inertiay), xxer, 108)
 		
 		love.graphics.print("Deaths:"..tostring(deaths), xxer, 250)
+	end
+	
+	if crafting.held_item["id"] then
+		local x, y = love.mouse.getPosition( )
+		love.graphics.draw(texture_table[crafting.held_item["id"]],  x, y,0, 4, 4)
+		love.graphics.print( crafting.held_item["count"], x+50, y+64, 0, 1, 1)
 	end
 
 end

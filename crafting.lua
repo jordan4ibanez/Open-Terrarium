@@ -25,6 +25,8 @@ craft_output_selection_y = 0
 
 crafting.craft_inventory = {}
 
+crafting.held_item = {}
+
 --create crafting inventory
 for i = 1,crafting.craft_size*crafting.craft_size do
 	crafting.craft_inventory[i] = {}
@@ -118,13 +120,18 @@ function crafting.move_items()
 	if crafting_open == true then
 		if left and old_left_mouse == false then
 			if crafting_selection_x > 0 and crafting_selection_y > 0 then
-				if selected_slot > 0 and old_selected_slot ~= selected_slot and inventory[selected_slot]["id"] then
+
+				if not crafting.held_item["id"] then
+					crafting.held_item["id"] = inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"]
+					crafting.held_item["count"] = inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"]
+					inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)] = {}
+					--[[
 					print("removeing")
 					local old_slot = inventory[selected_slot]
 					
 					inventory_remove(selected_slot,nil)
 					
-					selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+					selected_slot = 
 					
 					inventory_add(old_slot["id"],selected_slot)
 					
@@ -132,9 +139,15 @@ function crafting.move_items()
 					selected_slot = -1
 					
 					old_selected_slot = selected_slot
+					]]--
+				--else
+				--	print("test")
+				--	selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
 				else
-					print("test")
-					selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
+					inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"] = crafting.held_item["id"]
+					inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"] = crafting.held_item["count"]
+					
+					crafting.held_item = {}
 				end
 				
 			end
