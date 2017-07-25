@@ -116,7 +116,7 @@ function menu.draw()
 	if crafting.held_item["id"] then
 		local x, y = love.mouse.getPosition( )
 		love.graphics.draw(texture_table[crafting.held_item["id"]],  x-32, y-32,0, 4, 4)
-		love.graphics.print( crafting.held_item["count"], x+18, y+32, 0, 1, 1)
+		love.graphics.print( crafting.held_item["count"], x+8, y+22, 0, 1, 1)
 	end
 
 end
