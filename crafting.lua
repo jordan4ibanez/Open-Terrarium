@@ -11,11 +11,17 @@ crafting_y = 350
 craft_inv_x = 120
 craft_inv_y = 50
 
+craft_output_x = 380
+craft_output_y = 134
+
 crafting_selection_x = 1
 crafting_selection_y = 1
 
 craft_inventory_selection_x = 0
 craft_inventory_selection_y = 0
+
+craft_output_selection_x = 0
+craft_output_selection_y = 0
 
 crafting.craft_inventory = {}
 
@@ -27,6 +33,14 @@ end
 --draw entire inventory
 function crafting.render_crafting()
 	if crafting_open == true then
+		--draw output table
+		love.graphics.draw(inventory_slot,  craft_output_x, craft_output_y,0, 1, 1)
+		
+		--draw output selection
+		if craft_output_selection_x > 0 and craft_output_selection_y > 0 then
+			love.graphics.draw(inventory_slot_selection, craft_output_x, craft_output_y,0, 1, 1)
+		end
+		
 		--draw crafting table
 		local xstep = 0
 		local ystep = 0
