@@ -206,7 +206,7 @@ function crafting.move_items()
 				--	selected_slot = crafting_selection_x + ((crafting_selection_y-1) * inventory_size)
 				else
 					if not crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"] then
-						print("test2")
+						--print("test2")
 						crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"] = crafting.held_item["id"]
 						crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"] = crafting.held_item["count"]
 						
