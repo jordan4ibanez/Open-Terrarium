@@ -316,6 +316,18 @@ function entity.item_magnet(i)
 		entity_table[i]["inertiax"] = entity_table[i]["inertiax"] + normalx
 		entity_table[i]["inertiay"] = entity_table[i]["inertiay"] + normaly
 		entity_table[i]["magnetized"] = true
+		
+		--limit the inertia
+		if entity_table[i]["inertiax"] > 0.5 then 
+			entity_table[i]["inertiax"] = 0.5
+		elseif entity_table[i]["inertiax"] < -0.5 then
+			entity_table[i]["inertiax"] = -0.5
+		end
+		if entity_table[i]["inertiay"] > 0.5 then
+			entity_table[i]["inertiay"] = 0.5
+		elseif entity_table[i]["inertiay"] < -0.5 then
+			entity_table[i]["inertiay"] = -0.5
+		end
 	end
 	
 	--inventory magnet add
