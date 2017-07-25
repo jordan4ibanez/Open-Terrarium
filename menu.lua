@@ -201,9 +201,14 @@ function menu.cursor()
 		if x > crafting_x and x < crafting_x + (inventory_size*84) and y > crafting_y and y < crafting_y + (inventory_height*84) then
 			crafting_selection_x = math.ceil((x-crafting_x)/84)
 			crafting_selection_y = math.ceil((y-crafting_y)/84)
+		elseif x > craft_inv_x and x < craft_inv_x + (crafting.craft_size*84) and y > craft_inv_y and y < craft_inv_y + (crafting.craft_size*84) then
+			craft_inventory_selection_x = math.ceil((x-craft_inv_x)/84)
+			craft_inventory_selection_y = math.ceil((y-craft_inv_y)/84)
 		else
 			crafting_selection_x = -1
 			crafting_selection_y = -1
+			craft_inventory_selection_x = -1
+			craft_inventory_selection_y = -1
 		end
 	end
 

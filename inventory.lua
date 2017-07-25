@@ -107,8 +107,8 @@ function love.wheelmoved(x, y)
 end
 
 
+--render hot bar
 function render_inventory()
-	--draw inventory
 	for i = 1,inventory_size do
 		love.graphics.draw(inventory_slot,  inventory_x+(i*(inv_slot_width/2)), inventory_y,0, 1/2, 1/2)
 	end
