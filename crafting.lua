@@ -156,6 +156,9 @@ function crafting.move_items()
 	
 	--left click
 	if crafting_open == true then
+		if (left or right) and (craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0) then
+			detect_recipes()
+		end
 		if left and old_left_mouse == false then
 			--the full inventory
 			if crafting_selection_x > 0 and crafting_selection_y > 0 then
@@ -261,5 +264,13 @@ function crafting.right_click(selectionerx,selectionery,inventory,inventory_widt
 			end
 			
 		end
+	end
+end
+
+
+--crafting mechanic
+function detect_recipes()
+	for i = 1,crafting.craft_size*crafting.craft_size do
+		print(crafting.craft_inventory[i])
 	end
 end
