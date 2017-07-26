@@ -156,9 +156,6 @@ function crafting.move_items()
 	
 	--left click
 	if crafting_open == true then
-		if (left or right) and (craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0) then
-			detect_recipes()
-		end
 		if left and old_left_mouse == false then
 			--the full inventory
 			if crafting_selection_x > 0 and crafting_selection_y > 0 then
@@ -192,6 +189,9 @@ function crafting.move_items()
 			elseif craft_output_selection_x > 0 and craft_output_selection_y > 0 then
 				crafting.right_click(craft_output_selection_x,craft_output_selection_y,crafting.output_inventory,1,false)				
 			end
+		end
+		if (left or right) and (old_left_mouse == false) and (old_right_mouse == false) and (craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0) then
+			detect_recipes()
 		end
 	end
 	
@@ -267,10 +267,27 @@ function crafting.right_click(selectionerx,selectionery,inventory,inventory_widt
 	end
 end
 
+recipe_test = {
+2,nil,nil,
+2,nil,nil,
+2,nil,nil,
+}
+
 
 --crafting mechanic
 function detect_recipes()
+	print("----------------------")
 	for i = 1,crafting.craft_size*crafting.craft_size do
-		print(crafting.craft_inventory[i])
+		if recipe_test[i] == crafting.craft_inventory[i]["id"] then
+			if i == crafting.craft_size*crafting.craft_size then
+				print(" real recipe")
+			end
+		end
+		if recipe_test[i] ~= crafting.craft_inventory[i]["id"] then
+			print("move onto next")
+			return
+		end
+		--print(crafting.craft_inventory[i]["id"])
 	end
+	
 end
