@@ -170,6 +170,10 @@ function crafting.move_items()
 			--only allow grabbing from output
 			elseif craft_output_selection_x > 0 and craft_output_selection_y > 0 then
 				crafting.left_click(craft_output_selection_x,craft_output_selection_y,crafting.output_inventory,1,false)				
+			--throw item
+			else
+				print("fix this")
+				throw_item()
 			end
 			
 			
@@ -295,6 +299,7 @@ amount = 4,
 
 --crafting mechanic
 function detect_recipes()
+	print("add shift clicking")
 	--print("----------------------")
 	for i = 1,crafting.craft_size*crafting.craft_size do
 		if recipe_test["recipe"][i] == crafting.craft_inventory[i]["id"] then
