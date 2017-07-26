@@ -190,7 +190,7 @@ function crafting.move_items()
 				crafting.right_click(craft_output_selection_x,craft_output_selection_y,crafting.output_inventory,1,false)				
 			end
 		end
-		if (left or right) and (old_left_mouse == false) and (old_right_mouse == false) and (craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0) then
+		if (left or right) and (old_left_mouse == false) and (old_right_mouse == false) then--and (craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0) then
 			detect_recipes()
 		end
 	end
@@ -208,6 +208,21 @@ function crafting.left_click(selectionerx,selectionery,inventory,inventory_width
 		crafting.held_item["id"] = inventory[i]["id"]
 		crafting.held_item["count"] = inventory[i]["count"]
 		inventory[i] = {}
+		--remove items from craft when taking from output
+		if inventory == crafting.output_inventory then
+			--print("test output")
+			--remove singles from craft
+			for i = 1,crafting.craft_size*crafting.craft_size do
+				if crafting.craft_inventory[i]["id"] then
+					crafting.craft_inventory[i]["count"] = crafting.craft_inventory[i]["count"] - 1
+					
+					if crafting.craft_inventory[i]["count"] <= 0 then
+						crafting.craft_inventory[i] = {}
+					end
+					
+				end
+			end
+		end
 	--placing
 	elseif allow_input == true then
 		--put in blank slot
