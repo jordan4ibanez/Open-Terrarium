@@ -159,49 +159,17 @@ function crafting.move_items()
 		if left and old_left_mouse == false then
 			--the full inventory
 			if crafting_selection_x > 0 and crafting_selection_y > 0 then
-				--print("full")
-				if not crafting.held_item["id"] then
-					crafting.held_item["id"] = inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"]
-					crafting.held_item["count"] = inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"]
-					inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)] = {}
-				else
-					if not inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"] then
-						inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["id"] = crafting.held_item["id"]
-						inventory[crafting_selection_x + ((crafting_selection_y-1) * inventory_size)]["count"] = crafting.held_item["count"]
-					
-						crafting.held_item = {}
-					end
-				end
+				crafting.left_click(crafting_selection_x,crafting_selection_y,inventory,inventory_size,true)
 				
 			--the crafting inventory
 			elseif craft_inventory_selection_x > 0 and craft_inventory_selection_y > 0 then
 
-				if not crafting.held_item["id"] then
-					--print("inventory")
-					--print("nothing here: "..(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size)))
-					crafting.held_item["id"] = crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"]
-					crafting.held_item["count"] = crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"]
-					crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))] = {}
-				else
-					if not crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"] then
-						--print("test2")
-						crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["id"] = crafting.held_item["id"]
-						crafting.craft_inventory[(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size))]["count"] = crafting.held_item["count"]
-						
-						crafting.held_item = {}
-					end
-				end
+				crafting.left_click(craft_inventory_selection_x,craft_inventory_selection_y,crafting.craft_inventory,crafting.craft_size,true)
+
 			
 			--only allow grabbing from output
 			elseif craft_output_selection_x > 0 and craft_output_selection_y > 0 then
-
-				if not crafting.held_item["id"] then
-				--	--print("nothing here: "..(craft_inventory_selection_x + ((craft_inventory_selection_y-1) * crafting.craft_size)))
-					crafting.held_item["id"] = crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["id"]
-					crafting.held_item["count"] = crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))]["count"]
-					crafting.output_inventory[(craft_output_selection_x + ((craft_output_selection_y-1) * 1))] = {}
-				end
-				
+				crafting.left_click(craft_output_selection_x,craft_output_selection_y,crafting.output_inventory,1,false)				
 			end
 			
 			
@@ -262,4 +230,41 @@ function crafting.move_items()
 	
 	old_left_mouse  = left
 	old_right_mouse = right
+end
+
+
+--left click mechanic
+function crafting.left_click(selectionerx,selectionery,inventory,inventory_width,allow_input)
+	local i = selectionerx + ((selectionery-1) * inventory_width)
+	--taking
+	if not crafting.held_item["id"] then
+		crafting.held_item["id"] = inventory[i]["id"]
+		crafting.held_item["count"] = inventory[i]["count"]
+		inventory[i] = {}
+	--placing
+	elseif allow_input == true then
+		--put in blank slot
+		if not inventory[i]["id"] then
+			inventory[i]["id"] = crafting.held_item["id"]
+			inventory[i]["count"] = crafting.held_item["count"]
+			crafting.held_item = {}
+		--put into existing
+		elseif inventory[i]["id"] == crafting.held_item["id"] then
+			--add into
+			if inventory[i]["id"] + crafting.held_item["id"] + inventory[i]["id"] <= 64 then
+				inventory[i]["id"] = inventory[i]["id"] + inventory[i]["id"] + crafting.held_item["id"]
+				crafting.held_item = {}
+			end
+		--switch
+		elseif inventory[i]["id"] ~= crafting.held_item["id"] then
+			local temp_held = crafting.held_item
+			crafting.held_item = inventory[i]
+			inventory[i] = temp_held
+		end
+	end
+end
+
+--right click mechanic
+function crafting.right_click(selectionerx,selectionery,inventory,inventory_width,allow_input)
+
 end
