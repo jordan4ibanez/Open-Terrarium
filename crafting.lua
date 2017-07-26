@@ -268,9 +268,13 @@ function crafting.right_click(selectionerx,selectionery,inventory,inventory_widt
 end
 
 recipe_test = {
-2,nil,nil,
-2,nil,nil,
-2,nil,nil,
+recipe = {
+nil,nil,nil,
+nil,7,nil,
+nil,nil,nil,
+},
+output = 8,
+amount = 4,
 }
 
 
@@ -278,13 +282,16 @@ recipe_test = {
 function detect_recipes()
 	print("----------------------")
 	for i = 1,crafting.craft_size*crafting.craft_size do
-		if recipe_test[i] == crafting.craft_inventory[i]["id"] then
+		if recipe_test["recipe"][i] == crafting.craft_inventory[i]["id"] then
 			if i == crafting.craft_size*crafting.craft_size then
 				print(" real recipe")
+				crafting.output_inventory[1]["id"] = recipe_test["output"]
+				crafting.output_inventory[1]["count"] = recipe_test["amount"]
 			end
 		end
-		if recipe_test[i] ~= crafting.craft_inventory[i]["id"] then
+		if recipe_test["recipe"][i] ~= crafting.craft_inventory[i]["id"] then
 			print("move onto next")
+			crafting.output_inventory[1] = {}
 			return
 		end
 		--print(crafting.craft_inventory[i]["id"])
