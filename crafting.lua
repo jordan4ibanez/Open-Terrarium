@@ -295,17 +295,17 @@ amount = 4,
 
 --crafting mechanic
 function detect_recipes()
-	print("----------------------")
+	--print("----------------------")
 	for i = 1,crafting.craft_size*crafting.craft_size do
 		if recipe_test["recipe"][i] == crafting.craft_inventory[i]["id"] then
 			if i == crafting.craft_size*crafting.craft_size then
-				print(" real recipe")
+				--print(" real recipe")
 				crafting.output_inventory[1]["id"] = recipe_test["output"]
 				crafting.output_inventory[1]["count"] = recipe_test["amount"]
 			end
 		end
 		if recipe_test["recipe"][i] ~= crafting.craft_inventory[i]["id"] then
-			print("move onto next")
+			--print("move onto next")
 			crafting.output_inventory[1] = {}
 			return
 		end
