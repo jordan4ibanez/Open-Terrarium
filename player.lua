@@ -20,6 +20,8 @@ add_inventory_radius = 0.35
 
 time_before_add = 2
 
+radius_of_selection = 10
+
 function move(dt)	
 	--debug - stresstest
 	--if love.keyboard.isDown("f5") then

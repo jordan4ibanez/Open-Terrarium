@@ -367,7 +367,7 @@ function maplib.draw()
 					
 					
 					
-					if drawx >= -scale and drawx < screenwidth and drawy >= -scale and drawy < screenheight then
+					if drawx >= -scale and drawx < love.graphics.getWidth() and drawy >= -scale and drawy < love.graphics.getHeight( ) then
 						if loaded_chunks[xx] and loaded_chunks[xx][yy] and loaded_chunks[xx][yy][x] and loaded_chunks[xx][yy][x][y] then
 							--print("Drawing")
 							love.graphics.draw(texture_table[loaded_chunks[xx][yy][x][y]["block"]],  drawx,drawy,0, scale/16, scale/16)

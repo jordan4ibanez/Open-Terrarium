@@ -142,7 +142,7 @@ function menu.cursor()
 		
 		selected_chunkx,selected_chunky = chunkx,chunky
 		--only change and draw if in boundaries
-		if ((mx >= 1 and mx <= map_max) and (my >= 1 and my <= map_max)) and (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
+		if ((mx >= 1 and mx <= map_max) and (my >= 1 and my <= map_max)) and (math.abs(player.playerx-mx) <=radius_of_selection and math.abs(player.playery-my) <=radius_of_selection) then
 			local draw_selection_x = player_drawnx+(mx*scale)-(player.playerx*scale)
 			local draw_selection_y = player_drawny+(my*scale)-(player.playery*scale)
 			love.graphics.rectangle("line",draw_selection_x, draw_selection_y, scale, scale )
@@ -151,7 +151,7 @@ function menu.cursor()
 			end
 			
 		--reach outside of chunk
-		elseif (math.abs(player.playerx-mx) <=5 and math.abs(player.playery-my) <=5) then
+		elseif (math.abs(player.playerx-mx) <=radius_of_selection and math.abs(player.playery-my) <=radius_of_selection) then
 
 			--ocal chunkex,chunkey = math.floor(mx/map_max),math.floor(my/map_max)
 			
