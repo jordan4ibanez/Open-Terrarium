@@ -286,6 +286,7 @@ function crafting.right_click(selectionerx,selectionery,inventory,inventory_widt
 	end
 end
 
+
 recipe_test = {
 recipe = {
 nil,nil,nil,
