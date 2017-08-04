@@ -115,8 +115,6 @@ function love.update(dt)
 		physics.gravity()
 		move(dt)
 		physics.player_x_apply(dt)
-
-		pause_game()
 		
 		maplib.load_chunks()
 		fpsGraph:update(dt)

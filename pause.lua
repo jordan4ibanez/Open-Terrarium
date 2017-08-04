@@ -24,7 +24,18 @@ function pause_game()
 		end
 		ier = ier + 1
 	end
-		--starter_y-9+(ier*100),fontbig:getWidth(item), fontbig:getHeight(item)
+	
+	--exit
+	if pause_menu_submenu == "EXIT" and love.mouse.isDown(1) then
+		maplib.save_chunks()
+		love.filesystem.write( "/map/player.txt", TSerial.pack({inventory,chunkx,chunky,player.playerx,player.playery}))
+		
+		print("saving...")
+		
+		love.timer.sleep(1)
+		
+		love.event.push('quit')
+	end
 	
 end
 
