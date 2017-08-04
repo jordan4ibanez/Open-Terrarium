@@ -45,6 +45,8 @@ function terminal_logic(dt)
 		if globalkey == "return" then
 			terminal_history = terminal_history..terminal_input.."\n"
 			terminal_input = ""
+		elseif globalkey == "`" or globalkey == "/" then
+			globalkey = nil
 		elseif globalkey == "backspace" then
 			terminal_input = terminal_input:sub(1, -2)
 		elseif globalkey == "space" then
