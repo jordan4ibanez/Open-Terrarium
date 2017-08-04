@@ -37,17 +37,19 @@ screenwidth = love.graphics.getWidth( )
 screenheight = love.graphics.getHeight( )
 
 function love.draw()
-	maplib.draw()
-	player.draw()
-	player.draw_health()
-	entity.render_entity()
-	particle.render_particle()
-	crafting.render_crafting()
-	menu.draw()  
-	render_inventory()
 	if pause == true then
 		render_pause_menu()
+	else
+		maplib.draw()
+		player.draw()
+		player.draw_health()
+		entity.render_entity()
+		particle.render_particle()
+		crafting.render_crafting()
+		menu.draw()  
+		render_inventory()
 	end
+
 end
 
 function love.load()
