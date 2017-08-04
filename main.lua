@@ -38,6 +38,11 @@ screenheight = love.graphics.getHeight( )
 
 function love.draw()
 	if pause == true then
+		maplib.draw()
+		player.draw()
+		entity.render_entity()
+		particle.render_particle()
+		
 		render_pause_menu()
 	else
 		maplib.draw()
@@ -139,7 +144,7 @@ function love.update(dt)
 		
 		maplib.new_block(player.playerx,player.playery)
 	else
-	
+		pause_game()
 	end
 	
 end
