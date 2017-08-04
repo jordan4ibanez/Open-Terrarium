@@ -10,7 +10,12 @@ function render_terminal()
 	
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fontbig)
-	love.graphics.print(terminal_input..blink_cursor, 0,12)
+	--push text back
+	if fontbig:getWidth(terminal_input..blink_cursor)> love.graphics.getWidth() then
+		love.graphics.print(terminal_input..blink_cursor, -(fontbig:getWidth(terminal_input..blink_cursor)-love.graphics.getWidth()),12)
+	else
+		love.graphics.print(terminal_input..blink_cursor, 0,12)
+	end
 end
 
 blink_cursor = "/"
@@ -20,9 +25,9 @@ function terminal_logic(dt)
 	
 	if blink_timer > 0.5 then
 		if blink_cursor == "/" then
-			blink_cursor = ""
+			blink_cursor = " "
 			blink_timer = 0
-		elseif blink_cursor == "" then
+		elseif blink_cursor == " " then
 			blink_cursor = "/"
 			blink_timer = 0
 		end
