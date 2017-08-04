@@ -7,6 +7,15 @@ function pause_game()
 	
 end
 
+--menu items
+pause_menu_items = {
+"GRAPHICS",
+"VOLUME",
+"WORLD",
+"EXIT"
+
+}
+
 --Font:getHeight( )
 
 function render_pause_menu()
@@ -19,39 +28,20 @@ function render_pause_menu()
 	
 	--directories
 	
+	local starter_y = 250
+	local ier = 0
 	
-	--graphics
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.rectangle( "fill", love.graphics.getWidth( )/2-(fontbig:getWidth("GRAPHICS")/2)-2, 250-9,fontbig:getWidth("GRAPHICS"), fontbig:getHeight("GRAPHICS") )
-	---
-	love.graphics.setColor(0,0,0,255)
-	love.graphics.setFont(fontbig)
-	love.graphics.print("GRAPHICS", love.graphics.getWidth( )/2-(fontbig:getWidth("GRAPHICS")/2),250)
-	
-	--volume
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.rectangle( "fill", love.graphics.getWidth( )/2-(fontbig:getWidth("VOLUME")/2)-2, 350-9,fontbig:getWidth("VOLUME"), fontbig:getHeight("VOLUME") )
-	---
-	love.graphics.setColor(0,0,0,255)
-	love.graphics.setFont(fontbig)
-	love.graphics.print("VOLUME", love.graphics.getWidth( )/2-(fontbig:getWidth("VOLUME")/2),350)
-	
-	--world
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.rectangle( "fill", love.graphics.getWidth( )/2-(fontbig:getWidth("WORLD")/2)-2, 450-9,fontbig:getWidth("WORLD"), fontbig:getHeight("WORLD") )
-	---
-	love.graphics.setColor(0,0,0,255)
-	love.graphics.setFont(fontbig)
-	love.graphics.print("WORLD", love.graphics.getWidth( )/2-(fontbig:getWidth("WORLD")/2),450)
-	
-	--exit
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.rectangle( "fill", love.graphics.getWidth( )/2-(fontbig:getWidth("EXIT")/2)-2, 550-9,fontbig:getWidth("EXIT"), fontbig:getHeight("EXIT") )
-	---
-	love.graphics.setColor(0,0,0,255)
-	love.graphics.setFont(fontbig)
-	love.graphics.print("EXIT", love.graphics.getWidth( )/2-(fontbig:getWidth("EXIT")/2),550)
-	
+	for _,item in pairs(pause_menu_items) do
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.rectangle( "fill", love.graphics.getWidth( )/2-(fontbig:getWidth(item)/2)-2, 250-9+(ier*100),fontbig:getWidth(item), fontbig:getHeight(item) )
+		---
+		love.graphics.setColor(0,0,0,255)
+		love.graphics.setFont(fontbig)
+		love.graphics.print(item, love.graphics.getWidth( )/2-(fontbig:getWidth(item)/2),250+(ier*100))
+		
+		ier = ier + 1
+	end
+		
 	
 	--love.graphics.setColor(80,80,80,255)
 end
