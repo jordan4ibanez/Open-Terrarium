@@ -45,6 +45,9 @@ function love.draw()
 	crafting.render_crafting()
 	menu.draw()  
 	render_inventory()
+	if pause == true then
+		render_pause_menu()
+	end
 end
 
 function love.load()
@@ -68,6 +71,7 @@ function love.load()
 	font = love.graphics.newFont("font.ttf", 12)
 	fontmed = love.graphics.newFont("font.ttf", 22)
 	fontbig = love.graphics.newFont("font.ttf", 35)
+	hugefont = love.graphics.newFont("font.ttf", 100)
 	
 	love.graphics.setFont(font)
 	

@@ -2,14 +2,12 @@
 
 pause = false
 
-function pause_game()
-	if pause == true then
+function pause_game()	
+	--love.graphics.rectangle( "line", 10, 1, 53,53 )
 	
-		 love.graphics.rectangle( "line", 10, 1, 53,53 )
-	end
 end
 
 function render_pause_menu()
-
-
+	love.graphics.setFont(hugefont)
+	love.graphics.print("PAUSED", love.graphics.getWidth( )/2-300,love.graphics.getHeight( )/2-50)
 end

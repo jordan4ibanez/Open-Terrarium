@@ -300,6 +300,7 @@ end
 
 
 function player.draw_health()
+	love.graphics.setFont(font)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.print("Health:", 4,screenheight-32)
 	for i = 1,health do
