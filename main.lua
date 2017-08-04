@@ -15,6 +15,7 @@ math.randomseed(os.time())
 debugger = false
 
 dofile("math.lua")
+dofile("terminal.lua")
 dofile("schematics.lua")
 dofile("tserial.lua")
 dofile("pause.lua")
@@ -53,6 +54,10 @@ function love.draw()
 		crafting.render_crafting()
 		menu.draw()  
 		render_inventory()
+	end
+	
+	if terminal == true then
+		render_terminal()
 	end
 
 end
@@ -111,7 +116,7 @@ function love.quit( )
 end
 
 function love.update(dt)
-	if pause ~= true then
+	if pause ~= true and terminal ~= true then
 		physics.gravity()
 		move(dt)
 		physics.player_x_apply(dt)
@@ -141,8 +146,10 @@ function love.update(dt)
 		crafting.move_items()
 		
 		maplib.new_block(player.playerx,player.playery)
-	else
+	elseif pause == true then
 		pause_game()
+	elseif terminal == true then
+		terminal_logic(dt)
 	end
 	
 end

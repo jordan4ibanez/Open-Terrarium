@@ -99,6 +99,8 @@ end
 
 function love.keypressed( key, scancode, isrepeat )
 
+	globalkey = key
+
 	--quit
 	if key == "escape" then
 		--maplib.save_chunks()
@@ -148,6 +150,11 @@ function love.keypressed( key, scancode, isrepeat )
 	--open inventory
 	if key == "e" then
 		crafting_open = not crafting_open
+	end
+	
+	--open terminal
+	if key == "`" or key == "/" then
+		terminal = not terminal
 	end
 			
 
