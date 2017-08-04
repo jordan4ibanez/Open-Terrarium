@@ -40,11 +40,11 @@ function love.draw()
 	maplib.draw()
 	player.draw()
 	player.draw_health()
-	render_inventory()
 	entity.render_entity()
 	particle.render_particle()
 	crafting.render_crafting()
 	menu.draw()  
+	render_inventory()
 end
 
 function love.load()
