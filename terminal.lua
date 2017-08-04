@@ -8,6 +8,9 @@ function render_terminal()
 	love.graphics.setColor(0,0,0,155)
 	love.graphics.rectangle( "fill", 0, 0,love.graphics.getWidth(), fontbig:getHeight("ABCDEFG")+7 )
 	
+	love.graphics.setColor(255,255,255,200)
+	love.graphics.rectangle( "fill", 0, fontbig:getHeight("ABCDEFG")+7,love.graphics.getWidth(), 3 )
+	
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(fontbig)
 	--push text back
