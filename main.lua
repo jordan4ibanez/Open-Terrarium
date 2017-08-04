@@ -99,37 +99,41 @@ function love.quit( )
 	return nil
 end
 
-function love.update(dt)	
-	physics.gravity()
-	move(dt)
-	physics.player_x_apply(dt)
+function love.update(dt)
+	if pause ~= true then
+		physics.gravity()
+		move(dt)
+		physics.player_x_apply(dt)
 
-	pause_game()
+		pause_game()
+		
+		maplib.load_chunks()
+		fpsGraph:update(dt)
+		memGraph:update(dt)
+		-- Update our custom graph
+		dtGraph:update(dt, math.floor(dt * 1000))
+		dtGraph.label = 'DT: ' ..  dt
+		
+		menu.animate()
+		mine(key,dt)
+		player.move_camera(dt)
+		maplib.liquid_flow(dt)
+		--debug
+		if love.keyboard.isDown("space") then
+			print("clear")
+		end
+		
+		
+		entity.gravity()
+		entity.physics_apply(dt)
+		
+		particle.gravity()
+		particle.physics_apply(dt)
+		crafting.move_items()
+		
+		maplib.new_block(player.playerx,player.playery)
+	else
 	
-	maplib.load_chunks()
-	fpsGraph:update(dt)
-	memGraph:update(dt)
-	-- Update our custom graph
-	dtGraph:update(dt, math.floor(dt * 1000))
-	dtGraph.label = 'DT: ' ..  dt
-	
-	menu.animate()
-	mine(key,dt)
-	player.move_camera(dt)
-	maplib.liquid_flow(dt)
-	--debug
-	if love.keyboard.isDown("space") then
-		print("clear")
 	end
-	
-	
-	entity.gravity()
-	entity.physics_apply(dt)
-	
-	particle.gravity()
-	particle.physics_apply(dt)
-	crafting.move_items()
-	
-	maplib.new_block(player.playerx,player.playery)
 	
 end

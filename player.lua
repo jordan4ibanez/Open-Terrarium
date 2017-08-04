@@ -101,13 +101,13 @@ function love.keypressed( key, scancode, isrepeat )
 
 	--quit
 	if key == "escape" then
-		maplib.save_chunks()
-		love.filesystem.write( "/map/player.txt", TSerial.pack({inventory,chunkx,chunky,player.playerx,player.playery}))
+		--maplib.save_chunks()
+		--love.filesystem.write( "/map/player.txt", TSerial.pack({inventory,chunkx,chunky,player.playerx,player.playery}))
 		
-		love.timer.sleep(3)
+		--love.timer.sleep(3)
 		
-		love.event.push('quit')
-		--pause = true
+		--love.event.push('quit')
+		pause = not pause
 	end
 
 
@@ -352,110 +352,111 @@ function player.draw()
     ]]--
     
     --leg animation
-    if player.inertiax ~= 0 then
-		if leg_animation_up == true then
-			leg_animation = leg_animation + math.abs(player.inertiax)
+    if pause ~= true then
+		if player.inertiax ~= 0 then
+			if leg_animation_up == true then
+				leg_animation = leg_animation + math.abs(player.inertiax)
 
-			if leg_animation >= 1 then
-				leg_animation_up = false
+				if leg_animation >= 1 then
+					leg_animation_up = false
+				end
+			elseif leg_animation_up == false then
+				leg_animation = leg_animation - math.abs(player.inertiax)
+
+				if leg_animation <= -1 then
+					leg_animation_up = true
+				end
 			end
-		elseif leg_animation_up == false then
-			leg_animation = leg_animation - math.abs(player.inertiax)
-
-			if leg_animation <= -1 then
-				leg_animation_up = true
+		else --return animation to normal
+			--return to 0 
+			if leg_animation > -0.05 and leg_animation < 0.05 then
+				leg_animation = 0
+			end
+		
+			--push back
+			if leg_animation > 0 then
+				--print("animation down")
+				leg_animation = leg_animation - 0.05
+			elseif leg_animation < 0 then
+				--print("animation up")
+				leg_animation = leg_animation + 0.05
 			end
 		end
-	else --return animation to normal
-		--return to 0 
-		if leg_animation > -0.05 and leg_animation < 0.05 then
-			leg_animation = 0
+		
+		if (leg_animation > -0.1 and leg_animation < 0.1) and not (old_leg_animation > -0.1 and old_leg_animation < 0.1) then
+			stepsound:setPitch(love.math.random(80,100)/100)
+			stepsound:stop()
+			stepsound:play()
 		end
-	
-		--push back
-		if leg_animation > 0 then
-			--print("animation down")
-			leg_animation = leg_animation - 0.05
-		elseif leg_animation < 0 then
-			--print("animation up")
-			leg_animation = leg_animation + 0.05
+		
+		old_leg_animation = leg_animation
+		
+		--arm animation
+		if player.inertiax ~= 0 then
+			if arm_animation_up == true then
+				arm_animation = arm_animation + math.abs(player.inertiax)
+
+				if arm_animation >= 1 then
+					arm_animation_up = false
+				end
+			elseif arm_animation_up == false then
+				arm_animation = arm_animation - math.abs(player.inertiax)
+
+				if arm_animation <= -1 then
+					arm_animation_up = true
+				end
+			end
+		else --return animation to normal
+			--return to 0 
+			if arm_animation > -0.05 and arm_animation < 0.05 then
+				arm_animation = 0
+			end
+		
+			--push back
+			if arm_animation > 0 then
+				--print("animation down")
+				arm_animation = arm_animation - 0.05
+			elseif leg_animation < 0 then
+				--print("animation up")
+				arm_animation = arm_animation + 0.05
+			end
+		end
+		
+		--mining animation
+		--get to -1.5
+		
+		if mine_process ~= 0 then
+			if mining_animation_up == true then
+				mining_animation = mining_animation + 0.4
+
+				if mining_animation >= -0.8 then
+					mining_animation_up = false
+				end
+			elseif mining_animation_up == false then
+				mining_animation = mining_animation - 0.4
+
+				if mining_animation <= -2.2 then
+					mining_animation_up = true
+				end
+			end
+		else --return animation to normal
+			--print("return to normal "..mining_animation)
+			--return to 0 
+			if mining_animation > -0.05 and mining_animation < 0.05 then
+				mining_animation = 0
+			end
+		
+			--push back
+			if mining_animation > 0 then
+				--print("animation down")
+				mining_animation = mining_animation - 0.05
+			elseif mining_animation < 0 then
+				--print("animation up")
+				mining_animation = mining_animation + 0.05
+			end
 		end
 	end
-	
-	if (leg_animation > -0.1 and leg_animation < 0.1) and not (old_leg_animation > -0.1 and old_leg_animation < 0.1) then
-		stepsound:setPitch(love.math.random(80,100)/100)
-		stepsound:stop()
-		stepsound:play()
-	end
-	
-	old_leg_animation = leg_animation
-	
-	--arm animation
-	if player.inertiax ~= 0 then
-		if arm_animation_up == true then
-			arm_animation = arm_animation + math.abs(player.inertiax)
-
-			if arm_animation >= 1 then
-				arm_animation_up = false
-			end
-		elseif arm_animation_up == false then
-			arm_animation = arm_animation - math.abs(player.inertiax)
-
-			if arm_animation <= -1 then
-				arm_animation_up = true
-			end
-		end
-	else --return animation to normal
-		--return to 0 
-		if arm_animation > -0.05 and arm_animation < 0.05 then
-			arm_animation = 0
-		end
-	
-		--push back
-		if arm_animation > 0 then
-			--print("animation down")
-			arm_animation = arm_animation - 0.05
-		elseif leg_animation < 0 then
-			--print("animation up")
-			arm_animation = arm_animation + 0.05
-		end
-	end
-    
-    --mining animation
-    --get to -1.5
-    
-	if mine_process ~= 0 then
-		if mining_animation_up == true then
-			mining_animation = mining_animation + 0.4
-
-			if mining_animation >= -0.8 then
-				mining_animation_up = false
-			end
-		elseif mining_animation_up == false then
-			mining_animation = mining_animation - 0.4
-
-			if mining_animation <= -2.2 then
-				mining_animation_up = true
-			end
-		end
-	else --return animation to normal
-		--print("return to normal "..mining_animation)
-		--return to 0 
-		if mining_animation > -0.05 and mining_animation < 0.05 then
-			mining_animation = 0
-		end
-	
-		--push back
-		if mining_animation > 0 then
-			--print("animation down")
-			mining_animation = mining_animation - 0.05
-		elseif mining_animation < 0 then
-			--print("animation up")
-			mining_animation = mining_animation + 0.05
-		end
-	end
-    
-    
+		
 	
 	--left leg
 	love.graphics.draw(player_leg,  player_drawnx, player_drawny+((scale/17.7)*2),leg_animation, scale/17.7, scale/17.7,2,0)
