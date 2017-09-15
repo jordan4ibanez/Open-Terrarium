@@ -319,7 +319,8 @@ end
 function load_player_textures()
 
 	
-	player_head = love.graphics.newImage("textures/player_head.png")
+	player_head_right = love.graphics.newImage("textures/player_head_right.png")
+	player_head_left = love.graphics.newImage("textures/player_head_left.png")
 	player_arm = love.graphics.newImage("textures/player_arm.png")
 	player_body = love.graphics.newImage("textures/player_body.png")
 	player_leg = love.graphics.newImage("textures/player_leg.png")
@@ -483,8 +484,23 @@ function player.draw()
 		love.graphics.draw(player_arm,  player_drawnx, player_drawny-((scale/17.7)*8),mining_animation, scale/17.7, scale/17.7,2,0)
 	end
 	
+	
+	--2d vector
+	local xor, yor = love.mouse.getPosition( )
+	local vec = {x=player_drawnx-xor, y= player_drawny-((scale/17.7)*12)-yor}
+	
+	local yaw = math.atan(vec.y/vec.x)
+	
+	
 	--head
-	love.graphics.draw(player_head,  player_drawnx, player_drawny-((scale/17.7)*12),radians(90), scale/17.7, scale/17.7,4,4)
+	if player_drawnx > xor then
+		love.graphics.draw(player_head_left,  player_drawnx, player_drawny-((scale/17.7)*12),yaw, scale/17.7, scale/17.7,4,4)
+	else
+		love.graphics.draw(player_head_right,  player_drawnx, player_drawny-((scale/17.7)*12),yaw, scale/17.7, scale/17.7,4,4)
+	end
+	
+	
+	
 	
 	--wielded item
 	-- block loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]
