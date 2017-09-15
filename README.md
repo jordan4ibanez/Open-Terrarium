@@ -4,7 +4,7 @@ __Open Terrarium__ is an open world, open source, 2D block based sandbox game wh
 
 
 
-### Why is this different than the thousands of other 2D Terraria clones?
+### How does this differ from the thousands of other Terraria clones?
 
 __Open Terrarium__ is written in a higher level language so that it's much easier to modify, debug, add into, and program in general.
 
