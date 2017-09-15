@@ -1,9 +1,9 @@
 ### What is this game?
 
 __Open Terrarium__ is an open world, open source, 2D block based sandbox game where you can mine and craft.
-
-
-
+\
+\
+\
 ### How does this differ from the thousands of other Terraria clones?
 
 __Open Terrarium__ is written in a higher level language so that it's much easier to modify, debug, add into, and program in general.
