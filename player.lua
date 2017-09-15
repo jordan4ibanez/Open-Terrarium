@@ -484,7 +484,7 @@ function player.draw()
 	end
 	
 	--head
-	love.graphics.draw(player_head,  player_drawnx, player_drawny-((scale/17.7)*12),0, scale/17.7, scale/17.7,4,4)
+	love.graphics.draw(player_head,  player_drawnx, player_drawny-((scale/17.7)*12),radians(90), scale/17.7, scale/17.7,4,4)
 	
 	--wielded item
 	-- block loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"]
