@@ -61,21 +61,6 @@ function move(dt)
 		scale = scale - 1
 	end
 	
-	--if love.keyboard.isDown("a","d","w") then
-		--print("guude 2")
-		--local collide = maplib.new_block(oldposx,oldposy)
-		
-		--footsteps
-		--if oldposx ~= player.playerx or oldposy ~= player.playery then
-		--[[
-		if collide == true and collision(oldposx,oldposy) ~= true and oldposy < map_max and tiles[oldposx][oldposy+1]["block"] ~= 0 then
-			stepsound:setPitch(love.math.random(50,100)/100)
-			stepsound:stop()
-			stepsound:play()
-		end
-		]]--
-		--end
-	--end
 end
 --restore stuff
 function player_restore()
@@ -110,6 +95,11 @@ function love.keypressed( key, scancode, isrepeat )
 		
 		--love.event.push('quit')
 		pause = not pause
+		if pause == false then
+			--wonder_music:play()
+		else
+			--wonder_music:stop()
+		end
 	end
 
 
@@ -212,20 +202,27 @@ function mine(key,dt)
 						
 						player.mining = true
 						
-						mine_process = mine_process + 8--0.5
+						mine_process = mine_process + 0.1--0.5
 						
+						--[[
+						
+						NOTE: 
+						change minesound to the sound that the block makes when dug
+						
+						]]--
+						
+						--mining
 						if math.ceil(mine_process) > math.ceil(old_mine_process) then
-						--	minesound:setPitch(love.math.random(70,80)/100)
-						--	minesound:stop()
-						--	minesound:play()
+							sound_play(minesound,70,80)	
 						end
 						
 						old_mine_process = mine_process
+						--breaking
 						if mine_process >= 10 then
 							mine_process = 0
-							minesound:setPitch(love.math.random(90,100)/100)
-							minesound:stop()
-							minesound:play()
+							
+							sound_play(minesound,90,100)
+							
 							particle.create_particle(type,5,0.1,0.1,nil,selected_chunkx,selected_chunky,mx+0.5,my+0.5,-350,350, -100,-140,loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"],3)
 							
 							--THIS
@@ -266,10 +263,10 @@ function mine(key,dt)
 							loaded_chunks[selected_chunkx][selected_chunky][mx][my]["block"] = inventory[inventory_selection]["id"]
 							
 							inventory_remove(inventory_selection,inventory[inventory_selection]["id"])
+														
+							--NOTE: Placeholder "placement" sound
+							sound_play(minesound,20,30)
 							
-							placesound:setPitch(love.math.random(50,100)/100)
-							placesound:stop()
-							placesound:play()
 							score = score + 1
 							player.mining = false
 							--end
@@ -392,9 +389,7 @@ function player.draw()
 		end
 		
 		if (leg_animation > -0.1 and leg_animation < 0.1) and not (old_leg_animation > -0.1 and old_leg_animation < 0.1) then
-			stepsound:setPitch(love.math.random(80,100)/100)
-			stepsound:stop()
-			stepsound:play()
+			sound_play(stepsound,80,100)
 		end
 		
 		old_leg_animation = leg_animation

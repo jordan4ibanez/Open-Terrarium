@@ -337,8 +337,6 @@ function entity.item_magnet(i)
 		table.remove(entity_table,i)
 		entity_count = entity_count - 1
 		--print("add to inventory")
-		item_magnet_pickup:setPitch(love.math.random(80,120)/100)
-		item_magnet_pickup:stop()
-		item_magnet_pickup:play()
+		sound_play(item_magnet_pickup,80,120)
 	end
 end
