@@ -101,8 +101,11 @@ function love.keypressed( key, scancode, isrepeat )
 			--wonder_music:stop()
 		end
 	end
-
-
+	--screenshot
+	if key == "f1" then
+		local screenshot = love.graphics.newScreenshot();
+		screenshot:encode('png', os.time() .. '.png');
+	end
 	
 	--debug
 	if key == "f5" then
