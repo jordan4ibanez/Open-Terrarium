@@ -1,10 +1,3 @@
-# Update
-
-I am currently rewriting the base of the engine to utilize the builtin collision detection, which will be the base for a few games I'm going to make while developing this. [You can find that by clicking this.](https://github.com/jordan4ibanez/Block-Game-Engine) https://github.com/jordan4ibanez/Block-Game-Engine. If you would like to help with this, feel free to do pull requests. Thank you.
-
-
-# End Update
-
 ### What is this game?
 
 __Open Terrarium__ is an open world, open source, 2D block based sandbox game where you can mine and craft.
