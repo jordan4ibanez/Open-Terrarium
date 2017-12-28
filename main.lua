@@ -96,9 +96,9 @@ function love.load()
 	item_magnet_pickup = love.audio.newSource("sounds/item_magnet.ogg", "static")
 	menu_music = love.audio.newSource("sounds/menu_music.ogg")
 	menu_music:setLooping(true)
-	wonder_music = love.audio.newSource("sounds/wonder.ogg")
-	wonder_music:setLooping(true)
-	
+	--wonder_music = love.audio.newSource("sounds/wonder.ogg")
+	--wonder_music:setLooping(true)
+	--wonder_music:play()
 	
 	texture_table = {}
 	local i = 1
@@ -110,11 +110,11 @@ function love.load()
 	--playertexture = love.graphics.newImage("textures/player.png")
 	heart = love.graphics.newImage("textures/heart.png")
 	
-	wonder_music:play()
+	
 end
 
 function love.quit( )
-	print("Thanks for playing!")
+	--print("Thanks for playing!")
 	return nil
 end
 
