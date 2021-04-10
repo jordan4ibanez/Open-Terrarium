@@ -1,3 +1,5 @@
+This game needs to be updated, currently working on updating
+
 ### What is this game?
 
 __Open Terrarium__ is an open world, open source, 2D block based sandbox game where you can mine and craft.
